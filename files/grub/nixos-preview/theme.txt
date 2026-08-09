@@ -1,0 +1,33 @@
+desktop-image: "background.png"
+desktop-color: "#000000"
+title-text: ""
+message-font: "Unifont Regular 16"
+message-color: "#ffffff"
+message-bg-color: "#000000"
+terminal-font: "Unifont Regular 16"
+terminal-box: "0,0,0,0"
+
++ boot_menu {
+  left = 13%
+  top = 33%
+  width = 42%
+  height = 26%
+  item_height = 44
+  item_padding = 10
+  item_spacing = 4
+  item_font = "Unifont Regular 20"
+  item_color = "#8e8e8e"
+  selected_item_color = "#ffffff"
+}
+
++ progress_bar {
+  id = "__timeout__"
+  left = 10%
+  top = 80%
+  width = 45%
+  height = 16
+  show_text = false
+  fg_color = "#18aeea"
+  bg_color = "#202020"
+  border_color = "#000000"
+}

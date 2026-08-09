@@ -1,0 +1,8 @@
+result
+result-*
+*.swp
+*.swo
+*~
+*.bak
+*.bak.*
+*.pre-flake.bak
