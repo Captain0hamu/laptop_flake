@@ -172,6 +172,8 @@ in
     qemu.swtpm.enable = true;
     sshProxy = false;
   };
+  virtualisation.docker.enable = true;
+
   virtualisation.vmVariant = {
     fileSystems."/home/nix/lab" = lib.mkForce {
       device = "tmpfs";
