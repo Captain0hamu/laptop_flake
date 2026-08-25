@@ -199,6 +199,7 @@ in
     isNormalUser = true;
     extraGroups = [
       "wheel"
+      "docker"
       "networkmanager"
       "libvirtd"
       "kvm"
