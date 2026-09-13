@@ -65,6 +65,7 @@ in
 
   networking.hostName = "nixos";
   networking.networkmanager.enable = true;
+  networking.firewall.allowedTCPPorts = [ 22 ];
   hardware.wirelessRegulatoryDatabase = true;
   hardware.bluetooth = {
     enable = true;
@@ -124,7 +125,13 @@ in
 	sddm.settings.theme.Current = "Gently-Blur-SDDM-6";
     };
     desktopManager.plasma6.enable = true;
-    openssh.enable = true;
+    openssh = {
+  enable = true;
+    settings = {
+      PermitRootLogin = "no";        # Recommended for security
+      PasswordAuthentication = true; # Set to false if using SSH keys only
+      };
+    };
     tailscale = {
       enable = true;
       package = unstable.tailscale;
