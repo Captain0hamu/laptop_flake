@@ -1,0 +1,522 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NixOS Flake dependency graph</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #090d14;
+      --panel: #101722;
+      --panel-2: #151e2b;
+      --line: #334155;
+      --text: #e5edf7;
+      --muted: #98a6b9;
+      --cyan: #55d6e8;
+      --blue: #75a7ff;
+      --violet: #b39bff;
+      --green: #72dfa8;
+      --amber: #f1c56b;
+      --rose: #ff8fa3;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 18% 0%, #14243a 0, transparent 30rem),
+        radial-gradient(circle at 90% 18%, #211b3d 0, transparent 30rem),
+        var(--bg);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", "Noto Sans JP", sans-serif;
+      line-height: 1.6;
+    }
+
+    main { width: min(1500px, calc(100% - 32px)); margin: 0 auto; padding: 48px 0 72px; }
+    h1, h2, p { margin-top: 0; }
+    h1 { font-size: clamp(2rem, 5vw, 4.2rem); line-height: 1.08; letter-spacing: -.04em; margin-bottom: 14px; }
+    h2 { font-size: 1.15rem; margin-bottom: 18px; }
+    code { font-family: "SFMono-Regular", Consolas, monospace; }
+
+    .eyebrow {
+      color: var(--cyan);
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-size: .76rem;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    .lead { color: var(--muted); max-width: 70ch; font-size: 1.03rem; }
+    .badges { display: flex; flex-wrap: wrap; gap: 8px; margin: 22px 0 34px; }
+    .badge {
+      background: #172131;
+      border: 1px solid #2d3d53;
+      border-radius: 999px;
+      color: #c8d5e5;
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-size: .75rem;
+      padding: 5px 10px;
+    }
+
+    .panel {
+      background: color-mix(in srgb, var(--panel) 93%, transparent);
+      border: 1px solid #263244;
+      border-radius: 18px;
+      box-shadow: 0 22px 60px rgba(0,0,0,.28);
+      overflow: hidden;
+    }
+
+    .panel-head {
+      align-items: center;
+      border-bottom: 1px solid #263244;
+      display: flex;
+      gap: 16px;
+      justify-content: space-between;
+      padding: 16px 20px;
+    }
+
+    .panel-head h2 { margin: 0; }
+    .legend { display: flex; flex-wrap: wrap; gap: 14px; color: var(--muted); font-size: .77rem; }
+    .key { align-items: center; display: inline-flex; gap: 6px; }
+    .dot { border-radius: 50%; height: 8px; width: 8px; }
+    .graph-wrap { overflow-x: auto; padding: 18px; }
+
+    svg { display: block; min-width: 1320px; width: 100%; height: auto; }
+    svg .lane { fill: #0d131d; stroke: #202c3d; stroke-width: 1; }
+    svg .lane-title { fill: #718096; font-size: 13px; font-weight: 700; letter-spacing: 2px; }
+    svg .edge { fill: none; stroke: #4b5e75; stroke-width: 2; marker-end: url(#arrow); opacity: .82; }
+    svg .edge.main { stroke: var(--cyan); }
+    svg .edge.unstable { stroke: var(--amber); }
+    svg .edge.hm { stroke: var(--violet); }
+    svg .edge.theme { stroke: var(--green); }
+    svg .node { fill: #151e2b; stroke: #34455c; stroke-width: 1.5; rx: 12; }
+    svg .node.input { stroke: var(--blue); }
+    svg .node.eval { stroke: var(--cyan); }
+    svg .node.module { stroke: var(--violet); }
+    svg .node.result { stroke: var(--green); }
+    svg .node.special { stroke: var(--amber); }
+    svg .title { fill: #edf4fc; font-size: 15px; font-weight: 700; }
+    svg .sub { fill: #94a3b8; font-size: 12px; }
+    svg .mono { font-family: "SFMono-Regular", Consolas, monospace; }
+    svg a:hover .node { fill: #1c2939; stroke-width: 2.5; }
+
+    .cards { display: grid; gap: 16px; grid-template-columns: repeat(3, 1fr); margin-top: 18px; }
+    .card { background: var(--panel); border: 1px solid #263244; border-radius: 16px; padding: 20px; }
+    .card h2 { color: #f1f5f9; }
+    .card p, .card li { color: var(--muted); font-size: .91rem; }
+    .card ul { margin: 0; padding-left: 1.2rem; }
+    .card strong { color: var(--text); }
+
+    .live-grid { display: grid; gap: 14px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .live-block { background: #0d141f; border: 1px solid #26364b; border-radius: 13px; padding: 16px; }
+    .live-block h3 { font-size: .98rem; margin: 0 0 6px; }
+    .live-block p { color: var(--muted); font-size: .82rem; margin: 0; }
+    .live-block details { border-top: 1px solid #253247; margin-top: 12px; padding-top: 10px; }
+    .live-block summary { color: #cbd8e8; cursor: pointer; font-size: .84rem; }
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; max-height: 270px; overflow: auto; }
+    .chip { background: #172234; border: 1px solid #2d405a; border-radius: 7px; color: #b9c9dc; font-family: "SFMono-Regular", Consolas, monospace; font-size: .69rem; padding: 3px 6px; }
+    .stamp { color: var(--muted); font-family: "SFMono-Regular", Consolas, monospace; font-size: .75rem; }
+    .error { background: #321923; border: 1px solid #683044; border-radius: 10px; color: #ffc0ca; font-size: .78rem; margin-top: 12px; padding: 10px; white-space: pre-wrap; }
+    .refs { border-collapse: collapse; margin-top: 12px; width: 100%; }
+    .refs td { border-top: 1px solid #253247; color: var(--muted); font-size: .78rem; padding: 7px 5px; vertical-align: top; }
+    .refs td:first-child { color: #c9d6e7; font-family: "SFMono-Regular", Consolas, monospace; width: 32%; }
+
+    .flow { align-items: stretch; display: grid; gap: 10px; grid-template-columns: 1fr auto 1fr auto 1fr; }
+    .flow-step { background: var(--panel-2); border: 1px solid #314158; border-radius: 12px; padding: 14px; }
+    .flow-step small { color: var(--muted); display: block; margin-top: 4px; }
+    .flow-arrow { align-self: center; color: var(--cyan); font-size: 1.4rem; }
+    .wide { grid-column: span 2; }
+    footer { color: #708096; font-size: .8rem; margin-top: 20px; text-align: right; }
+
+    @media (max-width: 900px) {
+      main { width: min(100% - 20px, 1500px); padding-top: 28px; }
+      .cards { grid-template-columns: 1fr; }
+      .live-grid { grid-template-columns: 1fr; }
+      .wide { grid-column: auto; }
+      .flow { grid-template-columns: 1fr; }
+      .flow-arrow { transform: rotate(90deg); justify-self: center; }
+      .panel-head { align-items: flex-start; flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="eyebrow">/home/nix/nixos-flake</div>
+    <h1>Configuration dependency map</h1>
+    <p class="lead">
+      このリポジトリで、flake input がどの評価経路を通って NixOS、Home Manager、
+      dev shell のパッケージになるかを表した図です。ノードをクリックすると対応ファイルを開きます。
+    </p>
+
+    <div class="badges">
+      <span class="badge">system: x86_64-linux</span>
+      <span class="badge">channel: nixos-unstable</span>
+      <span class="badge">default host: #nixos</span>
+      <span class="badge">default profile: dev</span>
+      <span class="badge">stateVersion: 25.05</span>
+    </div>
+
+    <section class="panel">
+      <div class="panel-head">
+        <h2>依存グラフ</h2>
+        <div class="legend">
+          <span class="key"><span class="dot" style="background:var(--blue)"></span>input</span>
+          <span class="key"><span class="dot" style="background:var(--cyan)"></span>評価・import</span>
+          <span class="key"><span class="dot" style="background:var(--violet)"></span>module</span>
+          <span class="key"><span class="dot" style="background:var(--green)"></span>output</span>
+          <span class="key"><span class="dot" style="background:var(--amber)"></span>unstable経路</span>
+        </div>
+      </div>
+
+      <div class="graph-wrap">
+        <svg viewBox="0 0 1400 900" role="img" aria-labelledby="graph-title graph-desc">
+          <title id="graph-title">NixOS flake dependency graph</title>
+          <desc id="graph-desc">Inputs on the left flow through imports and module evaluation to system, home and development outputs on the right.</desc>
+          <defs>
+            <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/>
+            </marker>
+          </defs>
+
+          <rect class="lane" x="8" y="34" width="300" height="840" rx="16"/>
+          <rect class="lane" x="325" y="34" width="300" height="840" rx="16"/>
+          <rect class="lane" x="642" y="34" width="360" height="840" rx="16"/>
+          <rect class="lane" x="1019" y="34" width="372" height="840" rx="16"/>
+          <text class="lane-title" x="28" y="65">1 · FLAKE INPUTS</text>
+          <text class="lane-title" x="345" y="65">2 · CONSTRUCTORS</text>
+          <text class="lane-title" x="662" y="65">3 · MODULES</text>
+          <text class="lane-title" x="1039" y="65">4 · RESULT</text>
+
+          <!-- Edges are behind nodes. -->
+          <path class="edge main" d="M278 139 C335 139 300 140 365 140"/>
+          <path class="edge main" d="M278 139 C330 139 310 430 365 430"/>
+          <path class="edge unstable" d="M278 279 C330 279 315 270 365 270"/>
+          <path class="edge hm" d="M278 419 C330 419 314 456 365 456"/>
+          <path class="edge hm" d="M278 419 C330 419 310 652 365 652"/>
+          <path class="edge theme" d="M278 559 C330 559 310 480 365 480"/>
+
+          <path class="edge main" d="M585 140 C650 140 610 775 690 775"/>
+          <path class="edge main" d="M585 140 C650 140 615 675 690 675"/>
+          <path class="edge unstable" d="M585 270 C630 270 630 290 690 290"/>
+          <path class="edge main" d="M585 430 C630 430 630 290 690 290"/>
+          <path class="edge hm" d="M585 456 C630 456 630 445 690 445"/>
+          <path class="edge theme" d="M585 480 C630 480 630 570 690 570"/>
+          <path class="edge hm" d="M585 652 C630 652 630 675 690 675"/>
+
+          <path class="edge main" d="M970 290 C1020 290 1005 145 1057 145"/>
+          <path class="edge main" d="M970 290 C1020 290 1008 275 1057 275"/>
+          <path class="edge unstable" d="M970 290 C1020 290 1008 405 1057 405"/>
+          <path class="edge hm" d="M970 445 C1025 445 1005 550 1057 550"/>
+          <path class="edge hm" d="M970 675 C1025 675 1005 550 1057 550"/>
+          <path class="edge hm" d="M970 675 C1025 675 1005 680 1057 680"/>
+          <path class="edge theme" d="M970 570 C1025 570 1005 405 1057 405"/>
+          <path class="edge main" d="M970 775 C1025 775 1005 810 1057 810"/>
+
+          <!-- Inputs -->
+          <a href="../flake.nix#L4">
+            <rect class="node input" x="38" y="92" width="240" height="94"/>
+            <text class="title mono" x="56" y="120">nixpkgs</text>
+            <text class="sub" x="56" y="144">nixos-unstable</text>
+            <text class="sub mono" id="nixpkgs-rev" x="56" y="165">c59305bab206…</text>
+          </a>
+          <a href="../flake.nix#L5">
+            <rect class="node special" x="38" y="232" width="240" height="94"/>
+            <text class="title mono" x="56" y="260">nixpkgs-unstable</text>
+            <text class="sub" x="56" y="284">nixos-unstable（現在は同一rev）</text>
+            <text class="sub mono" id="unstable-rev" x="56" y="305">c59305bab206…</text>
+          </a>
+          <a href="../flake.nix#L6">
+            <rect class="node input" x="38" y="372" width="240" height="94"/>
+            <text class="title mono" x="56" y="400">home-manager</text>
+            <text class="sub mono" id="home-manager-rev" x="56" y="424">a439f71e75b9…</text>
+            <text class="sub" x="56" y="445">inputs.nixpkgs.follows = nixpkgs</text>
+          </a>
+          <a href="../flake.nix#L10">
+            <rect class="node input" x="38" y="512" width="240" height="94"/>
+            <text class="title mono" x="56" y="540">darkmatter-grub-theme</text>
+            <text class="sub mono" id="theme-rev" x="56" y="564">42ed4b9e786b…</text>
+            <text class="sub" x="56" y="585">inputs.nixpkgs.follows = nixpkgs</text>
+          </a>
+          <a href="../flake.lock">
+            <rect class="node" x="38" y="704" width="240" height="96"/>
+            <text class="title mono" x="56" y="735">flake.lock</text>
+            <text class="sub" x="56" y="760">上記inputの正確なrevとhash</text>
+            <text class="sub" x="56" y="780">updateで変更 / rebuildで使用</text>
+          </a>
+
+          <!-- Constructors -->
+          <a href="../flake.nix#L19">
+            <rect class="node eval" x="365" y="98" width="220" height="84"/>
+            <text class="title mono" x="383" y="128">import nixpkgs</text>
+            <text class="sub" x="383" y="151">pkgs / allowUnfree</text>
+            <text class="sub" x="383" y="169">standalone home + devShell用</text>
+          </a>
+          <a href="../flake.nix#L23">
+            <rect class="node special" x="365" y="228" width="220" height="84"/>
+            <text class="title mono" x="383" y="258">import nixpkgs-unstable</text>
+            <text class="sub" x="383" y="281">unstable</text>
+            <text class="sub" x="383" y="299">specialArgsでmoduleへ</text>
+          </a>
+          <a href="../flake.nix#L28">
+            <rect class="node eval" x="365" y="388" width="220" height="112"/>
+            <text class="title mono" x="383" y="418">nixpkgs.lib.nixosSystem</text>
+            <text class="sub" x="383" y="443">mkSystem profile</text>
+            <text class="sub" x="383" y="464">NixOS用pkgsを生成・注入</text>
+            <text class="sub" x="383" y="484">全moduleをマージして評価</text>
+          </a>
+          <a href="../flake.nix#L66">
+            <rect class="node eval" x="365" y="610" width="220" height="84"/>
+            <text class="title mono" x="383" y="640">homeManagerConfiguration</text>
+            <text class="sub" x="383" y="664">明示importしたpkgsを使用</text>
+            <text class="sub" x="383" y="682">dev / labを個別にbuild</text>
+          </a>
+
+          <!-- Modules -->
+          <a href="../configuration.nix">
+            <rect class="node module" x="690" y="230" width="280" height="120"/>
+            <text class="title mono" x="708" y="260">configuration.nix</text>
+            <text class="sub" x="708" y="284">pkgs ← nixosSystemから自動注入</text>
+            <text class="sub" x="708" y="305">unstable ← specialArgsから注入</text>
+            <text class="sub" x="708" y="326">hardware-configuration.nixをimport</text>
+          </a>
+          <a href="../home/default.nix">
+            <rect class="node module" x="690" y="395" width="280" height="100"/>
+            <text class="title mono" x="708" y="425">Home Manager NixOS module</text>
+            <text class="sub" x="708" y="449">useGlobalPkgs = true</text>
+            <text class="sub" x="708" y="470">systemと同じpkgs + 選択profile</text>
+          </a>
+          <a href="../flake.nix#L45">
+            <rect class="node module" x="690" y="530" width="280" height="80"/>
+            <text class="title mono" x="708" y="560">inline boot module</text>
+            <text class="sub" x="708" y="584">GRUB + darkmatter theme</text>
+          </a>
+          <a href="../home/default.nix">
+            <rect class="node module" x="690" y="630" width="280" height="90"/>
+            <text class="title mono" x="708" y="660">home/default.nix</text>
+            <text class="sub" x="708" y="684">common.nix + profile module</text>
+            <text class="sub" x="708" y="704">dev → ai-cli / lab</text>
+          </a>
+          <a href="../flake.nix#L81">
+            <rect class="node eval" x="690" y="740" width="280" height="70"/>
+            <text class="title mono" x="708" y="770">pkgs.mkShell</text>
+            <text class="sub" x="708" y="793">dotnet-sdk / csharp-ls / netcoredbg</text>
+          </a>
+
+          <!-- Results -->
+          <a href="../configuration.nix#L221">
+            <rect class="node result" x="1057" y="100" width="296" height="90"/>
+            <text class="title mono" x="1075" y="130">environment.systemPackages</text>
+            <text class="sub" x="1075" y="154">Firefox / Node.js / Git / KDE…</text>
+            <text class="sub" x="1075" y="174">+ users.users.nix.packages</text>
+          </a>
+          <a href="../configuration.nix#L38">
+            <rect class="node result" x="1057" y="230" width="296" height="90"/>
+            <text class="title" x="1075" y="260">NixOS system closure</text>
+            <text class="sub" x="1075" y="284">kernel / Plasma / SDDM / PipeWire</text>
+            <text class="sub" x="1075" y="304">Docker / libvirt / module依存</text>
+          </a>
+          <a href="../configuration.nix#L135">
+            <rect class="node special" x="1057" y="360" width="296" height="90"/>
+            <text class="title mono" x="1075" y="390">unstable.tailscale</text>
+            <text class="sub" x="1075" y="414">nixpkgs-unstableを使う唯一の箇所</text>
+            <text class="sub" x="1075" y="434">+ GRUB theme module</text>
+          </a>
+          <a href="../home/profiles/dev.nix">
+            <rect class="node result" x="1057" y="500" width="296" height="100"/>
+            <text class="title mono" x="1075" y="530">#nixos / #nixos-dev</text>
+            <text class="sub" x="1075" y="554">mkSystem "dev"</text>
+            <text class="sub" x="1075" y="575">common + dev + ai-cli</text>
+          </a>
+          <a href="../home/profiles/lab.nix">
+            <rect class="node result" x="1057" y="635" width="296" height="90"/>
+            <text class="title mono" x="1075" y="665">#nixos-lab / nix@lab</text>
+            <text class="sub" x="1075" y="689">mkSystem "lab" / standalone home</text>
+            <text class="sub" x="1075" y="709">common + lab tools</text>
+          </a>
+          <a href="../flake.nix#L81">
+            <rect class="node result" x="1057" y="765" width="296" height="90"/>
+            <text class="title mono" x="1075" y="795">devShells.x86_64-linux.default</text>
+            <text class="sub" x="1075" y="819">nix develop</text>
+            <text class="sub" x="1075" y="839">明示importしたpkgsを使用</text>
+          </a>
+        </svg>
+      </div>
+    </section>
+
+    <section class="panel" style="margin-top:18px">
+      <div class="panel-head">
+        <h2>現在の評価結果</h2>
+        <span class="stamp" id="generated-at">dependency-data.js を読み込み中…</span>
+      </div>
+      <div id="live-data" style="padding:18px">
+        <noscript>このセクションの表示にはJavaScriptが必要です。</noscript>
+      </div>
+    </section>
+
+    <section class="cards">
+      <article class="card wide">
+        <h2><code>nix flake update</code> の波及</h2>
+        <div class="flow">
+          <div class="flow-step">
+            <strong>1. inputを更新</strong>
+            <small>nixos-unstable等の最新revisionを解決</small>
+          </div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-step">
+            <strong>2. flake.lockを書換</strong>
+            <small>revisionとcontent hashを固定</small>
+          </div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-step">
+            <strong>3. rebuild</strong>
+            <small>新しいnixpkgsでsystem closure全体を再評価</small>
+          </div>
+        </div>
+        <p style="margin:14px 0 0">
+          そのため、明示したsystem packageだけでなく、カーネル、desktop、service、ライブラリなどの
+          推移的依存も更新対象になります。<code>system.stateVersion</code> はパッケージを固定しません。
+        </p>
+      </article>
+
+      <article class="card">
+        <h2>通常のrebuild</h2>
+        <p><code>rebuild_n_switch</code> は <code>.#nixos</code> を選択します。</p>
+        <ul>
+          <li><code>mkSystem "dev"</code></li>
+          <li>NixOS + Home Managerを同時評価</li>
+          <li>Home Managerもsystemと同じ<code>pkgs</code></li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h2>2種類のpkgs</h2>
+        <p>
+          system側の<code>pkgs</code>は<code>nixosSystem</code>が生成します。
+          flake直下で明示importした<code>pkgs</code>はstandalone Home Managerとdev shell向けです。
+        </p>
+      </article>
+
+      <article class="card">
+        <h2>現在の重複</h2>
+        <p>
+          <code>nixpkgs</code>と<code>nixpkgs-unstable</code>は、現在どちらも
+          <code>nixos-unstable</code>の同じrevisionです。従って現状の
+          <code>unstable.tailscale</code>は通常の<code>pkgs.tailscale</code>と実質同じです。
+        </p>
+      </article>
+    </section>
+
+    <footer>
+      Snapshot based on the repository configuration and flake.lock at generation time.
+    </footer>
+  </main>
+  <script src="./dependency-data.js"></script>
+  <script>
+    (() => {
+      const data = window.NIX_GRAPH_DATA;
+      const root = document.getElementById("live-data");
+      const stamp = document.getElementById("generated-at");
+
+      const element = (tag, className, text) => {
+        const node = document.createElement(tag);
+        if (className) node.className = className;
+        if (text !== undefined) node.textContent = text;
+        return node;
+      };
+
+      const chips = (items) => {
+        const list = element("div", "chips");
+        [...new Set(items)].sort().forEach((item) => list.append(element("span", "chip", item)));
+        return list;
+      };
+
+      const detail = (label, items) => {
+        const details = document.createElement("details");
+        details.append(element("summary", "", `${label} (${new Set(items).size})`));
+        details.append(chips(items));
+        return details;
+      };
+
+      const block = (title, subtitle) => {
+        const article = element("article", "live-block");
+        article.append(element("h3", "", title), element("p", "", subtitle));
+        return article;
+      };
+
+      if (!data) {
+        stamp.textContent = "未生成";
+        root.append(element("div", "error", "dependency-data.js がありません。./graph/update.sh を実行してください。"));
+        return;
+      }
+
+      stamp.textContent = `generated ${new Date(data.generatedAt).toLocaleString("ja-JP")}`;
+
+      const revisionIds = {
+        nixpkgs: "nixpkgs-rev",
+        "nixpkgs-unstable": "unstable-rev",
+        "home-manager": "home-manager-rev",
+        "darkmatter-grub-theme": "theme-rev",
+      };
+      data.inputs.forEach((input) => {
+        const node = document.getElementById(revisionIds[input.name]);
+        if (node) node.textContent = input.shortRevision ? `${input.shortRevision}…` : input.source;
+      });
+
+      const grid = element("div", "live-grid");
+
+      data.inputs.forEach((input) => {
+        const item = block(input.name, `${input.source} · ${input.shortRevision ?? "no revision"}`);
+        if (input.dependencies.length) {
+          item.append(detail("input dependencies", input.dependencies.map((dep) =>
+            `${dep.name} → ${dep.target}${dep.follows ? " (follows)" : ""}`)));
+        }
+        grid.append(item);
+      });
+
+      Object.entries(data.nixosConfigurations).forEach(([name, config]) => {
+        const item = block(`nixosConfigurations.${name}`, `${config.system} · stateVersion ${config.stateVersion}`);
+        item.append(
+          detail("effective system packages", config.systemPackages),
+          detail("user nix packages", config.userPackages),
+          detail("Home Manager packages", config.homePackages),
+          detail("systemd services", config.systemdServices),
+        );
+        grid.append(item);
+      });
+
+      Object.entries(data.homeConfigurations).forEach(([name, config]) => {
+        const item = block(`homeConfigurations.${name}`, `stateVersion ${config.stateVersion}`);
+        item.append(detail("effective Home Manager packages", config.packages));
+        grid.append(item);
+      });
+
+      Object.entries(data.devShells).forEach(([system, shells]) => {
+        Object.entries(shells).forEach(([name, shell]) => {
+          const item = block(`devShells.${system}.${name}`, "evaluated shell inputs");
+          item.append(detail("packages", shell.packages));
+          grid.append(item);
+        });
+      });
+
+      const refs = block("local file references", "source scanによる直接参照。動的に組み立てたpathは含まれない場合があります。 ");
+      const table = element("table", "refs");
+      data.localReferences.forEach((entry) => {
+        const row = document.createElement("tr");
+        row.append(element("td", "", entry.file), element("td", "", entry.targets.join(" · ")));
+        table.append(row);
+      });
+      refs.append(table);
+      grid.append(refs);
+      root.replaceChildren(grid);
+
+      if (data.errors.length) {
+        root.append(element("div", "error", `一部のNix評価に失敗しました:\n${data.errors.join("\n\n")}`));
+      }
+    })();
+  </script>
+</body>
+</html>
