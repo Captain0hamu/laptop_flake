@@ -34,7 +34,7 @@ in
 
     pluginUrl = mkOption {
       type = types.str;
-      default = "https://github.com/birat-chapagain/dsh-codex-oauth/releases/download/v0.1.6/dsh-codex-oauth.tgz";
+      default = "https://github.com/birat-chapagain/dsh-codex-oauth/releases/download/v0.1.5/dsh-codex-oauth.tgz";
       description = "Pinned release archive for the community Codex OAuth plugin.";
     };
   };
