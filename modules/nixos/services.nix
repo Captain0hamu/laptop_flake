@@ -26,5 +26,9 @@
       enable = true;
       drivers = with pkgs; [ cups-browsed cups-filters ];
     };
+    mysql = {
+      enable = true;
+      package = pkgs.mysql84;
+    };
   };
 }
