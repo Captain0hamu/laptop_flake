@@ -28,8 +28,8 @@ in
 
     dshVersion = mkOption {
       type = types.str;
-      default = "0.1.0-rc.6";
-      description = "DeepSeek Harness npm version used by the wrapper commands.";
+      default = "0.1.0-rc.8";
+      description = "DeepSeek Harness npm version installed for the Codex OAuth plugin.";
     };
 
     pluginUrl = mkOption {
@@ -46,6 +46,19 @@ in
         runtimeInputs = [ pkgs.nodejs_24 pkgs.pnpm ];
         text = ''
           ${withDshHome}
+          runtime="$DSH_HOME/runtime"
+          dsh_bin="$runtime/node_modules/.bin/dsh"
+
+          if [ ! -x "$dsh_bin" ]; then
+            echo "Installing DeepSeek Harness ${cfg.dshVersion} into $runtime ..."
+            mkdir -p "$runtime"
+            npm install --prefix "$runtime" --no-save --package-lock=false ${lib.escapeShellArg dsh}
+          fi
+
+          # The plugin installer delegates to `dsh plugin add`; putting the
+          # exact compatible runtime first prevents it from downloading the
+          # current (and potentially incompatible) DSH release via npx.
+          export PATH="$runtime/node_modules/.bin:$PATH"
           # The plugin's installer configures its required pnpm build approvals
           # and adds the plugin to the web profile. This changes only $DSH_HOME.
           exec npx --yes ${lib.escapeShellArg cfg.pluginUrl} install
@@ -56,8 +69,13 @@ in
         runtimeInputs = [ pkgs.nodejs_24 pkgs.pnpm ];
         text = ''
           ${withDshHome}
+          auth_bin="$DSH_HOME/profiles/web/node_modules/.bin/dsh-codex-oauth"
+          if [ ! -x "$auth_bin" ]; then
+            echo "Codex OAuth plugin is not installed. Run dsh-codex-install first." >&2
+            exit 1
+          fi
           # Runs OpenAI's device-code OAuth flow and saves the result in $DSH_HOME.
-          exec npx --yes dsh-codex-oauth login --method device "$@"
+          exec "$auth_bin" login --method device "$@"
         '';
       })
       (pkgs.writeShellApplication {
@@ -65,7 +83,12 @@ in
         runtimeInputs = [ pkgs.nodejs_24 pkgs.pnpm ];
         text = ''
           ${withDshHome}
-          exec npx --yes ${dsh} web "$@"
+          dsh_bin="$DSH_HOME/runtime/node_modules/.bin/dsh"
+          if [ ! -x "$dsh_bin" ]; then
+            echo "DeepSeek Harness is not installed. Run dsh-codex-install first." >&2
+            exit 1
+          fi
+          exec "$dsh_bin" web "$@"
         '';
       })
     ];
