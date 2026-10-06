@@ -43,7 +43,7 @@ in
     home.packages = [
       (pkgs.writeShellApplication {
         name = "dsh-codex-install";
-        runtimeInputs = [ pkgs.nodejs_24 ];
+        runtimeInputs = [ pkgs.nodejs_24 pkgs.pnpm ];
         text = ''
           ${withDshHome}
           # The plugin's installer configures its required pnpm build approvals
@@ -53,7 +53,7 @@ in
       })
       (pkgs.writeShellApplication {
         name = "dsh-codex-login";
-        runtimeInputs = [ pkgs.nodejs_24 ];
+        runtimeInputs = [ pkgs.nodejs_24 pkgs.pnpm ];
         text = ''
           ${withDshHome}
           # Runs OpenAI's device-code OAuth flow and saves the result in $DSH_HOME.
@@ -62,7 +62,7 @@ in
       })
       (pkgs.writeShellApplication {
         name = "dsh-codex-web";
-        runtimeInputs = [ pkgs.nodejs_24 ];
+        runtimeInputs = [ pkgs.nodejs_24 pkgs.pnpm ];
         text = ''
           ${withDshHome}
           exec npx --yes ${dsh} web "$@"
