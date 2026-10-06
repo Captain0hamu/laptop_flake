@@ -214,7 +214,9 @@ in
     ];
     hashedPassword = "$6$D1yPR195la2OcHsV$ux/cvoQRyea.DCuZDNMZIEbnggw4NJaYWJm2nz98X49OsJ.ip9/MfKVMEJc9tw3K/dJ5W3lBsnV3pV1Mf8E1G0";
     packages = with pkgs; [
-      discord-ptb
+      (discord-ptb.override {
+        commandLineArgs = "--ozone-platform=x11 --force-device-scale-factor=1";
+        })
     ];
   };
 
@@ -242,6 +244,7 @@ in
     nmap
     wayland-utils
     kdePackages.kcolorchooser
+    kdePackages.print-manager
     kdePackages.sddm-kcm
     kdePackages.kdenlive
     checksec
