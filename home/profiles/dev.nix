@@ -7,7 +7,6 @@
 
   home.packages = with pkgs; [
     nodejs
-    gcc
     gnumake
     hadolint
     docker-compose
