@@ -49,7 +49,7 @@ end
 local bat_like_palette = {
   bg = "#1e1e1e",
   fg = "#c8c8c8",
-  comment = "#6c7a89",
+  comment = "#78e482",
   keyword = "#ff5f87",
   string = "#ffd75f",
   function_name = "#5fd7ff",
