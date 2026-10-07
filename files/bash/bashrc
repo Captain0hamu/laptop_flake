@@ -13,7 +13,7 @@ if [[ $- == *i* ]]; then
     local previous_status=$?
     ( exit "$previous_status" )
     eval "$__kitty_original_prompt_command"
-    PS1+=$'\[\e[38;2;61;174;233m\]'
+    PS1+=$'\[\e[38;2;207;190;165m\]'
   }
   PROMPT_COMMAND=__kitty_coloured_prompt
   PS0=$'\e[38;2;184;184;184m'
