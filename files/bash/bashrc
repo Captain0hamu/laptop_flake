@@ -1,0 +1,53 @@
+alias nv="nvim"
+
+if command -v oh-my-posh >/dev/null 2>&1; then
+  eval "$(oh-my-posh init bash --config "$HOME/.config/oh-my-posh/distrous-nixos.omp.json")"
+fi
+
+# Keep the editable command line distinct from ordinary, uncoloured output.
+# PS0 is emitted immediately before Bash runs the command, so command output
+# returns to Kitty's default foreground (#b8b8b8).
+if [[ $- == *i* ]]; then
+  __kitty_original_prompt_command=$PROMPT_COMMAND
+  __kitty_coloured_prompt() {
+    local previous_status=$?
+    ( exit "$previous_status" )
+    eval "$__kitty_original_prompt_command"
+    PS1+=$'\[\e[38;2;61;174;233m\]'
+  }
+  PROMPT_COMMAND=__kitty_coloured_prompt
+  PS0=$'\e[38;2;184;184;184m'
+fi
+
+alias sbrc='source ~/.bashrc'
+
+alias ls='eza --icons=auto --group-directories-first'
+alias ll='eza -lah --icons=auto --group-directories-first --git'
+alias la='eza -a --icons=auto --group-directories-first'
+alias l='eza -F --icons=auto --group-directories-first'
+alias lt='eza --tree --level=2 --icons --group-directories-first'
+alias lta='eza --tree --level=2 -a --icons --group-directories-first'
+alias ltd='eza --tree --level=3 --icons --group-directories-first --git-ignore'
+alias lf='eza -lhf --icons --group-directories-first'
+alias ff='fastfetch'
+
+mkcd() {
+  mkdir -p -- "$1" && cd -- "$1"
+}
+
+cpy-file(){
+  wl-copy < "$1"
+}
+
+alias gad='git add'
+alias gish='git push'
+alias gs='git status'
+alias gimit='git commit -m'
+
+alias gdb='gdb -q'
+alias cat='bat -p'
+
+dl-msc(){
+  nix run nixpkgs#yt-dlp -- -P "/home/nix/Downloads/m4a" -x --audio-format m4a "$1"
+}
+alias killptb="pkill -KILL -f 'DiscordPTB|discord-ptb'"
