@@ -14,6 +14,11 @@
   home.file.".config/oh-my-posh/distrous-nixos.omp.json".source =
     ../files/oh-my-posh/distrous-nixos.omp.json;
 
+  home.file = {
+    ".config/kitty/kitty.conf".source = ../files/kitty/kitty.conf;
+    ".bashrc".source = ../files/bash/bashrc;
+  };
+
   programs.git = {
     enable = true;
     settings.user = {
