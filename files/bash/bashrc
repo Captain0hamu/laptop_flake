@@ -13,12 +13,13 @@ if [[ $- == *i* ]]; then
     local previous_status=$?
     ( exit "$previous_status" )
     eval "$__kitty_original_prompt_command"
-    PS1+=$'\[\e[38;2;207;190;165m\]'
+    PS1+=$'\[\e[38;2;217;200;175m\]'
   }
   PROMPT_COMMAND=__kitty_coloured_prompt
   PS0=$'\e[38;2;184;184;184m'
 fi
 
+export PATH="$HOME/.local/bin:$PATH"
 alias sbrc='source ~/.bashrc'
 
 alias ls='eza --icons=auto --group-directories-first'
@@ -29,7 +30,7 @@ alias lt='eza --tree --level=2 --icons --group-directories-first'
 alias lta='eza --tree --level=2 -a --icons --group-directories-first'
 alias ltd='eza --tree --level=3 --icons --group-directories-first --git-ignore'
 alias lf='eza -lhf --icons --group-directories-first'
-alias ff='fastfetch'
+alias ff='fastfetch -c examples/26.jsonc'
 
 mkcd() {
   mkdir -p -- "$1" && cd -- "$1"
