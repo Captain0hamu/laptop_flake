@@ -12,7 +12,8 @@ Regenerate the data after changing the configuration or running
 ```
 
 The generator has no npm dependencies. It reads `flake.lock` and local Nix
-references directly, then uses `nix eval` to collect the effective packages,
+references directly, then uses `nix eval --impure` (required to read the git-ignored `local.nix`) to collect
+the effective packages,
 systemd units, NixOS configurations, Home Manager configurations, and dev
 shell inputs. If Nix evaluation fails, it still writes the lock/static data and
 shows the error in the page.

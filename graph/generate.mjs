@@ -12,7 +12,7 @@ function nixEval(attribute, expression) {
   try {
     const stdout = execFileSync(
       "nix",
-      ["eval", "--json", attribute, "--apply", expression],
+      ["eval", "--impure", "--json", attribute, "--apply", expression],
       {
         cwd: repo,
         encoding: "utf8",

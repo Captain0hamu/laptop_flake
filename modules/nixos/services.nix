@@ -1,4 +1,4 @@
-{ pkgs, unstable, ... }:
+{ pkgs, ... }:
 
 {
   services = {
@@ -12,7 +12,7 @@
 
     tailscale = {
       enable = true;
-      package = unstable.tailscale;
+      package = pkgs.tailscale;
       extraSetFlags = [ "--accept-dns=false" ];
     };
 

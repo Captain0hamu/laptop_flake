@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, local, ... }:
 
 {
   home.username = "nix";
@@ -23,8 +23,8 @@
   programs.git = {
     enable = true;
     settings.user = {
-      name = "Lrnz3318";
-      email = "251091shirai@tid.ac.jp";
+      name = local.gitName;
+      email = local.gitEmail;
     };
   };
 

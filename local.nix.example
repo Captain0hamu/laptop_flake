@@ -1,0 +1,14 @@
+# Copy this file to `local.nix` and fill in real values.
+#
+# `local.nix` is git-ignored and is only read during an impure evaluation,
+# so the rebuild commands run Nix with `--impure` (see scripts/nixos-functions.sh).
+#
+# Generate a password hash with:
+#   mkpasswd -m sha-512
+{
+  # The password below is "changeme" -- replace it.
+  rootHashedPassword = "$6$CskgfvBHmvASlZ..$yXmOy2JbwfYMlMftpe1vrxiXYBkHyPMaB0MhdEFXHAirK3a1dyYQC7mIbjmZZMnM/v6IYoC01hxRMgYjOgbMG/";
+  userHashedPassword = "$6$CskgfvBHmvASlZ..$yXmOy2JbwfYMlMftpe1vrxiXYBkHyPMaB0MhdEFXHAirK3a1dyYQC7mIbjmZZMnM/v6IYoC01hxRMgYjOgbMG/";
+  gitName = "Your Name";
+  gitEmail = "you@example.com";
+}

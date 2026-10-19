@@ -5,6 +5,7 @@
     ./hardware-configuration.nix
     ./modules/nixos/base.nix
     ./modules/nixos/boot.nix
+    ./modules/nixos/bootloader.nix
     ./modules/nixos/filesystems.nix
     ./modules/nixos/networking.nix
     ./modules/nixos/audio.nix

@@ -14,7 +14,12 @@
       enable = true;
       efiSupport = true;
       device = "nodev";
-      useOSProber = true;
+      darkmatter-theme = {
+        enable = true;
+        style = "nixos";
+        icon = "color";
+        resolution = "1440p";
+      };
     };
   };
 }

@@ -49,15 +49,15 @@ sweep() {
 }
 
 loadgen() {
-  sudo nixos-rebuild boot --flake "$(_nixos_flake_ref)"
+  sudo nixos-rebuild boot --flake "$(_nixos_flake_ref)" --impure
 }
 
 drybuild() {
-  sudo nixos-rebuild dry-build --flake "$(_nixos_flake_ref)"
+  sudo nixos-rebuild dry-build --flake "$(_nixos_flake_ref)" --impure
 }
 
 rebuild_n_switch() {
-  sudo nixos-rebuild switch --flake "$(_nixos_flake_ref)"
+  sudo nixos-rebuild switch --flake "$(_nixos_flake_ref)" --impure
 }
 
 rebuild_and_switch() {
@@ -65,17 +65,17 @@ rebuild_and_switch() {
 }
 
 switch-dev() {
-  home-manager switch --flake "$(_home_flake_ref dev)"
+  home-manager switch --flake "$(_home_flake_ref dev)" --impure
 }
 
 switch-lab() {
-  home-manager switch --flake "$(_home_flake_ref lab)"
+  home-manager switch --flake "$(_home_flake_ref lab)" --impure
 }
 
 build-dev() {
-  home-manager build --flake "$(_home_flake_ref dev)"
+  home-manager build --flake "$(_home_flake_ref dev)" --impure
 }
 
 build-lab() {
-  home-manager build --flake "$(_home_flake_ref lab)"
+  home-manager build --flake "$(_home_flake_ref lab)" --impure
 }
