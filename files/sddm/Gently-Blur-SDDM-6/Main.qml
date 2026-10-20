@@ -59,6 +59,25 @@ Item {
         }
     }
 
+    Rectangle {
+        anchors.fill: parent
+        color: "#000000"
+        opacity: 0.25
+    }
+
+    FontLoader {
+        id: bankFont
+        source: "BankGothic.ttf"
+    }
+
+    SplashHud {
+        id: splashHud
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.margins: Math.round(root.height * 0.05)
+        z: 1
+    }
+
     RejectPasswordAnimation {
         id: rejectPasswordAnimation
         target: mainStack
@@ -545,5 +564,11 @@ Item {
         id: notificationResetTimer
         interval: 3000
         onTriggered: notificationMessage = ""
+    }
+
+    IntroOverlay {
+        id: introOverlay
+        anchors.fill: parent
+        z: 100
     }
 }

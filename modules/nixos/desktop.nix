@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ lib, pkgs, grubThemeSrc, ... }:
 
 let
   background = ../../files/sddm/dmc-login-bg.jpg;
@@ -6,7 +6,7 @@ let
   themeConfig = pkgs.writeText "theme.conf.user" ''
     [General]
     background=${toString background}
-    type=image
+    type=animation
     showlogo=hidden
     showClock=true
     fontSize=10
@@ -24,6 +24,7 @@ let
       chmod -R u+w "$theme_dir"
       rm -f "$theme_dir/theme.conf.user"
       cp ${themeConfig} "$theme_dir/theme.conf.user"
+      cp ${grubThemeSrc}/assets/fonts/BankGothic.ttf "$theme_dir/BankGothic.ttf"
     '';
   };
 in

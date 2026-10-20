@@ -1,0 +1,30 @@
+.pragma library
+
+var frames = [
+    "A01.jpg",
+    "A08.jpg",
+    "A07.jpg",
+    "B07.jpg",
+    "B08.jpg",
+    "B01.jpg",
+    "A02.jpg",
+    "B02.jpg",
+    "C09.jpg",
+    "C01.jpg",
+    "C10.jpg",
+    "C07.jpg",
+    "C04.jpg",
+    "C06.jpg",
+    "C08.jpg",
+    "C03.jpg",
+    "B04.jpg",
+    "A04.jpg",
+    "B03.jpg",
+    "C05.jpg",
+    "C02.jpg",
+    "A03.jpg",
+    "B05.jpg",
+    "A05.jpg",
+    "B06.jpg",
+    "A06.jpg"
+];
