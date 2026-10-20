@@ -6,13 +6,13 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    darkmatter-grub-theme = {
-      url = "github:VandalByte/darkmatter-grub2-theme";
-      inputs.nixpkgs.follows = "nixpkgs";
+    grub-gtg = {
+      url = "git+https://gitlab.com/imnotpua/grub_gtg.git?ref=main";
+      flake = false;
     };
   };
 
-  outputs = inputs@{ nixpkgs, home-manager, darkmatter-grub-theme, ... }:
+  outputs = inputs@{ nixpkgs, home-manager, grub-gtg, ... }:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
@@ -45,9 +45,8 @@
       mkSystem = profile:
         nixpkgs.lib.nixosSystem {
           inherit system;
-          specialArgs = { inherit local; };
+          specialArgs = { inherit local; grubThemeSrc = grub-gtg; };
           modules = [
-            darkmatter-grub-theme.nixosModule
             ./configuration.nix
             home-manager.nixosModules.home-manager
             {

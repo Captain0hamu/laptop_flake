@@ -1,40 +1,20 @@
 {
   "nodes": {
-    "darkmatter-grub-theme": {
-      "inputs": {
-        "flake-compat": "flake-compat",
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1781429026,
-        "narHash": "sha256-wFi5pCKgOJ9pBQq2peq8nHP5pWII0HFxqpvttio/onI=",
-        "owner": "VandalByte",
-        "repo": "darkmatter-grub2-theme",
-        "rev": "42ed4b9e786b32946f1d14c4018d2215be061020",
-        "type": "github"
-      },
-      "original": {
-        "owner": "VandalByte",
-        "repo": "darkmatter-grub2-theme",
-        "type": "github"
-      }
-    },
-    "flake-compat": {
+    "grub-gtg": {
       "flake": false,
       "locked": {
-        "lastModified": 1673956053,
-        "narHash": "sha256-4gtG9iQuiKITOjNQQeQIpoIB6b16fm+504Ch3sNKLd8=",
-        "owner": "edolstra",
-        "repo": "flake-compat",
-        "rev": "35bb57c0c8d8b62bbfd284272c928ceb64ddbde9",
-        "type": "github"
+        "lastModified": 1700235697,
+        "narHash": "sha256-IqG//QgYc676Gw/R+UW5chKhxm0odf8FskmWT3vb3mo=",
+        "ref": "main",
+        "rev": "47420d283989b38775180636c724fe4f2490f414",
+        "revCount": 26,
+        "type": "git",
+        "url": "https://gitlab.com/imnotpua/grub_gtg.git"
       },
       "original": {
-        "owner": "edolstra",
-        "repo": "flake-compat",
-        "type": "github"
+        "ref": "main",
+        "type": "git",
+        "url": "https://gitlab.com/imnotpua/grub_gtg.git"
       }
     },
     "home-manager": {
@@ -75,7 +55,7 @@
     },
     "root": {
       "inputs": {
-        "darkmatter-grub-theme": "darkmatter-grub-theme",
+        "grub-gtg": "grub-gtg",
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs"
       }
