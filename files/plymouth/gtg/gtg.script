@@ -72,12 +72,12 @@ counter = 0;
 fun refresh_callback() {
   counter++;
 
-  load.sprite.SetImage(load_image[Math.Int(counter / 25) % 4]);
-  vinyl.sprite.SetImage(vinyl_image[Math.Int(counter / 3) % 16]);
-  radio.sprite.SetImage(radio_image[Math.Int(counter / 60) % 11]);
-  tip.sprite.SetImage(tip_image[Math.Int(counter / 70) % 12]);
+  load.sprite.SetImage(load_image[Math.Int(counter / 50) % 4]);
+  vinyl.sprite.SetImage(vinyl_image[Math.Int(counter / 5) % 16]);
+  radio.sprite.SetImage(radio_image[Math.Int(counter / 120) % 11]);
+  tip.sprite.SetImage(tip_image[Math.Int(counter / 140) % 12]);
 
-  synthetic = counter / 150.0;
+  synthetic = counter / 300.0;
   if (synthetic > 0.95) { synthetic = 0.95; }
   if (progress > synthetic) { synthetic = progress; }
   if (progress >= 0.999) { synthetic = 1.0; }
@@ -90,7 +90,7 @@ fun refresh_callback() {
 
   shine.sprite.SetOpacity(0.0);
   if (filled > shine.image.GetWidth() + 8) {
-    pos = (counter % 120) / 120.0;
+    pos = (counter % 180) / 180.0;
     shine.sprite.SetPosition(bar.x + pos * (filled - shine.image.GetWidth()), bar.y, 11);
     shine.sprite.SetOpacity(0.35);
   }
