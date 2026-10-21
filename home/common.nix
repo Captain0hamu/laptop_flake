@@ -22,8 +22,8 @@
       force = true;
       text = ''
         [KSplash]
-        Engine=KSplashQML
-        Theme=org.nixos.sonic.desktop
+        Engine=none
+        Theme=None
       '';
     };
   };

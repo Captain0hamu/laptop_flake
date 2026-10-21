@@ -27,6 +27,13 @@ FocusScope {
         smooth: true;
     }
 
+    Loader {
+        id: sceneAnimatedBackground
+        anchors.fill: parent
+        active: sceneBackgroundType === "animation"
+        source: "AnimatedBackground.qml"
+    }
+
     states: [
         State {
             name: "imageBackground"
@@ -41,8 +48,20 @@ FocusScope {
             }
         },
         State {
+            name: "animationBackground"
+            when: sceneBackgroundType === "animation"
+            PropertyChanges {
+                target: sceneColorBackground
+                visible: false
+            }
+            PropertyChanges {
+                target: sceneImageBackground
+                visible: false
+            }
+        },
+        State {
             name: "colorBackground"
-            when: sceneBackgroundType !== "image"
+            when: sceneBackgroundType !== "image" && sceneBackgroundType !== "animation"
             PropertyChanges {
                 target: sceneColorBackground
                 visible: true

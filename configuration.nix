@@ -7,7 +7,6 @@
     ./modules/nixos/boot.nix
     ./modules/nixos/bootloader.nix
     ./modules/nixos/plymouth.nix
-    ./modules/nixos/ksplash.nix
     ./modules/nixos/filesystems.nix
     ./modules/nixos/networking.nix
     ./modules/nixos/audio.nix
