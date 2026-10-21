@@ -58,8 +58,8 @@
       # SwitchKey entries correspond to the input methods in profile, in order.
       text = ''
         [SwitchKey]
-        0=Henkan
-        1=Muhenkan
+        0=Muhenkan
+        1=Henkan
         2=Hiragana_Katakana
       '';
     };
