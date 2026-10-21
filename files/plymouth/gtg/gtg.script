@@ -1,0 +1,109 @@
+screen.w = Window.GetWidth(0);
+screen.h = Window.GetHeight(0);
+progress = 0.0;
+
+bg.image = Image("background.png").Scale(screen.w, screen.h);
+bg.sprite = Sprite(bg.image);
+bg.sprite.SetPosition(0, 0, 0);
+
+bar.x = screen.w * (1152.0 / 1920.0);
+bar.y = screen.h * (1122.0 / 1200.0);
+bar.w = screen.w * (686.0 / 1920.0);
+bar.h = screen.h * (12.0 / 1200.0);
+
+bar.full = Image("bar_full.png").Scale(bar.w, bar.h);
+bar.sprite = Sprite(bar.full.Crop(0, 0, 1, bar.h));
+bar.sprite.SetPosition(bar.x, bar.y, 10);
+
+shine.image = Image("shine.png").Scale(bar.w * 0.12, bar.h);
+shine.sprite = Sprite(shine.image);
+shine.sprite.SetOpacity(0.0);
+shine.sprite.SetPosition(bar.x, bar.y, 11);
+
+glow.size = screen.w * (64.0 / 1920.0);
+glow.image = Image("glow.png").Scale(glow.size, glow.size);
+glow.sprite = Sprite(glow.image);
+glow.sprite.SetOpacity(0.0);
+glow.sprite.SetPosition(bar.x, bar.y, 12);
+
+panel.x = screen.w * (110.0 / 1920.0);
+panel.y = screen.h * (900.0 / 1200.0);
+panel.w = screen.w * (800.0 / 1920.0);
+panel.h = screen.h * (200.0 / 1200.0);
+
+for (i = 0; i < 11; i++) {
+  radio_image[i] = Image("radio-" + i + ".png").Scale(panel.w, panel.h);
+}
+radio.sprite = Sprite(radio_image[0]);
+radio.sprite.SetPosition(panel.x, panel.y, 20);
+
+tip_count = 12;
+for (i = 0; i < tip_count; i++) {
+  tip_image[i] = Image("tip-" + i + ".png").Scale(screen.w * (680.0 / 1920.0), screen.h * (28.0 / 1200.0));
+}
+tip.sprite = Sprite(tip_image[0]);
+tip.sprite.SetPosition(screen.w * (230.0 / 1920.0), screen.h * (1050.0 / 1200.0), 21);
+
+vinyl.x = screen.w * (134.0 / 1920.0);
+vinyl.y = screen.h * (964.0 / 1200.0);
+vinyl.size = screen.w * (72.0 / 1920.0);
+for (i = 0; i < 16; i++) {
+  vinyl_image[i] = Image("vinyl-" + i + ".png").Scale(vinyl.size, vinyl.size);
+}
+vinyl.sprite = Sprite(vinyl_image[0]);
+vinyl.sprite.SetPosition(vinyl.x, vinyl.y, 22);
+
+load.x = screen.w * (1150.0 / 1920.0);
+load.y = screen.h * (1068.0 / 1200.0);
+load.w = screen.w * (690.0 / 1920.0);
+load.h = screen.h * (40.0 / 1200.0);
+for (i = 0; i < 4; i++) {
+  load_image[i] = Image("load-" + i + ".png").Scale(load.w, load.h);
+}
+load.sprite = Sprite(load_image[0]);
+load.sprite.SetPosition(load.x, load.y, 30);
+
+fun progress_callback(duration, p) {
+  progress = p;
+}
+Plymouth.SetBootProgressFunction(progress_callback);
+
+counter = 0;
+fun refresh_callback() {
+  counter++;
+
+  load.sprite.SetImage(load_image[Math.Int(counter / 25) % 4]);
+  vinyl.sprite.SetImage(vinyl_image[Math.Int(counter / 3) % 16]);
+  radio.sprite.SetImage(radio_image[Math.Int(counter / 60) % 11]);
+  tip.sprite.SetImage(tip_image[Math.Int(counter / 70) % 12]);
+
+  synthetic = counter / 150.0;
+  if (synthetic > 0.95) { synthetic = 0.95; }
+  if (progress > synthetic) { synthetic = progress; }
+  if (progress >= 0.999) { synthetic = 1.0; }
+
+  filled = bar.w * synthetic;
+  w = Math.Int(filled);
+  if (w < 1) { w = 1; }
+  if (w > bar.w) { w = bar.w; }
+  bar.sprite.SetImage(bar.full.Crop(0, 0, w, bar.h));
+
+  shine.sprite.SetOpacity(0.0);
+  if (filled > shine.image.GetWidth() + 8) {
+    pos = (counter % 120) / 120.0;
+    shine.sprite.SetPosition(bar.x + pos * (filled - shine.image.GetWidth()), bar.y, 11);
+    shine.sprite.SetOpacity(0.35);
+  }
+
+  glow.sprite.SetOpacity(0.0);
+  if (filled > 4) {
+    glow.sprite.SetPosition(bar.x + filled - glow.image.GetWidth() / 2, bar.y + bar.h / 2 - glow.image.GetHeight() / 2, 12);
+    if ((Math.Int(counter / 12) % 2) == 0) {
+      glow.sprite.SetOpacity(0.25);
+    }
+    if ((Math.Int(counter / 12) % 2) == 1) {
+      glow.sprite.SetOpacity(0.5);
+    }
+  }
+}
+Plymouth.SetRefreshFunction(refresh_callback);

@@ -1,0 +1,8 @@
+[Plymouth Theme]
+Name=Grand Theft Gentoo
+Description=GTA San Andreas inspired Plymouth theme
+ModuleName=script
+
+[script]
+ImageDir=@themeDir@
+ScriptFile=@themeDir@/gtg.script
