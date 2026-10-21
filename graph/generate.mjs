@@ -109,8 +109,8 @@ in {
   system = cfg.nixpkgs.hostPlatform.system;
   stateVersion = cfg.system.stateVersion;
   systemPackages = map packageName cfg.environment.systemPackages;
-  userPackages = map packageName (cfg.users.users.nix.packages or []);
-  homePackages = map packageName (cfg.home-manager.users.nix.home.packages or []);
+  userPackages = map packageName (cfg.users.users.razero.packages or []);
+  homePackages = map packageName (cfg.home-manager.users.razero.home.packages or []);
   systemdServices = builtins.attrNames cfg.systemd.services;
 }) configs`;
 

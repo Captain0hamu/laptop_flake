@@ -315,7 +315,7 @@
             <rect class="node result" x="1057" y="100" width="296" height="90"/>
             <text class="title mono" x="1075" y="130">environment.systemPackages</text>
             <text class="sub" x="1075" y="154">Firefox / Node.js / Git / KDE…</text>
-            <text class="sub" x="1075" y="174">+ users.users.nix.packages</text>
+            <text class="sub" x="1075" y="174">+ users.users.razero.packages</text>
           </a>
           <a href="../configuration.nix#L38">
             <rect class="node result" x="1057" y="230" width="296" height="90"/>
@@ -337,7 +337,7 @@
           </a>
           <a href="../home/profiles/lab.nix">
             <rect class="node result" x="1057" y="635" width="296" height="90"/>
-            <text class="title mono" x="1075" y="665">#nixos-lab / nix@lab</text>
+            <text class="title mono" x="1075" y="665">#nixos-lab / razero@lab</text>
             <text class="sub" x="1075" y="689">mkSystem "lab" / standalone home</text>
             <text class="sub" x="1075" y="709">common + lab tools</text>
           </a>
@@ -485,7 +485,7 @@
         const item = block(`nixosConfigurations.${name}`, `${config.system} · stateVersion ${config.stateVersion}`);
         item.append(
           detail("effective system packages", config.systemPackages),
-          detail("user nix packages", config.userPackages),
+          detail("user razero packages", config.userPackages),
           detail("Home Manager packages", config.homePackages),
           detail("systemd services", config.systemdServices),
         );
