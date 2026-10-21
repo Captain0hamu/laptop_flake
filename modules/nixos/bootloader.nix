@@ -17,7 +17,7 @@ let
       cp assets/selection/select_*.png $out/
       cp assets/scrollbar/scrollbar_thumb_c.png $out/
       cp assets/theme.txt $out/theme.txt
-      grub-mkfont -s 23 -b assets/fonts/BankGothic.ttf -o $out/bankgothic.pf2
+      grub-mkfont -s 23 -b ${../../files/fonts/BankGothic.ttf} -o $out/bankgothic.pf2
       runHook postInstall
     '';
   };

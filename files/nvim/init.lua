@@ -154,131 +154,77 @@ vim.keymap.set("n", "<leader>w", "<cmd>write<CR>", { desc = "Write file" })
 vim.keymap.set("n", "<leader>q", "<cmd>quit<CR>", { desc = "Quit window" })
 vim.keymap.set("n", "<leader>e", "<cmd>lua MiniFiles.open()<CR>", { desc = "File explorer" })
 
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not minimal_mode and not vim.loop.fs_stat(lazypath) then
-  local lazy_repo = "https://github.com/folke/lazy.nvim.git"
-  local out = vim.fn.system({
-    "git",
-    "clone",
-    "--filter=blob:none",
-    "--branch=stable",
-    lazy_repo,
-    lazypath,
-  })
-  if vim.v.shell_error ~= 0 then
-    vim.api.nvim_echo({
-      { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-      { out, "WarningMsg" },
-      { "\nPress any key to exit..." },
-    }, true, {})
-    vim.fn.getchar()
-    os.exit(1)
-  end
-end
+-- Plugins and Tree-sitter parsers are supplied by home/neovim.nix.
+-- Startup never clones plugins or compiles parsers into the home directory.
 if not minimal_mode then
-  vim.opt.rtp:prepend(lazypath)
+  require("monokai-pro").setup({
+    filter = "classic",
+  })
+  vim.cmd.colorscheme("monokai-pro")
+  apply_bat_like_highlights()
 
-  require("lazy").setup({
-    {
-      "loctvl842/monokai-pro.nvim",
-      priority = 1000,
-      config = function()
-        require("monokai-pro").setup({
-          filter = "classic",
-        })
-        vim.cmd.colorscheme("monokai-pro")
-        apply_bat_like_highlights()
-      end,
+  require("mini.ai").setup()
+  require("mini.comment").setup()
+  require("mini.files").setup()
+  require("mini.pairs").setup()
+  require("mini.surround").setup()
+  require("mini.statusline").setup()
+  require("mini.completion").setup({
+    delay = { completion = 120, info = 100, signature = 50 },
+    lsp_completion = { source_func = "omnifunc", auto_setup = true },
+  })
+
+  local imap_expr = function(lhs, rhs)
+    vim.keymap.set("i", lhs, rhs, { expr = true, replace_keycodes = false })
+  end
+
+  imap_expr("<Tab>", [[pumvisible() ? "\<C-n>" : "\<Tab>"]])
+  imap_expr("<S-Tab>", [[pumvisible() ? "\<C-p>" : "\<S-Tab>"]])
+
+  _G.cr_action = function()
+    if vim.fn.complete_info()["selected"] ~= -1 then
+      return "\25"
+    end
+    return "\r"
+  end
+  vim.keymap.set("i", "<CR>", "v:lua.cr_action()", { expr = true })
+
+  vim.g.rainbow_delimiters = {
+    strategy = {
+      [""] = "rainbow-delimiters.strategy.global",
     },
-    {
-      "echasnovski/mini.nvim",
-      version = false,
-      config = function()
-        require("mini.ai").setup()
-        require("mini.comment").setup()
-        require("mini.files").setup()
-        require("mini.pairs").setup()
-        require("mini.surround").setup()
-        require("mini.statusline").setup()
-        require("mini.completion").setup({
-          delay = { completion = 120, info = 100, signature = 50 },
-          lsp_completion = { source_func = "omnifunc", auto_setup = true },
-        })
-
-        local imap_expr = function(lhs, rhs)
-          vim.keymap.set("i", lhs, rhs, { expr = true, replace_keycodes = false })
-        end
-
-        imap_expr("<Tab>", [[pumvisible() ? "\<C-n>" : "\<Tab>"]])
-        imap_expr("<S-Tab>", [[pumvisible() ? "\<C-p>" : "\<S-Tab>"]])
-
-        _G.cr_action = function()
-          if vim.fn.complete_info()["selected"] ~= -1 then
-            return "\25"
-          end
-          return "\r"
-        end
-        vim.keymap.set("i", "<CR>", "v:lua.cr_action()", { expr = true })
-      end,
+    query = {
+      [""] = "rainbow-delimiters",
     },
-    {
-      "HiPhish/rainbow-delimiters.nvim",
-      dependencies = { "nvim-treesitter/nvim-treesitter" },
-      event = "VeryLazy",
-      config = function()
-        vim.g.rainbow_delimiters = {
-          strategy = {
-            [""] = "rainbow-delimiters.strategy.global",
-          },
-          query = {
-            [""] = "rainbow-delimiters",
-          },
-          highlight = {
-            "RainbowDelimiterRed",
-            "RainbowDelimiterYellow",
-            "RainbowDelimiterBlue",
-            "RainbowDelimiterOrange",
-            "RainbowDelimiterGreen",
-            "RainbowDelimiterViolet",
-            "RainbowDelimiterCyan",
-          },
-          condition = function(bufnr)
-            return vim.api.nvim_buf_line_count(bufnr) < 1000
-              and vim.api.nvim_buf_get_offset(bufnr, vim.api.nvim_buf_line_count(bufnr)) < 100000
-          end,
-        }
-      end,
+    highlight = {
+      "RainbowDelimiterRed",
+      "RainbowDelimiterYellow",
+      "RainbowDelimiterBlue",
+      "RainbowDelimiterOrange",
+      "RainbowDelimiterGreen",
+      "RainbowDelimiterViolet",
+      "RainbowDelimiterCyan",
     },
-    {
-      "nvim-treesitter/nvim-treesitter",
-      branch = "main",
-      build = ":TSUpdate",
-      config = function()
-        require("nvim-treesitter").setup({
-          highlight = {
-            enable = true,
-            additional_vim_regex_highlighting = false,
-          },
-          install_dir = vim.fn.stdpath("data") .. "/site",
-        })
+    condition = function(bufnr)
+      return vim.api.nvim_buf_line_count(bufnr) < 1000
+        and vim.api.nvim_buf_get_offset(bufnr, vim.api.nvim_buf_line_count(bufnr)) < 100000
+    end,
+  }
 
-        vim.api.nvim_create_autocmd("FileType", {
-          callback = function()
-            if vim.b.ts_started then
-              return
-            end
-            local ft = vim.bo.filetype
-            local lang = ft ~= "" and vim.treesitter.language.get_lang(ft) or nil
-            if lang and pcall(vim.treesitter.language.inspect, lang) then
-              vim.b.ts_started = true
-              vim.treesitter.start()
-            end
-          end,
-        })
-      end,
-    },
-  }, {
-    change_detection = { notify = false },
+  require("nvim-treesitter").setup({})
+
+  vim.api.nvim_create_autocmd("FileType", {
+    callback = function()
+      if vim.b.ts_started then
+        return
+      end
+      local ft = vim.bo.filetype
+      local lang = ft ~= "" and vim.treesitter.language.get_lang(ft) or nil
+      if lang and pcall(vim.treesitter.language.inspect, lang) then
+        vim.b.ts_started = true
+        vim.treesitter.start()
+      end
+    end,
   })
 end
 

@@ -9,6 +9,7 @@
     gh
     ripgrep
     fd
+    yt-dlp
   ];
 
   home.file.".config/oh-my-posh/distrous-nixos.omp.json".source =
@@ -37,10 +38,4 @@
   };
 
 #  programs.home-manager.enable = true;
-  programs.neovim = {
-    enable = true;
-    withRuby = true;
-    withPython3 = true;
-    initLua = builtins.readFile ../files/nvim/init.lua;
-  };
 }

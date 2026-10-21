@@ -8,7 +8,7 @@ let
   } ''
     themeDir=$out/share/plymouth/themes/gtg
     src=${./../../files/plymouth/gtg/assets}
-    bank=$src/BankGothic.ttf
+    bank=${../../files/fonts/BankGothic.ttf}
     dejavu=${pkgs.dejavu_fonts}/share/fonts/truetype/DejaVuSans.ttf
     dejavu_bold=${pkgs.dejavu_fonts}/share/fonts/truetype/DejaVuSans-Bold.ttf
     export themeDir src bank dejavu dejavu_bold

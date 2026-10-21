@@ -10,6 +10,7 @@ in
 {
   imports = [
     ./common.nix
+    ./neovim.nix
     profileModule
   ];
 }

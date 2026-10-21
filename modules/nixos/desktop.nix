@@ -1,4 +1,4 @@
-{ lib, pkgs, grubThemeSrc, ... }:
+{ lib, pkgs, ... }:
 
 let
   themeSource = ../../files/sddm/Gently-Blur-SDDM-6;
@@ -22,7 +22,7 @@ let
       chmod -R u+w "$theme_dir"
       rm -f "$theme_dir/theme.conf.user"
       cp ${themeConfig} "$theme_dir/theme.conf.user"
-      cp ${grubThemeSrc}/assets/fonts/BankGothic.ttf "$theme_dir/BankGothic.ttf"
+      cp ${../../files/fonts/BankGothic.ttf} "$theme_dir/BankGothic.ttf"
     '';
   };
 in
