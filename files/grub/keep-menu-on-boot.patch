@@ -1,0 +1,10 @@
+diff --git a/grub-core/normal/menu.c b/grub-core/normal/menu.c
+--- a/grub-core/normal/menu.c
++++ b/grub-core/normal/menu.c
+@@ -888 +888,5 @@ show_menu (grub_menu_t menu, int nested, int autobooted)
+-	  grub_cls ();
++	  /* Preserve the selected themed menu on an explicit boot request.
++	     Text menus, submenus and automatic boots keep their normal behavior. */
++	  if (!grub_env_get ("keep_menu_on_boot") ||
++	      !grub_env_get ("theme") || e->submenu)
++	    grub_cls ();

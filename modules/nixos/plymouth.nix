@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 let
   plymouthdConf = ../../files/plymouth/plymouthd.conf;
@@ -30,7 +30,9 @@ in
 
   boot.kernelParams = [
     "quiet"
+    "logo.nologo"
     "udev.log_level=3"
+    "rd.udev.log_level=3"
     "vt.global_cursor_default=0"
     "systemd.show_status=false"
     "rd.systemd.show_status=false"
@@ -60,5 +62,9 @@ in
   boot.initrd.systemd.contents."/etc/plymouth/plymouthd.conf".source = lib.mkForce plymouthdConf;
 
   systemd.services.plymouth-quit.serviceConfig.ExecStart =
-    lib.mkForce "${pkgs.plymouth}/bin/plymouth quit --retain-splash";
+    lib.mkForce [
+      # Reset the upstream oneshot command instead of running both commands.
+      ""
+      "${config.boot.plymouth.package}/bin/plymouth quit --retain-splash"
+    ];
 }
