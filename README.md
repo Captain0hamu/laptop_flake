@@ -76,6 +76,11 @@ and user name, and disk UUIDs/mounts in `hardware-configuration.nix` and
 
 ## Dependency graph
 
+Open `graph/showcase.html` for an interactive tour of the custom GRUB,
+Plymouth, SDDM, terminal and editor. It links to the dependency map and shows
+the relevant configuration without leaving the page. See `graph/README.md`
+for refreshing source snapshots and theme previews.
+
 `graph/index.html` is a self-contained viewer for this repository's flake
 structure. Regenerate the data after changing the configuration or running
 `nix flake update`:

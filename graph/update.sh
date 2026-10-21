@@ -8,4 +8,5 @@ repo_dir="$(cd -- "$script_dir/.." && pwd)"
 # lets this script run in restricted development environments.
 export XDG_CACHE_HOME="${XDG_CACHE_HOME:-${TMPDIR:-/tmp}/nix-dependency-graph-cache-${UID}}"
 
+node "$script_dir/generate-showcase.mjs"
 exec node "$script_dir/generate.mjs" "$repo_dir" "$script_dir/dependency-data.js"
