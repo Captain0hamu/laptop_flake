@@ -68,6 +68,7 @@ in
     lib.mkForce [
       # Reset the upstream oneshot command instead of running both commands.
       ""
-      "${config.boot.plymouth.package}/bin/plymouth quit --retain-splash"
+      # Match upstream: the daemon may already be gone during rebuild switch.
+      "-${config.boot.plymouth.package}/bin/plymouth quit --retain-splash"
     ];
 }
