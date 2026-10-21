@@ -1,6 +1,8 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 
 let
+  plymouthdConf = ../../files/plymouth/plymouthd.conf;
+
   gtgPlymouthTheme = pkgs.runCommand "plymouth-theme-gtg" {
     nativeBuildInputs = [ pkgs.imagemagick pkgs.dejavu_fonts ];
   } ''
@@ -30,11 +32,33 @@ in
     "quiet"
     "udev.log_level=3"
     "vt.global_cursor_default=0"
+    "systemd.show_status=false"
+    "rd.systemd.show_status=false"
   ];
+
+  systemd.settings.Manager.ShowStatus = false;
+  boot.initrd.systemd.settings.Manager.ShowStatus = false;
+
+  systemd.services.mute-status = {
+    description = "Mute systemd status output";
+    wantedBy = [ "sysinit.target" ];
+    after = [ "dbus.service" ];
+    before = [ "display-manager.service" ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.systemd}/bin/busctl call org.freedesktop.systemd1 /org/freedesktop/systemd1 org.freedesktop.systemd1.Manager SetShowStatus s no";
+    };
+  };
 
   boot.plymouth = {
     enable = true;
     theme = "gtg";
     themePackages = [ gtgPlymouthTheme ];
   };
+
+  environment.etc."plymouth/plymouthd.conf".source = lib.mkForce plymouthdConf;
+  boot.initrd.systemd.contents."/etc/plymouth/plymouthd.conf".source = lib.mkForce plymouthdConf;
+
+  systemd.services.plymouth-quit.serviceConfig.ExecStart =
+    lib.mkForce "${pkgs.plymouth}/bin/plymouth quit --retain-splash";
 }
