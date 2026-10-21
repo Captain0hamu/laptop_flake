@@ -25,6 +25,9 @@ SessionManagementScreen {
 
     signal loginRequest(string username, string password)
 
+    // Keep the user model and selection logic, but hide Breeze's avatar UI.
+    userList.visible: false
+
     onShowUsernamePromptChanged: {
         if (!showUsernamePrompt) {
             lastUserName = ""
@@ -72,6 +75,17 @@ SessionManagementScreen {
         // See https://bugreports.qt.io/browse/QTBUG-55460
         loginButton.forceActiveFocus();
         loginRequest(username, password);
+    }
+
+    PlasmaComponents3.Label {
+        Layout.fillWidth: true
+        Layout.bottomMargin: Kirigami.Units.smallSpacing
+        horizontalAlignment: Text.AlignHCenter
+        text: root.userListCurrentItem ? root.userListCurrentItem.name : root.lastUserName
+        textFormat: Text.PlainText
+        font.pointSize: root.fontSize + 4
+        color: "white"
+        visible: !root.showUsernamePrompt
     }
 
     Input {
