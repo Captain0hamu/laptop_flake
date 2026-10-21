@@ -13,6 +13,15 @@ beside `files/` when serving or copying the pages: SDDM frames and the shared
 font are referenced directly from the repository. The login controls and
 terminal output are visual examples, not an actual login or command runner.
 
+The workspace preview recreates the reference terminal using HTML/CSS, with
+the mountain wallpaper copied into `assets/desktop-mountains.jpg` from the
+existing desktop. It does not embed the reference screenshot or its network
+addresses. `assets/nix-snowflake.svg` comes from the installed Nix artwork,
+recolored to match the terminal's blue/green logo. The terminal/editor tabs
+also support Left/Right, Home and End keys. Fastfetch values are static samples.
+The SDDM preview's `assets/sddm-avatar.jpg` is a local copy of the selected
+`artworks-jMsWPOeOHp4qXf2j-Jt0oZA-t500x500.jpg` user image.
+
 `node graph/generate-showcase.mjs` updates the frame list, animation timing
 and allowlisted source snapshots in `showcase-data.js`. It never reads
 `local.nix` or the dependency map's generated host data. `./graph/update.sh`

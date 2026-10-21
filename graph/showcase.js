@@ -10,7 +10,8 @@
     sddm: { tag: '03 / LOGIN', title: '静止画に、時間を足す。', text: `${data.frames.length}枚のフレームをクロスフェード。緩やかなパンとズームに、走査線とラジオHUDを重ねたQMLのログイン画面。BankGothicで起動画面とトーンを揃えています。`, sources: ['files/sddm/Gently-Blur-SDDM-6/AnimatedBackground.qml', 'files/sddm/Gently-Blur-SDDM-6/IntroOverlay.qml', 'files/sddm/Gently-Blur-SDDM-6/SplashHud.qml'] }
   };
   let stage = 'sddm';
-  let paused = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const motionPreference = matchMedia('(prefers-reduced-motion: reduce)');
+  let paused = motionPreference.matches;
   let index = 0, front = $('#frame-a'), back = $('#frame-b');
   let last = performance.now(), introTimer, transitioning = false;
   const url = name => `../files/sddm/Gently-Blur-SDDM-6/anim/${name}`;
@@ -41,6 +42,7 @@
     $('#motion-toggle').textContent = paused ? '▶ アニメーションを再生' : 'Ⅱ アニメーションを停止';
   }
   setMotion();
+  motionPreference.addEventListener('change', event => { paused = event.matches; last = performance.now(); setMotion(); });
   $('#motion-toggle').addEventListener('click', () => { paused = !paused; last = performance.now(); setMotion(); });
   function selectStage(name) {
     stage = name; last = performance.now();
@@ -62,12 +64,27 @@
     overlay.hidden = false; overlay.style.animation = 'none'; void overlay.offsetWidth; overlay.style.animation = '';
     introTimer = setTimeout(() => { overlay.hidden = true; }, paused ? 2400 : 3200);
   });
-  $$('[data-tool]').forEach(button => button.addEventListener('click', () => {
+  const toolTabs = $$('[data-tool]');
+  function selectTool(button) {
     const editor = button.dataset.tool === 'editor';
     $('#fetch-demo').hidden = editor; $('#editor-demo').hidden = !editor;
-    $('#terminal-command').textContent = editor ? 'nvim home/neovim.nix' : 'fastfetch';
-    $$('[data-tool]').forEach(node => node.setAttribute('aria-pressed', String(node === button)));
-  }));
+    $('#terminal-command').textContent = editor ? 'nvim home/neovim.nix' : 'ff';
+    toolTabs.forEach(node => {
+      const selected = node === button;
+      node.setAttribute('aria-selected', String(selected));
+      node.tabIndex = selected ? 0 : -1;
+    });
+  }
+  toolTabs.forEach((button, index) => {
+    button.addEventListener('click', () => selectTool(button));
+    button.addEventListener('keydown', event => {
+      const offsets = { ArrowRight: 1, ArrowLeft: -1, Home: -index, End: toolTabs.length - 1 - index };
+      if (!(event.key in offsets)) return;
+      event.preventDefault();
+      const next = toolTabs[(index + offsets[event.key] + toolTabs.length) % toolTabs.length];
+      selectTool(next); next.focus();
+    });
+  });
   const dialog = $('#source-dialog'); let lastTrigger;
   document.addEventListener('click', event => {
     const button = event.target.closest('[data-source]'); if (!button) return;

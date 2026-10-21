@@ -17,19 +17,98 @@
 <div class="display" id="display">
 <div class="scene grub-scene" data-scene="grub" hidden><img src="assets/grub-background.png" alt="GRUBで使用している背景画像"><div class="grub-menu"><p class="grub-selected">NixOS <span>↵</span></p><p>NixOS — All configurations</p><p>Windows Boot Manager</p></div><span class="scene-corner">SELECT YOUR SYSTEM</span></div>
 <div class="scene plymouth-scene" data-scene="plymouth" hidden><img src="assets/plymouth-background.png" alt="生成されたPlymouthの背景画像"><div class="radio-mini"><b>RADIO GENTOO</b><small>101.3 FM // BOOT SEQUENCE</small><span>♪ emerge --sync</span></div><div class="loading"><b>LOADING<span class="loading-dots">...</span></b><span class="progress-track"><i></i></span></div></div>
-<div class="scene login-scene" data-scene="sddm"><img id="frame-a" class="frame active" alt="SDDMアニメーションのフレーム"><img id="frame-b" class="frame" alt="" aria-hidden="true"><div class="scene-shade"></div><div class="scanlines"></div><div class="login-radio"><b>RADIO GENTOO <i>●</i></b><small>101.3 FM // BOOT SEQUENCE</small><span id="radio-track">♪ emerge --sync</span></div><div class="login-form"><div class="avatar" aria-hidden="true">R</div><strong>razero</strong><div class="fake-input">Password <span>→</span></div><small>↻ Restart <span>⏻ Shut down</span></small></div><div class="intro-overlay" id="intro-overlay" hidden><b>GRAND THEFT GENTOO</b><small>SYSTEM READY // WELCOME BACK</small><span>LOADING SESSION</span></div><span class="scene-corner">26 FRAMES / PAN / CROSSFADE</span></div>
+<div class="scene login-scene" data-scene="sddm"><img id="frame-a" class="frame active" alt="SDDMアニメーションのフレーム"><img id="frame-b" class="frame" alt="" aria-hidden="true"><div class="scene-shade"></div><div class="scanlines"></div><div class="login-radio"><b>RADIO GENTOO <i>●</i></b><small>101.3 FM // BOOT SEQUENCE</small><span id="radio-track">♪ emerge --sync</span></div><div class="login-form"><img class="avatar" src="assets/sddm-avatar.jpg" alt="razeroのユーザーアイコン" width="500" height="500"><strong>razero</strong><div class="fake-input">Password <span>→</span></div><small>↻ Restart <span>⏻ Shut down</span></small></div><div class="intro-overlay" id="intro-overlay" hidden><b>GRAND THEFT GENTOO</b><small>SYSTEM READY // WELCOME BACK</small><span>LOADING SESSION</span></div><span class="scene-corner">26 FRAMES / PAN / CROSSFADE</span></div>
 </div><div class="viewer-bottom"><span id="scene-tag">03 / LOGIN</span><span>Actual assets. Browser-rendered interface.</span><button id="motion-toggle" type="button" aria-pressed="false">Ⅱ アニメーションを停止</button></div></div>
 <div class="scene-controls" role="group" aria-label="起動ステージ"><button data-stage="grub" aria-pressed="false"><span>01</span><b>GRUB</b><small>選ぶところから、らしく。</small></button><button data-stage="plymouth" aria-pressed="false"><span>02</span><b>Plymouth</b><small>待ち時間も、演出に。</small></button><button data-stage="sddm" class="selected" aria-pressed="true"><span>03</span><b>SDDM</b><small>ログイン前の、特等席。</small></button></div>
 <div class="stage-notes"><div><span id="stage-eyebrow" class="eyebrow">03 / SDDM</span><h3 id="stage-title">静止画に、時間を足す。</h3></div><div><p id="stage-description">26枚のフレームをクロスフェード。緩やかなパンとズームに、走査線とラジオHUDを重ねたQMLのログイン画面。BankGothicで起動画面とトーンを揃えています。</p><div id="stage-links" class="source-links"></div><button class="text-link" type="button" id="replay-intro">イントロを再生 ↻</button></div></div>
 </section>
-<section id="workspace" class="workspace"><div class="section-heading"><div><span class="eyebrow">02 / THE EVERYDAY DETAILS</span><h2>Stay for the small things.</h2></div><p>毎日触れる場所ほど、<br>自分の手に馴染むように。</p></div>
-<div class="workspace-grid"><article class="terminal-card"><div class="window-bar"><span class="window-dots">● ● ●</span><span>kitty / bash</span><span>⌘</span></div><div class="terminal-demo" aria-label="ターミナルの配色を再現したサンプル"><div class="prompt"><span>NIXOS</span><span>bash</span><span>main</span></div><p class="term-path">~/nixos-flake <span>›</span></p><p><span class="term-dollar">❯</span> <span id="terminal-command">fastfetch</span></p><div class="fetch-demo" id="fetch-demo"><pre aria-hidden="true">   ▗▄   ▖▄▖
-  ▄▛▀▜▄ ▝▜▖
- ▟▛   ▜▙▄▟▛
- ▜▙▄▟▛   ▜▙
-  ▝▜▖ ▄▛▀▜▛
-    ▜▖ ▝▀</pre><div><b>razero@nixos</b><p>OS <span>NixOS · unstable</span><br>Shell <span>bash</span><br>Terminal <span>kitty</span><br>Desktop <span>KDE Plasma</span></p><div class="color-swatches"><i></i><i></i><i></i><i></i><i></i><i></i></div></div></div><div class="editor-demo" id="editor-demo" hidden><div><span>1</span><b class="pink">{</b> pkgs, ... <b class="pink">}:</b></div><div><span>2</span></div><div><span>3</span><b class="pink">{</b></div><div><span>4</span>  programs.neovim.enable <b class="pink">=</b> <b class="cyan">true</b>;</div><div><span>5</span>  <b class="green"># Make it feel like home.</b></div><div><span>6</span><b class="pink">}</b></div><div class="editor-status">NORMAL <span>home/neovim.nix</span> Nix</div></div></div><div class="terminal-switch" role="group" aria-label="作業環境プレビュー"><button data-tool="terminal" aria-pressed="true">Shell + fastfetch</button><button data-tool="editor" aria-pressed="false">Neovim</button><small>配色・構成のサンプル表示</small></div></article>
-<div class="workspace-notes"><article><span class="eyebrow">THE TERMINAL</span><h3>透ける背景。<br>くっきりした入力。</h3><p>Kittyの半透明背景とBreeze系の配色。Oh My PoshのPowerlineプロンプト、カスタムfastfetch、入力時だけ変わる文字色まで。</p><div class="source-links"><button data-source="files/kitty/kitty.conf">kitty.conf ↗</button><button data-source="files/oh-my-posh/distrous-nixos.omp.json">prompt ↗</button></div></article><article><span class="eyebrow">THE EDITOR</span><h3>見た目の裏にも、再現性。</h3><p>Monokai Proと独自のハイライト調整、mini.nvimの編集操作。プラグインも10言語のTree-sitterパーサーも、Nixでまとめて管理。</p><div class="source-links"><button data-source="home/neovim.nix">neovim.nix ↗</button><button data-source="files/nvim/init.lua">init.lua ↗</button></div></article></div></div></section>
+<section id="workspace" class="workspace" aria-labelledby="workspace-title">
+  <div class="section-heading">
+    <div><span class="eyebrow">02 / THE EVERYDAY DETAILS</span><h2 id="workspace-title">A little more like home.</h2></div>
+    <p>山の稜線が透けるターミナル。<br>使うたびに、手に馴染む道具たち。</p>
+  </div>
+  <div class="workspace-preview">
+    <div class="workspace-toolbar">
+      <div class="terminal-switch" role="tablist" aria-label="作業環境プレビュー">
+        <button id="shell-tab" data-tool="terminal" role="tab" aria-selected="true" aria-controls="fetch-demo">01 <span>Shell + fastfetch</span></button>
+        <button id="editor-tab" data-tool="editor" role="tab" aria-selected="false" aria-controls="editor-demo" tabindex="-1">02 <span>Neovim</span></button>
+      </div>
+      <span class="workspace-label">KITTY / BASH / NIXOS</span>
+    </div>
+    <div class="terminal-demo">
+      <div class="terminal-prompt" aria-hidden="true">
+        <div class="prompt-top"><div class="prompt"><span>❄ NIXOS</span><span>▣ bash</span><span> main</span></div><span class="prompt-status">✓ <span>0ms</span></span></div>
+        <p class="prompt-date">╭ ◷ 03:45:10 PM <span>│</span> ▦ 26/10/13 〈 October : Tuesday 〉</p>
+        <p class="prompt-identity">│ <span>♟ razero</span> │ ▣ nixos</p>
+        <p class="prompt-path">│ <span>⌂ ~</span></p>
+        <p class="prompt-command">╰› <span id="terminal-command">ff</span></p>
+      </div>
+      <div id="fetch-demo" class="shell-panel" role="tabpanel" aria-labelledby="shell-tab" tabindex="0">
+        <div class="fetch-demo">
+          <img class="fetch-logo" src="assets/nix-snowflake.svg" alt="青と緑のNixスノーフレーク" width="535" height="535">
+          <div class="fetch-output">
+            <table class="fetch-table">
+              <caption class="sr-only">ターミナルの表示例。数値は参考画像に基づくサンプルです。</caption>
+              <thead><tr><th scope="col">Keys</th><th scope="col">Values</th></tr></thead>
+              <tbody>
+                <tr class="fetch-user"><th scope="row">User</th><td>razero <span>[/home/nix/]</span></td></tr>
+                <tr class="fetch-user"><th scope="row">Users</th><td>razero@localhost <span>[Local session]</span></td></tr>
+                <tr class="fetch-user"><th scope="row">Datetime</th><td>2026-10-13 15:45:14 <span>[Tuesday] [UTC+0900]</span></td></tr>
+                <tr class="fetch-system"><th scope="row">Host</th><td>nixos</td></tr>
+                <tr class="fetch-system"><th scope="row">Machine</th><td>FMVU8104GP</td></tr>
+                <tr class="fetch-system"><th scope="row">OS</th><td>NixOS 26.11 <span>(Zokor) [x86_64]</span></td></tr>
+                <tr class="fetch-system"><th scope="row">Kernel</th><td>Linux <span>[v6.18.55]</span></td></tr>
+                <tr class="fetch-system"><th scope="row">Uptime</th><td>0:16:03</td></tr>
+                <tr class="fetch-hardware"><th scope="row">CPU</th><td>13th Gen Intel® Core™ i5-1335U <span>[4.60 GHz]</span></td></tr>
+                <tr class="fetch-hardware"><th scope="row">GPU</th><td>Iris Xe Graphics <span>[Integrated]</span></td></tr>
+                <tr class="fetch-hardware"><th scope="row">Memory</th><td>3.07 GiB / 15.20 GiB <em>(20%)</em></td></tr>
+                <tr class="fetch-hardware"><th scope="row">Disk</th><td>102.46 GiB / 245.68 GiB <em>(42%)</em></td></tr>
+                <tr class="fetch-tools"><th scope="row">Terminal</th><td>kitty <span>[0.49.2]</span></td></tr>
+                <tr class="fetch-tools"><th scope="row">Font</th><td>JetBrainsMono Nerd Font <span>[10]</span></td></tr>
+                <tr class="fetch-tools"><th scope="row">Shell</th><td>bash <span>[v5.3.15]</span></td></tr>
+                <tr class="fetch-network"><th scope="row">Network</th><td>Wi-Fi <span>[Connected]</span></td></tr>
+              </tbody>
+            </table>
+            <div class="palette" aria-label="Breeze系のターミナル配色"><span>Colors</span><div class="color-swatches" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+          </div>
+        </div>
+        <div class="terminal-prompt prompt-repeat" aria-hidden="true">
+          <div class="prompt"><span>❄ NIXOS</span><span>▣ bash</span><span> main</span></div>
+          <p class="prompt-date">╭ ◷ 03:45:14 PM <span>│</span> ▦ 26/10/13</p>
+          <p class="prompt-identity">│ <span>♟ razero</span> │ ▣ nixos</p>
+          <p class="prompt-command">╰› <span class="terminal-cursor"></span></p>
+        </div>
+      </div>
+      <div id="editor-demo" class="editor-demo" role="tabpanel" aria-labelledby="editor-tab" tabindex="0" hidden>
+        <div class="editor-tabline"><span>home/neovim.nix</span><small>UTF-8 · Nix</small></div>
+        <div class="editor-code" aria-label="Neovim設定のコード表示例">
+          <div><span>1</span><code><b class="pink">{</b> pkgs, ... <b class="pink">}:</b></code></div>
+          <div><span>2</span><code></code></div>
+          <div><span>3</span><code><b class="pink">{</b></code></div>
+          <div><span>4</span><code>  programs.neovim = <b class="pink">{</b></code></div>
+          <div class="editor-current-line"><span>5</span><code>    enable = <b class="cyan">true</b>;</code></div>
+          <div><span>6</span><code>    defaultEditor = <b class="cyan">true</b>;</code></div>
+          <div><span>7</span><code>    viAlias = <b class="cyan">true</b>;</code></div>
+          <div><span>8</span><code>    vimAlias = <b class="cyan">true</b>;</code></div>
+          <div><span>9</span><code>    plugins = <b class="pink">with</b> pkgs.vimPlugins; [</code></div>
+          <div><span>10</span><code>      monokai-pro-nvim</code></div>
+          <div><span>11</span><code>      mini-nvim</code></div>
+          <div><span>12</span><code>    ];</code></div>
+          <div><span>13</span><code>  <b class="pink">}</b>;</code></div>
+          <div><span>14</span><code><b class="pink">}</b></code></div>
+          <div class="editor-empty" aria-hidden="true">~<br>~<br>~</div>
+        </div>
+        <div class="editor-status"><span>NORMAL</span><span>home/neovim.nix</span><span>5:5 · Nix</span></div>
+      </div>
+    </div>
+    <div class="workspace-caption"><span><i class="status-dot"></i> A WORKSPACE, RECREATED</span><p>参考画像をもとにした表示例。壁紙と配色は実際の環境から。</p><button data-source="files/fastfetch/config.jsonc">View fastfetch config ↗</button></div>
+  </div>
+  <div class="workspace-notes">
+    <article><span class="eyebrow">01 / THE CANVAS</span><h3>背景を、閉じ込めない。</h3><p>山の壁紙に重なるKitty。背景の不透明度は28%。出力を読む時間にも、デスクトップの風景が残ります。</p><div class="source-links"><button data-source="files/kitty/kitty.conf">kitty.conf ↗</button></div></article>
+    <article><span class="eyebrow">02 / THE PROMPT</span><h3>必要な情報を、一目で。</h3><p>Oh My Poshの段組みプロンプトに、色分けしたfastfetch。ユーザー、マシン、実行環境を枠の中へ整然と。</p><div class="source-links"><button data-source="files/oh-my-posh/distrous-nixos.omp.json">prompt ↗</button><button data-source="files/fastfetch/config.jsonc">fastfetch ↗</button></div></article>
+    <article><span class="eyebrow">03 / THE EDITOR</span><h3>手触りにも、再現性を。</h3><p>Monokai Proの配色とmini.nvim。プラグインも構文解析もNixで管理し、同じ設定から同じ作業環境へ。</p><div class="source-links"><button data-source="home/neovim.nix">neovim.nix ↗</button><button data-source="files/nvim/init.lua">init.lua ↗</button></div></article>
+  </div>
+</section>
 <section class="underneath"><div class="section-heading"><div><span class="eyebrow">03 / UNDER THE SURFACE</span><h2>見えないところにも、手を。</h2></div></div><div class="detail-list"><article><span class="detail-number">01</span><div><h3>画面をつなぐ、小さな調整</h3><p>quiet boot、フレームバッファの初期化、Plymouthの最終フレーム保持。KSplashは無効にして、余分な演出を挟まない構成へ。</p></div><button data-source="modules/nixos/plymouth.nix" aria-label="Plymouthの設定を見る">↗</button></article><article><span class="detail-number">02</span><div><h3>このマシンに合わせた音</h3><p>PipeWireとWirePlumberで、動作する内蔵マイクを優先。もう一方の入力を無効化し、日々使う入力先を整える。</p></div><button data-source="modules/nixos/audio.nix" aria-label="音声設定を見る">↗</button></article><article><span class="detail-number">03</span><div><h3>作業環境を、実験環境にも</h3><p>v4l2loopbackの仮想カメラ、Docker、libvirtとTPM付きQEMU。普段のデスクトップに、検証のための道具も組み込む。</p></div><button data-source="modules/nixos/virtualisation.nix" aria-label="仮想環境設定を見る">↗</button></article></div></section>
 <section class="closing"><span class="eyebrow">LOOKS ON THE SURFACE. NIX UNDERNEATH.</span><h2>この見た目を、<br>設定からたどる。</h2><p>雰囲気の裏にあるモジュール、素材、依存関係まで。</p><a class="map-link" href="index.html">Explore the dependency map <span>↗</span></a></section>
 </main><footer><span>inside the flake / built from this repository</span><span>NO CDN · LOCAL ASSETS · NIX MANAGED</span></footer>
