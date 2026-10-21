@@ -16,6 +16,8 @@
         options = [ "mode=755" "size=256M" ];
       };
 
+      boot.initrd.kernelModules = [ "bochs" "virtio_gpu" ];
+
       services.displayManager.sddm.wayland.enable = lib.mkForce false;
 
       virtualisation = {
