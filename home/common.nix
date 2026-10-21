@@ -21,9 +21,16 @@
       text = ''
         [Hotkey]
         AltTriggerKeys=
+        ConsumeRedundantActivateKeys=True
 
         [Hotkey/TriggerKeys]
         0=Control+space
+
+        [Hotkey/ActivateKeys]
+        0=Henkan
+
+        [Hotkey/DeactivateKeys]
+        0=Muhenkan
 
         [Behavior]
         PreeditEnabledByDefault=False
@@ -61,6 +68,12 @@
         0=Muhenkan
         1=Henkan
         2=Hiragana_Katakana
+      '';
+    };
+    ".config/fcitx5/conf/mozc.conf" = {
+      force = true;
+      text = ''
+        InitialMode=Hiragana
       '';
     };
     ".config/kitty/kitty.conf".source = ../files/kitty/kitty.conf;
