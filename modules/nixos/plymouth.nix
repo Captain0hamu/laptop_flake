@@ -31,6 +31,9 @@ in
   boot.kernelParams = [
     "quiet"
     "logo.nologo"
+    # Clear the bootloader framebuffer before Plymouth starts. Otherwise quiet
+    # boot can leave it untouched and expose it again during later VT switches.
+    "fbcon=nodefer"
     "udev.log_level=3"
     "rd.udev.log_level=3"
     "vt.global_cursor_default=0"
