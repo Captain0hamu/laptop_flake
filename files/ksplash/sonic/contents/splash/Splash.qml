@@ -6,7 +6,9 @@ Item {
 
     property int stage: 0
     property int frameIndex: 0
-    readonly property int frameDuration: 620
+    property int readyCount: 0
+    readonly property int frameDuration: 140
+    readonly property int fadeDuration: 360
     readonly property var frames: FrameData.frames
 
     Repeater {
@@ -23,9 +25,11 @@ Item {
             opacity: index === root.frameIndex ? 1 : 0
             visible: opacity > 0
 
+            onStatusChanged: if (status === Image.Ready) root.readyCount++
+
             Behavior on opacity {
                 NumberAnimation {
-                    duration: 220
+                    duration: 100
                     easing.type: Easing.InOutQuad
                 }
             }
@@ -46,9 +50,27 @@ Item {
     }
 
     Timer {
+        id: frameTimer
         interval: root.frameDuration
-        running: true
+        running: root.readyCount >= root.frames.length
         repeat: true
-        onTriggered: root.frameIndex = (root.frameIndex + 1) % root.frames.length
+        onTriggered: {
+            if (root.frameIndex < root.frames.length - 1) {
+                root.frameIndex++;
+            } else {
+                frameTimer.running = false;
+                fadeOut.start();
+            }
+        }
+    }
+
+    NumberAnimation {
+        id: fadeOut
+        target: root
+        property: "opacity"
+        to: 0
+        duration: root.fadeDuration
+        easing.type: Easing.InOutQuad
+        onFinished: Qt.quit()
     }
 }
