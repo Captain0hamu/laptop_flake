@@ -5,7 +5,11 @@
     kernelModules = [ "v4l2loopback" ];
 
     extraModulePackages = [
-      config.boot.kernelPackages.v4l2loopback
+      (config.boot.kernelPackages.v4l2loopback.overrideAttrs (old: {
+        # NixOS runs depmod on the merged module tree. Avoid generating empty
+        # builtin indexes here that collide with the kernel's own indexes.
+        makeFlags = old.makeFlags ++ [ "DEPMOD=true" ];
+      }))
     ];
 
     extraModprobeConfig = ''
