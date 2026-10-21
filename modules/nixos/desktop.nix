@@ -35,6 +35,7 @@ in
       theme = "Gently-Blur-SDDM-6";
       extraPackages = [ gentlyBlurTheme ];
       settings.theme.Current = "Gently-Blur-SDDM-6";
+      settings.Users.HideUsers = "razero-trial";
     };
     desktopManager.plasma6.enable = true;
   };
