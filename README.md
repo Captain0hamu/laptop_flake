@@ -50,6 +50,11 @@ NIXOS_FLAKE_DIR=/home/nix/nixos-flake
 NIXOS_FLAKE_HOST=nixos
 ```
 
+The login name is `razero` (UID 1000). Its home remains `/home/nix` to keep
+existing paths and VM disk mounts working. Home Manager profiles are
+`razero@dev` and `razero@lab`. The recovery account `razero-trial` uses UID
+1001 and `/home/razero`; it does not receive the main Home Manager profile.
+
 ## Assets and reproducibility
 
 SDDM's animated background reads `anim/frames.js` and `anim/*.jpg` relative to

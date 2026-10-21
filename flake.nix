@@ -55,7 +55,7 @@
               home-manager.useUserPackages = true;
               home-manager.backupFileExtension = "hm-backup";
               home-manager.extraSpecialArgs = { inherit local; };
-              home-manager.users.nix = mkHomeModule profile;
+              home-manager.users.razero = mkHomeModule profile;
             }
           ];
         };
@@ -72,8 +72,8 @@
         nixos-lab = mkSystem "lab";
       };
       homeConfigurations = {
-        "nix@dev" = mkStandaloneHome "dev";
-        "nix@lab" = mkStandaloneHome "lab";
+        "razero@dev" = mkStandaloneHome "dev";
+        "razero@lab" = mkStandaloneHome "lab";
       };
       devShells.${system}.default = pkgs.mkShell {
         packages = with pkgs; [

@@ -6,7 +6,7 @@ _nixos_flake_ref() {
 }
 
 _home_flake_ref() {
-  printf '%s#nix@%s' "$NIXOS_FLAKE_DIR" "$1"
+  printf '%s#razero@%s' "$NIXOS_FLAKE_DIR" "$1"
 }
 
 lsgen() {
