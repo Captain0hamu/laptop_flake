@@ -49,6 +49,6 @@ alias gdb='gdb -q'
 alias cat='bat -p'
 
 dl-msc(){
-  yt-dlp -P "$HOME/Downloads/m4a" -x --audio-format m4a "$1"
+  yt-dlp -P "$HOME/Downloads/m4a" -x --embed-metadata --embed-thumbnail --audio-format m4a "$1"
 }
 alias killptb="pkill -KILL -f 'DiscordPTB|discord-ptb'"
