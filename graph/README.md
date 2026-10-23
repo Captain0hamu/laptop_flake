@@ -1,24 +1,40 @@
-# NixOS dependency graph
+# Desktop showcase and dependency map
 
-`showcase.html` presents the custom boot/login sequence, terminal and editor,
-with interactive browser recreations and an inline source viewer. Switch
-between it and the dependency map using the page navigation. Open it directly:
+`showcase.html` presents the custom boot/login sequence, the shared Plasma
+lock and splash scene, the terminal and editor, and an inline source viewer.
+Switch between it and the dependency map using the page navigation. Open it
+directly:
 
 ```bash
 xdg-open graph/showcase.html
 ```
 
 No npm packages, external fonts or CDN scripts are required. Keep `graph/`
-beside `files/` when serving or copying the pages: SDDM frames and the shared
-font are referenced directly from the repository. The login controls and
-terminal output are visual examples, not an actual login or command runner.
+beside `files/` when serving or copying the pages: SDDM frames, the shared
+scene source and the shared font are referenced directly from the repository.
+The login controls and terminal output are visual examples, not an actual
+login or command runner.
+
+The boot player runs a 15.2-second sequence: GRUB, Plymouth, SDDM, the shared
+lock/splash scene, then the Plasma title card. Play continues from the current
+timeline position; the four chapter tabs seek to a stage. The range input,
+stage buttons, play button and shared-scene controls are keyboard accessible.
+The lock and splash surfaces share one scene, and **Enter the session** runs
+the 850 ms zoom into the desktop card. Chapter deep links are supported:
+
+```text
+showcase.html?stage=sddm
+showcase.html?stage=shared
+showcase.html?stage=shared&mode=splash
+```
 
 The English showcase uses `showcase-art-direction.css` for the exhibition
 layout and `showcase.css` for the simulated interfaces. Motion includes a
-masked title entrance, a scroll-linked photograph, section-title reveals and
-boot-stage wipes. Both motion buttons control the page and boot preview;
-`prefers-reduced-motion` disables the additional effects. The system notes
-are tucked into a native disclosure below the main previews.
+masked title entrance, a scroll-linked photograph, section-title reveals,
+stage transitions and the scene handoff. The boot player pauses the sequence;
+the page-header control pauses both the sequence and the additional page
+motion. `prefers-reduced-motion` starts the page with motion off. The five-value
+strip under the player links each number to the file that defines it.
 
 The workspace includes `assets/workspace-redacted.jpg`, derived from
 `Screenshot_20261022_105143.png`. The local IP, home path, login details and
@@ -33,14 +49,16 @@ The SDDM preview's `assets/sddm-avatar.jpg` is a local copy of the selected
 `artworks-jMsWPOeOHp4qXf2j-Jt0oZA-t500x500.jpg` user image.
 
 `node graph/generate-showcase.mjs` updates the frame list, animation timing
-and allowlisted source snapshots in `showcase-data.js`. It never reads
-`local.nix` or the dependency map's generated host data. `./graph/update.sh`
-updates both pages' data. Existing changes to `dependency-data.js` do not need
-to be replaced to update the showcase alone.
+and allowlisted source snapshots in `showcase-data.js`. The allowlist covers
+the SDDM and Plymouth themes, Plasma's shared scene and Kickoff patch, and the
+Home Manager Plasma/EasyEffects modules. It never reads `local.nix` or the
+dependency map's generated host data. `./graph/update.sh` updates both pages'
+data. Existing changes to `dependency-data.js` do not need to be replaced to
+update the showcase alone.
 
-The two files in `graph/assets/` are tracked previews copied from the built
-GRUB and Plymouth theme outputs. After changing those themes, build the system
-and refresh them with:
+The GRUB and Plymouth previews in `graph/assets/` are tracked snapshots copied
+from the built theme outputs. After changing those themes, build the system
+and refresh the previews with:
 
 ```bash
 nix build --impure .#nixosConfigurations.nixos.config.system.build.toplevel

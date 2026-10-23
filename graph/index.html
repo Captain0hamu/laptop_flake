@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ja">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -145,15 +145,15 @@
 </head>
 <body>
   <main>
-    <nav aria-label="ビュー切り替え" style="display:flex;gap:24px;flex-wrap:wrap;margin-bottom:30px;font-size:.85rem">
-      <a href="showcase.html" style="color:var(--cyan)">← Customization showcase / 見た目とこだわり</a>
+    <nav aria-label="Views" style="display:flex;gap:24px;flex-wrap:wrap;margin-bottom:30px;font-size:.85rem">
+      <a href="showcase.html" style="color:var(--cyan)">← Desktop showcase</a>
       <span aria-current="page" style="color:var(--muted)">Dependency map</span>
     </nav>
-    <div class="eyebrow">/home/nix/nixos-flake</div>
+    <div class="eyebrow">~/nixos-flake</div>
     <h1>Configuration dependency map</h1>
     <p class="lead">
-      このリポジトリで、flake input がどの評価経路を通って NixOS、Home Manager、
-      dev shell のパッケージになるかを表した図です。ノードをクリックすると対応ファイルを開きます。
+      How this repository turns its flake inputs into NixOS, Home Manager and
+      development-shell outputs. Select any node to open the file it describes.
     </p>
 
     <div class="badges">
@@ -166,20 +166,20 @@
 
     <section class="panel">
       <div class="panel-head">
-        <h2>依存グラフ</h2>
+        <h2>Dependency graph</h2>
         <div class="legend">
           <span class="key"><span class="dot" style="background:var(--blue)"></span>input</span>
-          <span class="key"><span class="dot" style="background:var(--cyan)"></span>評価・import</span>
+          <span class="key"><span class="dot" style="background:var(--cyan)"></span>evaluation / import</span>
           <span class="key"><span class="dot" style="background:var(--violet)"></span>module</span>
           <span class="key"><span class="dot" style="background:var(--green)"></span>output</span>
-          <span class="key"><span class="dot" style="background:var(--amber)"></span>unstable経路</span>
+          <span class="key"><span class="dot" style="background:var(--amber)"></span>special path</span>
         </div>
       </div>
 
       <div class="graph-wrap">
         <svg viewBox="0 0 1400 900" role="img" aria-labelledby="graph-title graph-desc">
           <title id="graph-title">NixOS flake dependency graph</title>
-          <desc id="graph-desc">Inputs on the left flow through imports and module evaluation to system, home and development outputs on the right.</desc>
+          <desc id="graph-desc">Inputs on the left flow through flake evaluation into NixOS and Home Manager modules, then into system, desktop and development outputs.</desc>
           <defs>
             <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
               <path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/>
@@ -195,157 +195,161 @@
           <text class="lane-title" x="662" y="65">3 · MODULES</text>
           <text class="lane-title" x="1039" y="65">4 · RESULT</text>
 
-          <!-- Edges are behind nodes. -->
-          <path class="edge main" d="M278 139 C335 139 300 140 365 140"/>
-          <path class="edge main" d="M278 139 C330 139 310 430 365 430"/>
-          <path class="edge unstable" d="M278 279 C330 279 315 270 365 270"/>
-          <path class="edge hm" d="M278 419 C330 419 314 456 365 456"/>
-          <path class="edge hm" d="M278 419 C330 419 310 652 365 652"/>
-          <path class="edge theme" d="M278 559 C330 559 310 480 365 480"/>
+          <!-- Edges sit behind nodes. Amber marks the git-ignored, theme and shared-scene paths. -->
+          <path class="edge main" d="M278 139 C330 139 310 140 365 140"/>
+          <path class="edge main" d="M278 139 C330 139 310 294 365 294"/>
+          <path class="edge main" d="M278 139 C330 139 310 512 365 512"/>
+          <path class="edge unstable" d="M278 279 C330 279 315 294 365 294"/>
+          <path class="edge hm" d="M278 419 C330 419 315 294 365 294"/>
+          <path class="edge hm" d="M278 419 C330 419 315 512 365 512"/>
+          <path class="edge unstable" d="M278 559 C330 559 315 294 365 294"/>
+          <path class="edge unstable" d="M278 559 C330 559 315 512 365 512"/>
 
-          <path class="edge main" d="M585 140 C650 140 610 775 690 775"/>
-          <path class="edge main" d="M585 140 C650 140 615 675 690 675"/>
-          <path class="edge unstable" d="M585 270 C630 270 630 290 690 290"/>
-          <path class="edge main" d="M585 430 C630 430 630 290 690 290"/>
-          <path class="edge hm" d="M585 456 C630 456 630 445 690 445"/>
-          <path class="edge theme" d="M585 480 C630 480 630 570 690 570"/>
-          <path class="edge hm" d="M585 652 C630 652 630 675 690 675"/>
+          <path class="edge main" d="M585 140 C650 140 610 154 690 154"/>
+          <path class="edge main" d="M585 140 C650 140 615 587 690 587"/>
+          <path class="edge main" d="M585 294 C630 294 615 154 690 154"/>
+          <path class="edge main" d="M585 294 C630 294 630 298 690 298"/>
+          <path class="edge main" d="M585 294 C650 294 640 731 690 731"/>
+          <path class="edge hm" d="M585 512 C630 512 630 587 690 587"/>
+          <path class="edge main" d="M585 742 C650 790 760 810 1057 810"/>
+          <path class="edge main" d="M700 210 C660 250 660 410 690 443"/>
 
-          <path class="edge main" d="M970 290 C1020 290 1005 145 1057 145"/>
-          <path class="edge main" d="M970 290 C1020 290 1008 275 1057 275"/>
-          <path class="edge unstable" d="M970 290 C1020 290 1008 405 1057 405"/>
-          <path class="edge hm" d="M970 445 C1025 445 1005 550 1057 550"/>
-          <path class="edge hm" d="M970 675 C1025 675 1005 550 1057 550"/>
-          <path class="edge hm" d="M970 675 C1025 675 1005 680 1057 680"/>
-          <path class="edge theme" d="M970 570 C1025 570 1005 405 1057 405"/>
-          <path class="edge main" d="M970 775 C1025 775 1005 810 1057 810"/>
+          <path class="edge main" d="M970 154 C1020 154 1008 145 1057 145"/>
+          <path class="edge main" d="M970 154 C1020 154 1008 275 1057 275"/>
+          <path class="edge hm" d="M970 298 C1025 298 1005 550 1057 550"/>
+          <path class="edge theme" d="M970 443 C1025 443 1005 275 1057 275"/>
+          <path class="edge hm" d="M970 587 C1025 587 1005 550 1057 550"/>
+          <path class="edge hm" d="M970 587 C1025 587 1005 680 1057 680"/>
+          <path class="edge unstable" d="M970 731 C1025 731 1005 405 1057 405"/>
 
           <!-- Inputs -->
           <a href="../flake.nix#L4">
             <rect class="node input" x="38" y="92" width="240" height="94"/>
             <text class="title mono" x="56" y="120">nixpkgs</text>
             <text class="sub" x="56" y="144">nixos-unstable</text>
-            <text class="sub mono" id="nixpkgs-rev" x="56" y="165">c59305bab206…</text>
+            <text class="sub mono" id="nixpkgs-rev" x="56" y="165">resolving…</text>
+          </a>
+          <a href="../flake.nix#L9">
+            <rect class="node special" x="38" y="232" width="240" height="94"/>
+            <text class="title mono" x="56" y="260">grub-gtg</text>
+            <text class="sub" x="56" y="284">Grand Theft Gentoo theme</text>
+            <text class="sub mono" id="grub-rev" x="56" y="305">resolving…</text>
           </a>
           <a href="../flake.nix#L5">
-            <rect class="node special" x="38" y="232" width="240" height="94"/>
-            <text class="title mono" x="56" y="260">nixpkgs-unstable</text>
-            <text class="sub" x="56" y="284">nixos-unstable（現在は同一rev）</text>
-            <text class="sub mono" id="unstable-rev" x="56" y="305">c59305bab206…</text>
-          </a>
-          <a href="../flake.nix#L6">
             <rect class="node input" x="38" y="372" width="240" height="94"/>
             <text class="title mono" x="56" y="400">home-manager</text>
-            <text class="sub mono" id="home-manager-rev" x="56" y="424">a439f71e75b9…</text>
+            <text class="sub mono" id="home-manager-rev" x="56" y="424">resolving…</text>
             <text class="sub" x="56" y="445">inputs.nixpkgs.follows = nixpkgs</text>
           </a>
-          <a href="../flake.nix#L10">
-            <rect class="node input" x="38" y="512" width="240" height="94"/>
-            <text class="title mono" x="56" y="540">darkmatter-grub-theme</text>
-            <text class="sub mono" id="theme-rev" x="56" y="564">42ed4b9e786b…</text>
-            <text class="sub" x="56" y="585">inputs.nixpkgs.follows = nixpkgs</text>
+          <a href="../local.nix.example">
+            <rect class="node special" x="38" y="512" width="240" height="94"/>
+            <text class="title mono" x="56" y="540">local.nix</text>
+            <text class="sub" x="56" y="564">git-ignored / --impure</text>
+            <text class="sub" x="56" y="585">user, email, secrets</text>
           </a>
           <a href="../flake.lock">
             <rect class="node" x="38" y="704" width="240" height="96"/>
             <text class="title mono" x="56" y="735">flake.lock</text>
-            <text class="sub" x="56" y="760">上記inputの正確なrevとhash</text>
-            <text class="sub" x="56" y="780">updateで変更 / rebuildで使用</text>
+            <text class="sub" x="56" y="760">exact revisions + hashes</text>
+            <text class="sub" x="56" y="780">written by nix flake update</text>
           </a>
 
           <!-- Constructors -->
-          <a href="../flake.nix#L19">
+          <a href="../flake.nix#L18">
             <rect class="node eval" x="365" y="98" width="220" height="84"/>
             <text class="title mono" x="383" y="128">import nixpkgs</text>
             <text class="sub" x="383" y="151">pkgs / allowUnfree</text>
-            <text class="sub" x="383" y="169">standalone home + devShell用</text>
+            <text class="sub" x="383" y="169">standalone Home + devShell</text>
           </a>
-          <a href="../flake.nix#L23">
-            <rect class="node special" x="365" y="228" width="220" height="84"/>
-            <text class="title mono" x="383" y="258">import nixpkgs-unstable</text>
-            <text class="sub" x="383" y="281">unstable</text>
-            <text class="sub" x="383" y="299">specialArgsでmoduleへ</text>
+          <a href="../flake.nix#L45">
+            <rect class="node eval" x="365" y="238" width="220" height="112"/>
+            <text class="title mono" x="383" y="268">mkSystem</text>
+            <text class="sub" x="383" y="292">nixpkgs.lib.nixosSystem</text>
+            <text class="sub" x="383" y="313">specialArgs: local + grub-gtg</text>
+            <text class="sub" x="383" y="334">merges NixOS modules</text>
           </a>
-          <a href="../flake.nix#L28">
-            <rect class="node eval" x="365" y="388" width="220" height="112"/>
-            <text class="title mono" x="383" y="418">nixpkgs.lib.nixosSystem</text>
-            <text class="sub" x="383" y="443">mkSystem profile</text>
-            <text class="sub" x="383" y="464">NixOS用pkgsを生成・注入</text>
-            <text class="sub" x="383" y="484">全moduleをマージして評価</text>
+          <a href="../flake.nix#L62">
+            <rect class="node eval" x="365" y="470" width="220" height="84"/>
+            <text class="title mono" x="383" y="500">homeManagerConfiguration</text>
+            <text class="sub" x="383" y="524">explicit pkgs import</text>
+            <text class="sub" x="383" y="542">standalone Home profiles</text>
           </a>
-          <a href="../flake.nix#L66">
-            <rect class="node eval" x="365" y="610" width="220" height="84"/>
-            <text class="title mono" x="383" y="640">homeManagerConfiguration</text>
-            <text class="sub" x="383" y="664">明示importしたpkgsを使用</text>
-            <text class="sub" x="383" y="682">dev / labを個別にbuild</text>
+          <a href="../flake.nix#L78">
+            <rect class="node eval" x="365" y="700" width="220" height="84"/>
+            <text class="title mono" x="383" y="730">pkgs.mkShell</text>
+            <text class="sub" x="383" y="754">dotnet-sdk_10</text>
+            <text class="sub" x="383" y="772">csharp-ls / netcoredbg</text>
           </a>
 
           <!-- Modules -->
           <a href="../configuration.nix">
-            <rect class="node module" x="690" y="230" width="280" height="120"/>
-            <text class="title mono" x="708" y="260">configuration.nix</text>
-            <text class="sub" x="708" y="284">pkgs ← nixosSystemから自動注入</text>
-            <text class="sub" x="708" y="305">unstable ← specialArgsから注入</text>
-            <text class="sub" x="708" y="326">hardware-configuration.nixをimport</text>
+            <rect class="node module" x="690" y="98" width="280" height="112"/>
+            <text class="title mono" x="708" y="128">configuration.nix</text>
+            <text class="sub" x="708" y="152">pkgs from nixosSystem</text>
+            <text class="sub" x="708" y="173">local from specialArgs</text>
+            <text class="sub" x="708" y="194">imports bootloader + desktop</text>
+          </a>
+          <a href="../flake.nix#L49">
+            <rect class="node module" x="690" y="250" width="280" height="96"/>
+            <text class="title" x="708" y="280">Home Manager NixOS module</text>
+            <text class="sub" x="708" y="304">useGlobalPkgs = true</text>
+            <text class="sub" x="708" y="325">system pkgs + selected profile</text>
+          </a>
+          <a href="../modules/nixos/bootloader.nix">
+            <rect class="node module" x="690" y="396" width="280" height="94"/>
+            <text class="title mono" x="708" y="426">bootloader.nix</text>
+            <text class="sub" x="708" y="450">GRUB + grub-gtg</text>
+            <text class="sub" x="708" y="471">keep the selected menu visible</text>
           </a>
           <a href="../home/default.nix">
-            <rect class="node module" x="690" y="395" width="280" height="100"/>
-            <text class="title mono" x="708" y="425">Home Manager NixOS module</text>
-            <text class="sub" x="708" y="449">useGlobalPkgs = true</text>
-            <text class="sub" x="708" y="470">systemと同じpkgs + 選択profile</text>
+            <rect class="node module" x="690" y="540" width="280" height="94"/>
+            <text class="title mono" x="708" y="570">home/default.nix</text>
+            <text class="sub" x="708" y="594">common + profile</text>
+            <text class="sub" x="708" y="615">plasma + EasyEffects + Neovim</text>
           </a>
-          <a href="../flake.nix#L45">
-            <rect class="node module" x="690" y="530" width="280" height="80"/>
-            <text class="title mono" x="708" y="560">inline boot module</text>
-            <text class="sub" x="708" y="584">GRUB + darkmatter theme</text>
-          </a>
-          <a href="../home/default.nix">
-            <rect class="node module" x="690" y="630" width="280" height="90"/>
-            <text class="title mono" x="708" y="660">home/default.nix</text>
-            <text class="sub" x="708" y="684">common.nix + profile module</text>
-            <text class="sub" x="708" y="704">dev → ai-cli / lab</text>
-          </a>
-          <a href="../flake.nix#L81">
-            <rect class="node eval" x="690" y="740" width="280" height="70"/>
-            <text class="title mono" x="708" y="770">pkgs.mkShell</text>
-            <text class="sub" x="708" y="793">dotnet-sdk / csharp-ls / netcoredbg</text>
+          <a href="../modules/nixos/desktop.nix">
+            <rect class="node module" x="690" y="684" width="280" height="94"/>
+            <text class="title mono" x="708" y="714">desktop.nix</text>
+            <text class="sub" x="708" y="738">imports plasma-customisation</text>
+            <text class="sub" x="708" y="759">shared scene + Kickoff</text>
           </a>
 
           <!-- Results -->
-          <a href="../configuration.nix#L221">
+          <a href="../modules/nixos/packages.nix">
             <rect class="node result" x="1057" y="100" width="296" height="90"/>
-            <text class="title mono" x="1075" y="130">environment.systemPackages</text>
+            <text class="title" x="1075" y="130">environment.systemPackages</text>
             <text class="sub" x="1075" y="154">Firefox / Node.js / Git / KDE…</text>
             <text class="sub" x="1075" y="174">+ users.users.razero.packages</text>
           </a>
-          <a href="../configuration.nix#L38">
+          <a href="../configuration.nix">
             <rect class="node result" x="1057" y="230" width="296" height="90"/>
             <text class="title" x="1075" y="260">NixOS system closure</text>
             <text class="sub" x="1075" y="284">kernel / Plasma / SDDM / PipeWire</text>
-            <text class="sub" x="1075" y="304">Docker / libvirt / module依存</text>
+            <text class="sub" x="1075" y="304">Docker / libvirt / module graph</text>
           </a>
-          <a href="../configuration.nix#L135">
+          <a href="../files/plasma/SharedScene.qml">
             <rect class="node special" x="1057" y="360" width="296" height="90"/>
-            <text class="title mono" x="1075" y="390">unstable.tailscale</text>
-            <text class="sub" x="1075" y="414">nixpkgs-unstableを使う唯一の箇所</text>
-            <text class="sub" x="1075" y="434">+ GRUB theme module</text>
+            <text class="title" x="1075" y="390">shared login scene</text>
+            <text class="sub" x="1075" y="414">SDDM + lock + KSplash</text>
+            <text class="sub" x="1075" y="434">24 px blur / 850 ms zoom</text>
           </a>
-          <a href="../home/profiles/dev.nix">
+          <a href="../flake.nix#L69">
             <rect class="node result" x="1057" y="500" width="296" height="100"/>
             <text class="title mono" x="1075" y="530">#nixos / #nixos-dev</text>
             <text class="sub" x="1075" y="554">mkSystem "dev"</text>
             <text class="sub" x="1075" y="575">common + dev + ai-cli</text>
           </a>
-          <a href="../home/profiles/lab.nix">
+          <a href="../flake.nix#L72">
             <rect class="node result" x="1057" y="635" width="296" height="90"/>
             <text class="title mono" x="1075" y="665">#nixos-lab / razero@lab</text>
-            <text class="sub" x="1075" y="689">mkSystem "lab" / standalone home</text>
+            <text class="sub" x="1075" y="689">mkSystem "lab" / standalone Home</text>
             <text class="sub" x="1075" y="709">common + lab tools</text>
           </a>
-          <a href="../flake.nix#L81">
+          <a href="../flake.nix#L78">
             <rect class="node result" x="1057" y="765" width="296" height="90"/>
             <text class="title mono" x="1075" y="795">devShells.x86_64-linux.default</text>
             <text class="sub" x="1075" y="819">nix develop</text>
-            <text class="sub" x="1075" y="839">明示importしたpkgsを使用</text>
+            <text class="sub" x="1075" y="839">explicit pkgs import</text>
           </a>
         </svg>
       </div>
@@ -353,63 +357,67 @@
 
     <section class="panel" style="margin-top:18px">
       <div class="panel-head">
-        <h2>現在の評価結果</h2>
-        <span class="stamp" id="generated-at">dependency-data.js を読み込み中…</span>
+        <h2>Current evaluation</h2>
+        <span class="stamp" id="generated-at">Loading dependency-data.js…</span>
       </div>
       <div id="live-data" style="padding:18px">
-        <noscript>このセクションの表示にはJavaScriptが必要です。</noscript>
+        <noscript>JavaScript is required to show this section.</noscript>
       </div>
     </section>
 
     <section class="cards">
       <article class="card wide">
-        <h2><code>nix flake update</code> の波及</h2>
+        <h2>What <code>nix flake update</code> changes</h2>
         <div class="flow">
           <div class="flow-step">
-            <strong>1. inputを更新</strong>
-            <small>nixos-unstable等の最新revisionを解決</small>
+            <strong>1. Resolve inputs</strong>
+            <small>Fetch the latest revision of nixpkgs and the other inputs.</small>
           </div>
           <div class="flow-arrow">→</div>
           <div class="flow-step">
-            <strong>2. flake.lockを書換</strong>
-            <small>revisionとcontent hashを固定</small>
+            <strong>2. Rewrite the lock</strong>
+            <small>Pin every revision and content hash in flake.lock.</small>
           </div>
           <div class="flow-arrow">→</div>
           <div class="flow-step">
-            <strong>3. rebuild</strong>
-            <small>新しいnixpkgsでsystem closure全体を再評価</small>
+            <strong>3. Rebuild</strong>
+            <small>Re-evaluate the system closure against the new nixpkgs.</small>
           </div>
         </div>
         <p style="margin:14px 0 0">
-          そのため、明示したsystem packageだけでなく、カーネル、desktop、service、ライブラリなどの
-          推移的依存も更新対象になります。<code>system.stateVersion</code> はパッケージを固定しません。
+          This updates more than explicit system packages: the kernel, desktop,
+          services and transitive libraries are re-evaluated too.
+          <code>system.stateVersion</code> is a compatibility marker, not a pin.
         </p>
       </article>
 
       <article class="card">
-        <h2>通常のrebuild</h2>
-        <p><code>rebuild_n_switch</code> は <code>.#nixos</code> を選択します。</p>
+        <h2>A normal rebuild</h2>
+        <p><code>rebuild_n_switch</code> targets <code>.#nixos</code> by default.</p>
         <ul>
           <li><code>mkSystem "dev"</code></li>
-          <li>NixOS + Home Managerを同時評価</li>
-          <li>Home Managerもsystemと同じ<code>pkgs</code></li>
+          <li>Evaluates NixOS and Home Manager together</li>
+          <li>Home Manager reuses the system <code>pkgs</code></li>
         </ul>
       </article>
 
       <article class="card">
-        <h2>2種類のpkgs</h2>
+        <h2>Two package sets</h2>
         <p>
-          system側の<code>pkgs</code>は<code>nixosSystem</code>が生成します。
-          flake直下で明示importした<code>pkgs</code>はstandalone Home Managerとdev shell向けです。
+          The system <code>pkgs</code> comes from <code>nixosSystem</code>.
+          The explicitly imported <code>pkgs</code> at the flake root is for
+          standalone Home Manager profiles and the dev shell.
         </p>
       </article>
 
       <article class="card">
-        <h2>現在の重複</h2>
+        <h2>Why <code>local.nix</code> is impure</h2>
         <p>
-          <code>nixpkgs</code>と<code>nixpkgs-unstable</code>は、現在どちらも
-          <code>nixos-unstable</code>の同じrevisionです。従って現状の
-          <code>unstable.tailscale</code>は通常の<code>pkgs.tailscale</code>と実質同じです。
+          <code>local.nix</code> is git-ignored, so it never enters the flake
+          source tree. The flake reads it from
+          <code>NIXOS_FLAKE_DIR</code>, which is why rebuild commands pass
+          <code>--impure</code>. <code>local.nix.example</code> documents the
+          expected shape without exposing values.
         </p>
       </article>
     </section>
@@ -452,18 +460,17 @@
       };
 
       if (!data) {
-        stamp.textContent = "未生成";
-        root.append(element("div", "error", "dependency-data.js がありません。./graph/update.sh を実行してください。"));
+        stamp.textContent = "not generated";
+        root.append(element("div", "error", "dependency-data.js is missing. Run ./graph/update.sh."));
         return;
       }
 
-      stamp.textContent = `generated ${new Date(data.generatedAt).toLocaleString("ja-JP")}`;
+      stamp.textContent = `generated ${new Date(data.generatedAt).toLocaleString("en-GB")}`;
 
       const revisionIds = {
         nixpkgs: "nixpkgs-rev",
-        "nixpkgs-unstable": "unstable-rev",
         "home-manager": "home-manager-rev",
-        "darkmatter-grub-theme": "theme-rev",
+        "grub-gtg": "grub-rev",
       };
       data.inputs.forEach((input) => {
         const node = document.getElementById(revisionIds[input.name]);
@@ -506,7 +513,7 @@
         });
       });
 
-      const refs = block("local file references", "source scanによる直接参照。動的に組み立てたpathは含まれない場合があります。 ");
+      const refs = block("local file references", "Direct references found by the source scan. Dynamically assembled paths may not appear.");
       const table = element("table", "refs");
       data.localReferences.forEach((entry) => {
         const row = document.createElement("tr");
@@ -518,7 +525,7 @@
       root.replaceChildren(grid);
 
       if (data.errors.length) {
-        root.append(element("div", "error", `一部のNix評価に失敗しました:\n${data.errors.join("\n\n")}`));
+        root.append(element("div", "error", `Some Nix evaluations failed:\n${data.errors.join("\n\n")}`));
       }
     })();
   </script>

@@ -16,6 +16,11 @@ const paths = [
   'files/fastfetch/config.jsonc',
   'files/nvim/init.lua', 'home/neovim.nix', 'modules/nixos/audio.nix',
   'modules/nixos/boot.nix', 'modules/nixos/virtualisation.nix',
+  'home/plasma.nix', 'home/easyeffects.nix',
+  'modules/nixos/plasma-customisation.nix',
+  'files/plasma/SharedScene.qml', 'files/plasma/Splash.qml',
+  'files/plasma/patch-lockscreen.py', 'files/plasma/build-translucent-theme.py',
+  'files/sddm/Gently-Blur-SDDM-6/Main.qml',
 ];
 const frames = [...read('files/sddm/Gently-Blur-SDDM-6/anim/frames.js').matchAll(/"([^"\n]+\.jpg)"/g)].map(match => match[1]);
 for (const frame of frames) {

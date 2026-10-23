@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="razero's NixOS desktop: transparent terminals, a custom boot sequence, and the configuration behind it all.">
+<meta name="description" content="razero's NixOS desktop: transparent terminals, a shared Plasma login scene, and the configuration behind it all.">
 <title>razero / nixos — Personal desktop</title>
 <link rel="stylesheet" href="showcase.css">
 <link rel="stylesheet" href="showcase-art-direction.css">
@@ -16,15 +16,55 @@
   <figure class="hero-capture"><a href="assets/workspace-redacted.jpg" target="_blank" rel="noopener" aria-label="Enlarge the desktop screenshot with sensitive details blurred"><img src="assets/workspace-redacted.jpg" alt="A three-pane Kitty workspace with fastfetch and a Nix configuration diff over a game wallpaper." width="1920" height="1200" fetchpriority="high"></a><figcaption><span>Plasma 6 / Kitty / Bash</span><span>22 Oct 2026 — Sensitive details blurred</span></figcaption></figure>
 </section>
 <section id="sequence" class="sequence" aria-labelledby="sequence-title">
-<div class="section-heading"><div><span class="eyebrow">Boot & login</span><h2 id="sequence-title">Power<br>on.</h2></div><p>Three stages. One world.<br>A Grand Theft Gentoo boot sequence.<br>Pick a stage. Watch it run.</p></div>
-<div class="viewer"><div class="viewer-top"><span><i class="status-dot"></i> BOOT EXPERIENCE</span><span class="preview-label">WEB RECREATION · NOT A SCREEN RECORDING</span></div>
-<div class="display" id="display">
-<div class="scene grub-scene" data-scene="grub" hidden><img src="assets/grub-background.png" alt="The actual GRUB theme background"><div class="grub-menu"><p class="grub-selected">NixOS <span>↵</span></p><p>NixOS — All configurations</p><p>Windows Boot Manager</p></div><span class="scene-corner">SELECT YOUR SYSTEM</span></div>
-<div class="scene plymouth-scene" data-scene="plymouth" hidden><img src="assets/plymouth-background.png" alt="The generated Plymouth background"><div class="radio-mini"><b>RADIO GENTOO</b><small>101.3 FM // BOOT SEQUENCE</small><span>♪ emerge --sync</span></div><div class="loading"><b>LOADING<span class="loading-dots">...</span></b><span class="progress-track"><i></i></span></div></div>
-<div class="scene login-scene" data-scene="sddm"><img id="frame-a" class="frame active" alt="An SDDM animation frame"><img id="frame-b" class="frame" alt="" aria-hidden="true"><div class="scene-shade"></div><div class="scanlines"></div><div class="login-radio"><b>RADIO GENTOO <i>●</i></b><small>101.3 FM // BOOT SEQUENCE</small><span id="radio-track">♪ emerge --sync</span></div><div class="login-form"><img class="avatar" src="assets/sddm-avatar.jpg" alt="razero's user avatar" width="500" height="500"><strong>razero</strong><div class="fake-input">Password <span>→</span></div><small>↻ Restart <span>⏻ Shut down</span></small></div><div class="intro-overlay" id="intro-overlay" hidden><b>GRAND THEFT GENTOO</b><small>SYSTEM READY // WELCOME BACK</small><span>LOADING SESSION</span></div><span class="scene-corner">26 FRAMES / PAN / CROSSFADE</span></div>
-</div><div class="viewer-bottom"><span id="scene-tag">03 / LOGIN</span><span>Actual assets. Browser-rendered interface.</span><button id="motion-toggle" type="button" aria-pressed="false">Ⅱ Pause motion</button></div></div>
-<div class="scene-controls" role="group" aria-label="Boot stages"><button data-stage="grub" aria-pressed="false"><span>01</span><b>GRUB</b><small>Choose a system.</small></button><button data-stage="plymouth" aria-pressed="false"><span>02</span><b>Plymouth</b><small>Make the wait count.</small></button><button data-stage="sddm" class="selected" aria-pressed="true"><span>03</span><b>SDDM</b><small>Welcome back.</small></button></div>
-<div class="stage-notes"><div><span id="stage-eyebrow" class="eyebrow">03 / SDDM</span><h3 id="stage-title">Still frames. Moving atmosphere.</h3></div><div><p id="stage-description">26 crossfading frames, slow pans and zooms, scanlines, and a radio HUD. A QML login screen tied to the boot sequence with BankGothic typography.</p><div id="stage-links" class="source-links"></div><button class="text-link" type="button" id="replay-intro">Replay intro ↻</button></div></div>
+<div class="section-heading"><div><span class="eyebrow">Boot & login</span><h2 id="sequence-title">Power<br>on.</h2></div><p>Four stages. One scene.<br>A Grand Theft Gentoo boot sequence.<br>Play it through, or pick a chapter.</p></div>
+<div class="viewer" id="sequence-viewer">
+  <div class="viewer-top"><span><i class="status-dot"></i> BOOT EXPERIENCE</span><span class="preview-label">WEB RECREATION · NOT A SCREEN RECORDING</span></div>
+  <div class="sequence-player">
+    <button id="sequence-play" class="sequence-play" type="button" aria-label="Play boot sequence"><span aria-hidden="true">▶</span></button>
+    <div class="sequence-timeline">
+      <div class="sequence-track" id="sequence-track" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+      <span class="sequence-fill" id="sequence-fill" aria-hidden="true"></span>
+      <input id="sequence-scrub" class="sequence-range" type="range" min="0" max="15.2" step="0.05" value="0" aria-label="Boot sequence timeline">
+      <div class="sequence-marks" id="sequence-marks" aria-hidden="true"></div>
+    </div>
+    <span id="sequence-clock" class="sequence-clock">00:00 / 00:15</span>
+  </div>
+  <div class="display" id="display">
+    <div class="scene grub-scene" data-scene="grub" hidden><img src="assets/grub-background.png" alt="The actual GRUB theme background"><div class="grub-menu"><p class="grub-selected">NixOS <span>↵</span></p><p>NixOS — All configurations</p><p>Windows Boot Manager</p></div><span class="scene-corner">SELECT YOUR SYSTEM</span></div>
+    <div class="scene plymouth-scene" data-scene="plymouth" hidden><img src="assets/plymouth-background.png" alt="The generated Plymouth background"><div class="radio-mini"><b>RADIO GENTOO</b><small>101.3 FM // BOOT SEQUENCE</small><span>♪ emerge --sync</span></div><div class="loading"><b>LOADING<span class="loading-dots">...</span></b><span class="progress-track"><i></i></span></div></div>
+    <div class="scene login-scene" data-scene="sddm">
+      <img id="frame-a" class="frame active" alt="An SDDM animation frame"><img id="frame-b" class="frame" alt="" aria-hidden="true">
+      <div class="scene-shade"></div><div class="scanlines"></div>
+      <div class="login-radio" id="login-radio"><b>RADIO GENTOO <i>●</i></b><small>101.3 FM // BOOT SEQUENCE</small><span id="radio-track">♪ emerge --sync</span></div>
+      <div class="login-form" id="login-form"><img class="avatar" src="assets/sddm-avatar.jpg" alt="razero's user avatar" width="500" height="500"><strong>razero</strong><div class="fake-input">Password <span>→</span></div><small>↻ Restart <span>⏻ Shut down</span></small></div>
+      <div class="shared-chrome" id="shared-chrome" hidden>
+        <div class="shared-frame" aria-hidden="true"></div><div class="shared-rule" aria-hidden="true"></div>
+        <div class="shared-clock"><b id="shared-time">--:--</b><span id="shared-date"></span></div>
+        <div class="shared-modes" role="group" aria-label="Shared scene surface"><button type="button" data-shared-mode="lock" class="selected" aria-pressed="true">Lock</button><button type="button" data-shared-mode="splash" aria-pressed="false">Splash</button></div>
+        <div class="shared-lock" id="shared-lock"><span class="shared-kicker">Locked</span><button class="shared-unlock" id="shared-unlock" type="button">Enter the session <span>→</span></button><small>Plasma's native password, fingerprint and session controls stay in charge.</small></div>
+        <div class="shared-splash" id="shared-splash" hidden><span class="shared-kicker">Starting Plasma</span><span class="shared-progress"><i></i></span><small>KSplashQML · stage 5 hands off with the same 850 ms zoom.</small></div>
+      </div>
+      <div class="intro-overlay" id="intro-overlay" hidden><b>GRAND THEFT GENTOO</b><small>SYSTEM READY // WELCOME BACK</small><span>LOADING SESSION</span></div>
+      <span class="scene-corner" id="scene-corner">26 FRAMES / PAN / CROSSFADE</span>
+    </div>
+    <div class="scene desktop-scene" data-scene="desktop" hidden><img class="desktop-mark" src="assets/nix-snowflake.svg" alt="" aria-hidden="true"><div class="desktop-copy"><span>PLASMA SESSION / READY</span><b>Welcome<br>back.</b><small>The shared scene hands over to the desktop.</small></div><span class="scene-corner">05 / PLASMA</span></div>
+  </div>
+  <div class="viewer-bottom"><span id="scene-tag">01 / SYSTEM SELECTION</span><span>Actual assets. Browser-rendered interface.</span><button id="motion-toggle" type="button" aria-pressed="false">Ⅱ Pause motion</button></div>
+</div>
+<div class="scene-controls" role="group" aria-label="Boot stages">
+  <button data-stage="grub" class="selected" aria-pressed="true" data-time="00:00"><span>01</span><b>GRUB</b><small>Choose a system.</small></button>
+  <button data-stage="plymouth" aria-pressed="false" data-time="00:02"><span>02</span><b>Plymouth</b><small>Make the wait count.</small></button>
+  <button data-stage="sddm" aria-pressed="false" data-time="00:05"><span>03</span><b>SDDM</b><small>Welcome back.</small></button>
+  <button data-stage="shared" aria-pressed="false" data-time="00:09"><span>04</span><b>Lock<span class="stage-suffix"> / Splash</span></b><small>Same scene, new surface.</small></button>
+</div>
+<div class="stage-notes"><div><span id="stage-eyebrow" class="eyebrow">01 / SYSTEM SELECTION</span><h3 id="stage-title">Choose your entry point.</h3></div><div><p id="stage-description">Grand Theft Gentoo artwork, BankGothic type, and a cool-blue selection. A small GRUB patch keeps the selected menu visible until the kernel takes over. Menu entries here are examples.</p><div id="stage-links" class="source-links"></div><button class="text-link" type="button" id="replay-intro" hidden>Replay intro ↻</button></div></div>
+<div class="scene-specs" aria-label="Shared scene specification">
+  <button data-source="home/plasma.nix"><b>0.60</b><span>Panel + dialog fill</span><small>plasma.nix</small></button>
+  <button data-source="files/plasma/SharedScene.qml"><b>24px</b><span>Lock + splash blur</span><small>SharedScene.qml</small></button>
+  <button data-source="files/plasma/SharedScene.qml"><b>0.32</b><span>Frosted veil</span><small>SharedScene.qml</small></button>
+  <button data-source="files/plasma/SharedScene.qml"><b>850ms</b><span>Handoff zoom</span><small>SharedScene.qml</small></button>
+  <button data-source="files/plasma/SharedScene.qml"><b>#a9c9ef</b><span>Scene accent</span><small>SharedScene.qml</small></button>
+</div>
 </section>
 <section id="workspace" class="workspace" aria-labelledby="workspace-title">
   <div class="section-heading">
@@ -117,9 +157,12 @@
 </section>
 <section class="underneath" aria-label="Additional system configuration">
   <details class="system-details">
-    <summary>More under the hood <span>Boot tweaks, audio & virtual machines ＋</span></summary>
+    <summary>More under the hood <span>Shared scene, audio & virtual machines ＋</span></summary>
     <div class="detail-list">
-      <article><div><h3>Quiet boot</h3><p>Less boot noise. Hold Plymouth's final frame and skip KSplash on the way to the desktop.</p></div><button data-source="modules/nixos/plymouth.nix" aria-label="View Plymouth configuration">↗</button></article>
+      <article><div><h3>Shared login scene</h3><p>SDDM, the Plasma lock screen and KSplash draw the same animated background, blur and clock. Native authentication and session controls stay intact.</p></div><button data-source="files/plasma/SharedScene.qml" aria-label="View the shared Plasma scene">↗</button></article>
+      <article><div><h3>Translucent Plasma</h3><p>Panel and dialog SVG fills at 60% opacity, plus a warm selection accent in Kickoff. The stock layout and behavior remain.</p></div><button data-source="modules/nixos/plasma-customisation.nix" aria-label="View Plasma customisation">↗</button></article>
+      <article><div><h3>Speaker EQ</h3><p>A six-band EasyEffects preset for the internal speaker: gentle low-end cuts, a little presence, and a peak-catching compressor.</p></div><button data-source="home/easyeffects.nix" aria-label="View the EasyEffects preset">↗</button></article>
+      <article><div><h3>Quiet boot</h3><p>Less boot noise. Hold Plymouth's final frame and hand off cleanly to SDDM.</p></div><button data-source="modules/nixos/plymouth.nix" aria-label="View Plymouth configuration">↗</button></article>
       <article><div><h3>Audio</h3><p>PipeWire and WirePlumber rules to prefer the working internal microphone.</p></div><button data-source="modules/nixos/audio.nix" aria-label="View audio configuration">↗</button></article>
       <article><div><h3>Virtual machines</h3><p>Docker, libvirt, and QEMU with TPM support. Test environments live in the same flake.</p></div><button data-source="modules/nixos/virtualisation.nix" aria-label="View virtualization configuration">↗</button></article>
     </div>
