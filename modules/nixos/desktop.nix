@@ -34,6 +34,8 @@ let
   };
 in
 {
+  imports = [ ./plasma-customisation.nix ];
+
   services = {
     xserver.enable = true;
     displayManager.sddm = {

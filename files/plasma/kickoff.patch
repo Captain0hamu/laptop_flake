@@ -1,0 +1,199 @@
+--- a/applets/kickoff/main.qml
++++ b/applets/kickoff/main.qml
+@@ -25,6 +25,12 @@
+ 
+ PlasmoidItem {
+     id: kickoff
++
++    // Local launcher styling: leave the desktop and other applets unchanged.
++    readonly property color launcherAccent: "@accentColor@"
++    readonly property real launcherBackgroundOpacity: @backgroundOpacity@
++    readonly property real launcherSelectionOpacity: @selectionOpacity@
++    Plasmoid.backgroundHints: PlasmaCore.Types.NoBackground
+ 
+     width: Kirigami.Units.iconSizes.huge
+     height: Kirigami.Units.iconSizes.huge
+--- a/applets/kickoff/FullRepresentation.qml
++++ b/applets/kickoff/FullRepresentation.qml
+@@ -23,11 +23,18 @@
+ EmptyPage {
+     id: root
+ 
++    background: Rectangle {
++        radius: Kirigami.Units.cornerRadius
++        color: Qt.rgba(35 / 255, 38 / 255, 39 / 255, kickoff.launcherBackgroundOpacity)
++        border.width: 1
++        border.color: Qt.alpha(kickoff.launcherAccent, 0.25)
++    }
++
+     // kickoff is Kickoff.qml
+-    leftPadding: -kickoff.backgroundMetrics.leftPadding
+-    rightPadding: -kickoff.backgroundMetrics.rightPadding
++    leftPadding: 0
++    rightPadding: 0
+     topPadding: 0
+-    bottomPadding: -kickoff.backgroundMetrics.bottomPadding
++    bottomPadding: 0
+     readonly property var appletInterface: kickoff
+ 
+     Layout.minimumWidth: implicitWidth
+--- a/applets/kickoff/Header.qml
++++ b/applets/kickoff/Header.qml
+@@ -22,6 +22,8 @@
+ 
+ PlasmaExtras.PlasmoidHeading {
+     id: root
++
++    background.opacity: 0
+ 
+     property alias searchText: searchField.text
+     property Item configureButton: configureButton
+@@ -186,6 +188,22 @@
+ 
+                 PlasmaExtras.SearchField {
+                     id: searchField
++                    selectionColor: Qt.alpha(kickoff.launcherAccent, 0.45)
++                    topPadding: Kirigami.Units.smallSpacing * 2
++                    bottomPadding: Kirigami.Units.smallSpacing * 2
++                    background: Rectangle {
++                        // Preserve SearchField's icon/action padding contract.
++                        readonly property QtObject margins: QtObject {
++                            readonly property real left: Kirigami.Units.smallSpacing * 2
++                            readonly property real right: Kirigami.Units.smallSpacing * 2
++                        }
++                        implicitWidth: Kirigami.Units.gridUnit * 10
++                        implicitHeight: Kirigami.Units.gridUnit * 2
++                        radius: Kirigami.Units.cornerRadius
++                        color: Qt.rgba(0, 0, 0, 0.18)
++                        border.width: 1
++                        border.color: Qt.alpha(kickoff.launcherAccent, searchField.activeFocus ? 0.85 : 0.35)
++                    }
+                     Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
+                     Layout.fillWidth: true
+                     Layout.leftMargin: kickoff.backgroundMetrics.leftPadding
+@@ -241,7 +259,7 @@
+                     }
+                 }
+ 
+-                PC3.ToolButton {
++                LauncherToolButton {
+                     id: configureButton
+                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
+                     visible: Plasmoid.internalAction("configure").enabled
+@@ -268,7 +286,7 @@
+                     }
+                     onClicked: plasmoid.internalAction("configure").trigger()
+                 }
+-                PC3.ToolButton {
++                LauncherToolButton {
+                     id: pinButton
+                     checkable: true
+                     checked: Plasmoid.configuration.pin
+--- a/applets/kickoff/Footer.qml
++++ b/applets/kickoff/Footer.qml
+@@ -16,6 +16,8 @@
+ PlasmaExtras.PlasmoidHeading {
+     id: root
+ 
++    background.opacity: 0
++
+     readonly property alias tabBar: tabBar
+     property real preferredTabBarWidth: 0
+     readonly property alias leaveButtons: leaveButtons
+@@ -76,18 +78,18 @@
+             highlightRangeMode: ListView.ApplyRange
+             preferredHighlightBegin: tabBar.tabWidth
+             preferredHighlightEnd: width - tabBar.tabWidth
+-            highlight: KSvg.FrameSvgItem {
++            highlight: Rectangle {
+                 anchors.top: tabBarListView.contentItem.top
+                 anchors.bottom: tabBarListView.contentItem.bottom
+                 anchors.topMargin: -root.topPadding
+                 anchors.bottomMargin: -root.bottomPadding
+-                imagePath: "widgets/tabbar"
+-                prefix: tabBar.position === PC3.TabBar.Header ? "north-active-tab" : "south-active-tab"
++                radius: Kirigami.Units.cornerRadius
++                color: Qt.alpha(kickoff.launcherAccent, kickoff.launcherSelectionOpacity)
+             }
+             keyNavigationEnabled: false
+         }
+ 
+-        PC3.TabButton {
++        LauncherTabButton {
+             id: applicationsTab
+             focus: true
+             width: tabBar.tabWidth
+@@ -104,7 +106,7 @@
+                     .forceActiveFocus(Qt.BacktabFocusReason)
+             }
+         }
+-        PC3.TabButton {
++        LauncherTabButton {
+             id: placesTab
+             width: tabBar.tabWidth
+             anchors.top: tabBarListView.contentItem.top
+--- a/applets/kickoff/AbstractKickoffItemDelegate.qml
++++ b/applets/kickoff/AbstractKickoffItemDelegate.qml
+@@ -262,7 +262,7 @@
+ 
+     background: Loader {
+         active: (root.GridView?.isCurrentItem || root.ListView?.isCurrentItem) ?? false
+-        sourceComponent: PlasmaExtras.Highlight {
++        sourceComponent: LauncherHighlight {
+             anchors.fill: parent
+             z: (root.Drag.active ?? false) ? 3 : 0
+             hovered: true
+--- a/applets/kickoff/ApplicationsPage.qml
++++ b/applets/kickoff/ApplicationsPage.qml
+@@ -58,7 +58,7 @@
+             id: sideBarDelegate
+             width: view.availableWidth
+             isCategoryListItem: true
+-            background: PlasmaExtras.Highlight {
++            background: LauncherHighlight {
+                 // I have to do this for it to actually fill the item for some reason
+                 anchors.fill: parent
+                 active: false
+--- a/applets/kickoff/PlacesPage.qml
++++ b/applets/kickoff/PlacesPage.qml
+@@ -25,7 +25,7 @@
+             width: view.availableWidth
+             isCategoryListItem: true
+             isMultilineText: false
+-            background: PlasmaExtras.Highlight {
++            background: LauncherHighlight {
+                 // I have to do this for it to actually fill the item for some reason
+                 anchors.fill: parent
+                 active: false
+--- a/applets/kickoff/LeaveButtons.qml
++++ b/applets/kickoff/LeaveButtons.qml
+@@ -110,7 +110,7 @@
+             id: buttonRepeater
+ 
+             model: filteredButtonsModel
+-            delegate: PC3.ToolButton {
++            delegate: LauncherToolButton {
+                 required property int index
+                 required property var model
+ 
+@@ -163,7 +163,7 @@
+     // Just like Kirigami.ActionToolBar, it takes two actual instances of a
+     // button with different display modes to calculate the layout properly
+     // without binding loops.
+-    component OverflowMenuButton : PC3.ToolButton {
++    component OverflowMenuButton : LauncherToolButton {
+         Accessible.role: Accessible.ButtonMenu
+         icon.width: Kirigami.Units.iconSizes.smallMedium
+         icon.height: Kirigami.Units.iconSizes.smallMedium
+--- a/applets/kickoff/CMakeLists.txt
++++ b/applets/kickoff/CMakeLists.txt
+@@ -2,6 +2,9 @@
+ 
+ plasma_add_applet(org.kde.plasma.kickoff
+ QML_SOURCES
++    LauncherHighlight.qml
++    LauncherToolButton.qml
++    LauncherTabButton.qml
+     config.qml
+     main.xml
+     AbstractKickoffItemDelegate.qml
