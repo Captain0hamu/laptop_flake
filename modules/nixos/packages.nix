@@ -1,5 +1,16 @@
 { pkgs, ... }:
 
+let
+  # Kamoso's record button is a checkable QML Action. If its checked state is
+  # reset (for example by a duplicate accessibility or keyboard event), QML
+  # immediately sets Kamoso.isRecording to false and stops the capture. Use
+  # Kamoso's own recording state as the single source of truth instead.
+  kamosoRecordFix = pkgs.kdePackages.kamoso.overrideAttrs (old: {
+    patches = (old.patches or [ ]) ++ [
+      ./patches/kamoso-record-state.patch
+    ];
+  });
+in
 {
   environment.systemPackages =
     (with pkgs; [
@@ -49,6 +60,6 @@
       sddm-kcm
       kdenlive
       kamera
-      kamoso
+      kamosoRecordFix
     ]);
 }

@@ -1,0 +1,31 @@
+--- a/src/qml/Main.qml
++++ b/src/qml/Main.qml
+@@ -133,12 +133,12 @@
+     Mode {
+         id: videoMode
+         mimes: "video/x-matroska"
+-        checkable: true
+-        icon.name: checked ? "media-playback-stop" : "camera-video-symbolic"
+-        text: checked? i18n("Stop Recording") : i18n("Record a Video")
++        checkable: false
++        icon.name: Kamoso.isRecording ? "media-playback-stop" : "camera-video-symbolic"
++        text: Kamoso.isRecording ? i18n("Stop Recording") : i18n("Record a Video")
+         modeInfo: Kamoso.recordingTime
+         nameFilter: "video_*"
+-        enabled: DeviceManager.playingDevice && !burstMode.checked && (WebcamControl.readyForCapture || checked) && !cooldown.running
++        enabled: DeviceManager.playingDevice && !burstMode.checked && (WebcamControl.readyForCapture || Kamoso.isRecording) && !cooldown.running
+ 
+         // While readyForCapture should be enough, gstreamer freezes when we request videos too quickly
+         Timer {
+@@ -146,9 +146,9 @@
+             interval: 1500
+         }
+ 
+-        onCheckedChanged: checked => {
++        onTriggered: {
+             cooldown.running = true
+-            Kamoso.isRecording = checked;
++            Kamoso.isRecording = !Kamoso.isRecording
+             lastMode = videoMode
+         }
+     }
