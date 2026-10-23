@@ -1,11 +1,9 @@
 { pkgs, ... }:
 
 let
-  # Kickoff (Meta key): transparency is applied to the background, never text/icons.
-  # 40% transparent = 60% opaque. Selection uses a lighter, 25%-opaque beige fill.
+  # Kickoff selection colors. Native popup/panel transparency is in home/plasma.nix.
   launcherStyle = {
     accentColor = "#cfbea5";
-    backgroundOpacity = "0.60";
     selectionOpacity = "0.25";
   };
 in

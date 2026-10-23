@@ -1,42 +1,16 @@
 --- a/applets/kickoff/main.qml
 +++ b/applets/kickoff/main.qml
-@@ -25,6 +25,12 @@
+@@ -25,6 +25,10 @@
  
  PlasmoidItem {
      id: kickoff
 +
 +    // Local launcher styling: leave the desktop and other applets unchanged.
 +    readonly property color launcherAccent: "@accentColor@"
-+    readonly property real launcherBackgroundOpacity: @backgroundOpacity@
 +    readonly property real launcherSelectionOpacity: @selectionOpacity@
-+    Plasmoid.backgroundHints: PlasmaCore.Types.NoBackground
  
      width: Kirigami.Units.iconSizes.huge
      height: Kirigami.Units.iconSizes.huge
---- a/applets/kickoff/FullRepresentation.qml
-+++ b/applets/kickoff/FullRepresentation.qml
-@@ -23,11 +23,18 @@
- EmptyPage {
-     id: root
- 
-+    background: Rectangle {
-+        radius: Kirigami.Units.cornerRadius
-+        color: Qt.rgba(35 / 255, 38 / 255, 39 / 255, kickoff.launcherBackgroundOpacity)
-+        border.width: 1
-+        border.color: Qt.alpha(kickoff.launcherAccent, 0.25)
-+    }
-+
-     // kickoff is Kickoff.qml
--    leftPadding: -kickoff.backgroundMetrics.leftPadding
--    rightPadding: -kickoff.backgroundMetrics.rightPadding
-+    leftPadding: 0
-+    rightPadding: 0
-     topPadding: 0
--    bottomPadding: -kickoff.backgroundMetrics.bottomPadding
-+    bottomPadding: 0
-     readonly property var appletInterface: kickoff
- 
-     Layout.minimumWidth: implicitWidth
 --- a/applets/kickoff/Header.qml
 +++ b/applets/kickoff/Header.qml
 @@ -22,6 +22,8 @@
