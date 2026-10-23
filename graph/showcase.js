@@ -5,9 +5,9 @@
   const $ = selector => document.querySelector(selector);
   const $$ = selector => [...document.querySelectorAll(selector)];
   const stages = {
-    grub: { tag: '01 / SYSTEM SELECTION', title: '選ぶところから、らしく。', text: 'Grand Theft Gentooのテーマをベースに、BankGothicと青みのある選択ハイライト。標準の背景を外し、手動選択後はメニューを保持してカーネルへ渡す構成です。プレビューのメニュー構成は表示例です。', sources: ['modules/nixos/bootloader.nix', 'files/grub/keep-menu-on-boot.patch'] },
-    plymouth: { tag: '02 / BOOT SPLASH', title: '待ち時間も、演出に。', text: 'ポスターと暗い背景を合成したPlymouthテーマ。ラジオ表示、回るレコード、ヒントと進捗バーをスクリプトで描画。ここでは実際の生成背景に、HUDと進捗のWeb再現を重ねています。', sources: ['modules/nixos/plymouth.nix', 'files/plymouth/gtg/gtg.script'] },
-    sddm: { tag: '03 / LOGIN', title: '静止画に、時間を足す。', text: `${data.frames.length}枚のフレームをクロスフェード。緩やかなパンとズームに、走査線とラジオHUDを重ねたQMLのログイン画面。BankGothicで起動画面とトーンを揃えています。`, sources: ['files/sddm/Gently-Blur-SDDM-6/AnimatedBackground.qml', 'files/sddm/Gently-Blur-SDDM-6/IntroOverlay.qml', 'files/sddm/Gently-Blur-SDDM-6/SplashHud.qml'] }
+    grub: { tag: '01 / SYSTEM SELECTION', title: 'Choose your entry point.', text: 'Grand Theft Gentoo artwork, BankGothic type, and a cool-blue selection. A small GRUB patch keeps the selected menu visible until the kernel takes over. Menu entries here are examples.', sources: ['modules/nixos/bootloader.nix', 'files/grub/keep-menu-on-boot.patch'] },
+    plymouth: { tag: '02 / BOOT SPLASH', title: 'Even the wait has a soundtrack.', text: 'A custom Plymouth theme with a radio panel, spinning vinyl, hints, and a progress bar. This recreation layers a browser-rendered HUD over the actual generated background.', sources: ['modules/nixos/plymouth.nix', 'files/plymouth/gtg/gtg.script'] },
+    sddm: { tag: '03 / LOGIN', title: 'Still frames. Moving atmosphere.', text: `${data.frames.length} crossfading frames. Slow pans and zooms, scanlines, and a radio HUD, built in QML. BankGothic ties the login screen to the rest of the boot sequence.`, sources: ['files/sddm/Gently-Blur-SDDM-6/AnimatedBackground.qml', 'files/sddm/Gently-Blur-SDDM-6/IntroOverlay.qml', 'files/sddm/Gently-Blur-SDDM-6/SplashHud.qml'] }
   };
   let stage = 'sddm';
   const motionPreference = matchMedia('(prefers-reduced-motion: reduce)');
@@ -39,11 +39,14 @@
   function setMotion() {
     document.body.classList.toggle('motion-off', paused);
     $('#motion-toggle').setAttribute('aria-pressed', String(paused));
-    $('#motion-toggle').textContent = paused ? '▶ アニメーションを再生' : 'Ⅱ アニメーションを停止';
+    $('#motion-toggle').textContent = paused ? '▶ Resume motion' : 'Ⅱ Pause motion';
+    $('#page-motion-toggle').setAttribute('aria-pressed', String(paused));
+    $('#page-motion-toggle').textContent = paused ? 'Resume motion' : 'Pause motion';
   }
   setMotion();
   motionPreference.addEventListener('change', event => { paused = event.matches; last = performance.now(); setMotion(); });
   $('#motion-toggle').addEventListener('click', () => { paused = !paused; last = performance.now(); setMotion(); });
+  $('#page-motion-toggle').addEventListener('click', () => { paused = !paused; last = performance.now(); setMotion(); });
   function selectStage(name) {
     stage = name; last = performance.now();
     $$('[data-scene]').forEach(node => { node.hidden = node.dataset.scene !== name; });
@@ -56,6 +59,12 @@
     $('#stage-links').replaceChildren(...details.sources.map(path => { const button = document.createElement('button'); button.dataset.source = path; button.textContent = `${path.split('/').pop()} ↗`; return button; }));
     $('#replay-intro').hidden = name !== 'sddm';
     $('#intro-overlay').hidden = true;
+    if (!paused && !motionPreference.matches) {
+      $('#display').animate([
+        { clipPath: 'inset(0 0 100% 0)', transform: 'scale(1.035)' },
+        { clipPath: 'inset(0 0 0 0)', transform: 'scale(1)' }
+      ], { duration: 700, easing: 'cubic-bezier(.16,1,.3,1)' });
+    }
   }
   $$('[data-stage]').forEach(button => button.addEventListener('click', () => selectStage(button.dataset.stage)));
   selectStage('sddm');
@@ -91,14 +100,40 @@
     const code = data.sources[button.dataset.source]; if (code === undefined) return;
     lastTrigger = button;
     $('#source-title').textContent = button.dataset.source; $('#source-code').textContent = code;
-    $('#copy-source').textContent = 'コピー'; dialog.showModal();
+    $('#copy-source').textContent = 'Copy'; dialog.showModal();
     dialog.querySelector('pre').scrollTop = 0;
   });
   $('#close-source').addEventListener('click', () => dialog.close());
   dialog.addEventListener('close', () => lastTrigger?.focus());
   dialog.addEventListener('click', event => { if (event.target === dialog) { const box = dialog.getBoundingClientRect(); if (event.clientX < box.left || event.clientX > box.right || event.clientY < box.top || event.clientY > box.bottom) dialog.close(); } });
   $('#copy-source').addEventListener('click', async () => {
-    try { await navigator.clipboard.writeText($('#source-code').textContent); $('#copy-source').textContent = 'コピーしました'; }
-    catch { const selection = getSelection(), range = document.createRange(); range.selectNodeContents($('#source-code')); selection.removeAllRanges(); selection.addRange(range); $('#copy-source').textContent = '選択しました · Ctrl/Cmd+C'; }
+    try { await navigator.clipboard.writeText($('#source-code').textContent); $('#copy-source').textContent = 'Copied'; }
+    catch { const selection = getSelection(), range = document.createRange(); range.selectNodeContents($('#source-code')); selection.removeAllRanges(); selection.addRange(range); $('#copy-source').textContent = 'Selected · Ctrl/Cmd+C'; }
   });
+  // Only the photograph follows scrolling; no scroll hijacking or pointer tracking.
+  const photograph = $('.hero-capture');
+  let scrollQueued = false;
+  function updateScroll() {
+    scrollQueued = false;
+    const progress = Math.min(1, Math.max(0, scrollY / Math.max(1, $('.intro').offsetHeight)));
+    photograph.style.setProperty('--scroll', paused || motionPreference.matches ? 0 : progress);
+  }
+  addEventListener('scroll', () => {
+    if (!scrollQueued) { scrollQueued = true; requestAnimationFrame(updateScroll); }
+  }, { passive: true });
+  addEventListener('resize', updateScroll);
+  $('#page-motion-toggle').addEventListener('click', updateScroll);
+  $('#motion-toggle').addEventListener('click', updateScroll);
+  motionPreference.addEventListener('change', updateScroll);
+  updateScroll();
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('section-in-view');
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: .1 });
+    $$('.workspace, .sequence').forEach(section => observer.observe(section));
+  }
 })();

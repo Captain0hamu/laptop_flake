@@ -13,10 +13,20 @@ beside `files/` when serving or copying the pages: SDDM frames and the shared
 font are referenced directly from the repository. The login controls and
 terminal output are visual examples, not an actual login or command runner.
 
-The workspace preview recreates the reference terminal using HTML/CSS, with
-the mountain wallpaper copied into `assets/desktop-mountains.jpg` from the
-existing desktop. It does not embed the reference screenshot or its network
-addresses. `assets/nix-snowflake.svg` comes from the installed Nix artwork,
+The English showcase uses `showcase-art-direction.css` for the exhibition
+layout and `showcase.css` for the simulated interfaces. Motion includes a
+masked title entrance, a scroll-linked photograph, section-title reveals and
+boot-stage wipes. Both motion buttons control the page and boot preview;
+`prefers-reduced-motion` disables the additional effects. The system notes
+are tucked into a native disclosure below the main previews.
+
+The workspace includes `assets/workspace-redacted.jpg`, derived from
+`Screenshot_20261022_105143.png`. The local IP, home path, login details and
+session-resume information receive strong baked-in blur; the overall image has
+a light blur and metadata is stripped. This is not a CSS-only effect.
+Never publish the unmodified screenshot. The HTML/CSS terminal below it uses
+an abstract background and static sample values, not a live desktop.
+`assets/nix-snowflake.svg` comes from the installed Nix artwork,
 recolored to match the terminal's blue/green logo. The terminal/editor tabs
 also support Left/Right, Home and End keys. Fastfetch values are static samples.
 The SDDM preview's `assets/sddm-avatar.jpg` is a local copy of the selected

@@ -585,6 +585,12 @@ nav a:hover,.text-link:hover {
 .terminal-switch button[aria-selected=true] span { color:var(--accent); }
 .workspace-label { font:9px var(--mono); letter-spacing:1px; color:#819084; }
 
+.workspace-capture { margin:0 0 28px; border:1px solid var(--line); background:#111514; overflow:hidden; border-radius:8px; }
+.workspace-capture img { display:block; width:100%; height:auto; }
+.workspace-capture figcaption { padding:18px 22px; }
+.workspace-capture figcaption>span { color:var(--accent); font:10px var(--mono); letter-spacing:1px; }
+.workspace-capture figcaption p { margin:8px 0 0; font-size:12px; }
+
 .terminal-demo {
   position:relative;
   isolation:isolate;
@@ -600,7 +606,7 @@ nav a:hover,.text-link:hover {
   position:absolute;
   inset:0;
   z-index:-2;
-  background:url('assets/desktop-mountains.jpg') center bottom / cover;
+  background:radial-gradient(ellipse at 35% 60%,#63473c,transparent 65%),linear-gradient(125deg,#22271f,#161b18 55%,#403128);
 }
 .terminal-demo::after {
   content:'';
