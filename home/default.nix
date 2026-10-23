@@ -11,6 +11,7 @@ in
   imports = [
     ./common.nix
     ./plasma.nix
+    ./easyeffects.nix
     ./neovim.nix
     profileModule
   ];

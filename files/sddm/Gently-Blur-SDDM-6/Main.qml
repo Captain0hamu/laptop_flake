@@ -59,10 +59,47 @@ Item {
         }
     }
 
+    FastBlur {
+        id: frostedWallpaper
+        anchors.fill: parent
+        source: wallpaper
+        radius: 24
+        opacity: 0.85
+        transform: Scale {
+            origin.x: root.width / 2
+            origin.y: root.height / 2
+            xScale: root.entering ? 2 : 1
+            yScale: root.entering ? 2 : 1
+            Behavior on xScale { NumberAnimation { duration: 850; easing.type: Easing.InCubic } }
+            Behavior on yScale { NumberAnimation { duration: 850; easing.type: Easing.InCubic } }
+        }
+    }
+
+    property bool entering: false
+
     Rectangle {
         anchors.fill: parent
         color: "#000000"
         opacity: 0.25
+    }
+
+    Rectangle {
+        anchors.fill: parent
+        anchors.margins: Math.max(20, Math.min(parent.width, parent.height) * 0.035)
+        color: "transparent"
+        radius: 24
+        border.color: "#77a9c9ef"
+        border.width: 1
+    }
+
+    Rectangle {
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: parent.top
+        anchors.topMargin: parent.height * 0.08
+        width: Math.min(420, parent.width * 0.8)
+        height: 2
+        color: "#a9c9ef"
+        opacity: 0.7
     }
 
     FontLoader {
@@ -542,6 +579,7 @@ Item {
             //note SDDM will kill the greeter at some random point after this
             //there is no certainty any transition will finish, it depends on the time it
             //takes to complete the init
+            root.entering = true
             mainStack.opacity = 0
             footer.opacity = 0
         }

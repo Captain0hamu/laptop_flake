@@ -94,3 +94,18 @@ structure. Regenerate the data after changing the configuration or running
 ./graph/update.sh
 xdg-open graph/index.html
 ```
+# Speaker and login appearance
+
+`home/easyeffects.nix` installs a conservative EQ + gentle compressor preset for
+the built-in Fujitsu/Raptor Lake Speaker route only. EasyEffects starts with the
+graphical session; headphones and HDMI are not assigned this preset. The EQ is
+not a measured calibration: adjust its six bands in EasyEffects after listening
+at a safe volume. The preset and device-specific autoload file live under
+`~/.local/share/easyeffects/`.
+
+SDDM, Plasma's lock screen and KSplash use the same animated background assets
+in `files/sddm/Gently-Blur-SDDM-6/anim`. The lock screen keeps Plasma's native
+authentication controls, including its recovery behavior. Both successful
+password unlock and Plasma's startup splash fade/zoom into the desktop; SDDM
+starts the same transition on login success (the display manager may close
+before it completes).

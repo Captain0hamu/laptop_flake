@@ -21,6 +21,10 @@ in
             cp ${../../files/plasma/LauncherHighlight.qml} applets/kickoff/LauncherHighlight.qml
             cp ${../../files/plasma/LauncherToolButton.qml} applets/kickoff/LauncherToolButton.qml
             cp ${../../files/plasma/LauncherTabButton.qml} applets/kickoff/LauncherTabButton.qml
+            ${pkgs.python3}/bin/python ${../../files/plasma/patch-lockscreen.py} desktoppackage/contents/lockscreen/LockScreenUi.qml
+            cp ${../../files/plasma/SharedScene.qml} desktoppackage/contents/lockscreen/SharedScene.qml
+            cp ${../../files/sddm/Gently-Blur-SDDM-6/AnimatedBackground.qml} desktoppackage/contents/lockscreen/AnimatedBackground.qml
+            cp -r ${../../files/sddm/Gently-Blur-SDDM-6/anim} desktoppackage/contents/lockscreen/anim
           '';
         });
       });

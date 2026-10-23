@@ -32,6 +32,15 @@ let
       cp ${../../files/fonts/BankGothic.ttf} "$theme_dir/BankGothic.ttf"
     '';
   };
+  sharedSplash = pkgs.runCommand "shared-login-splash" { } ''
+    dir="$out/share/plasma/look-and-feel/org.razero.shared-login/contents/splash"
+    mkdir -p "$dir"
+    cp ${../../files/plasma/SharedScene.qml} "$dir/SharedScene.qml"
+    cp ${../../files/plasma/Splash.qml} "$dir/Splash.qml"
+    cp ${../../files/sddm/Gently-Blur-SDDM-6/AnimatedBackground.qml} "$dir/AnimatedBackground.qml"
+    cp -r ${../../files/sddm/Gently-Blur-SDDM-6/anim} "$dir/anim"
+    cp ${../../files/plasma/splash-metadata.json} "$out/share/plasma/look-and-feel/org.razero.shared-login/metadata.json"
+  '';
 in
 {
   imports = [ ./plasma-customisation.nix ];
@@ -50,7 +59,7 @@ in
   };
 
   environment = {
-    systemPackages = [ gentlyBlurTheme ];
+    systemPackages = [ gentlyBlurTheme sharedSplash ];
     etc."sddm.conf.d/kde_settings.conf".text = lib.mkForce ''
       [Theme]
       Current=Gently-Blur-SDDM-6

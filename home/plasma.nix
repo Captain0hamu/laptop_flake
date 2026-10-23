@@ -20,4 +20,17 @@ in
     run ${pkgs.kdePackages.kconfig}/bin/kwriteconfig6 \
       --file plasmarc --group Theme --key name ${themeName} --notify
   '';
+  home.file.".config/ksplashrc" = {
+    force = true;
+    text = ''
+      [KSplash]
+      Engine=KSplashQML
+      Theme=org.razero.shared-login
+    '';
+  };
+  # The lockscreen supplies its own scene; do not cover it with the old wallpaper.
+  home.activation.lockWallpaper = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+    run ${pkgs.kdePackages.kconfig}/bin/kwriteconfig6 \
+      --file kscreenlockerrc --group Greeter --key WallpaperPlugin org.kde.color --notify
+  '';
 }

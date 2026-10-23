@@ -79,14 +79,6 @@
     ".config/kitty/kitty.conf".source = ../files/kitty/kitty.conf;
     ".config/fastfetch/config.jsonc".source = ../files/fastfetch/config.jsonc;
     ".bashrc".source = ../files/bash/bashrc;
-    ".config/ksplashrc" = {
-      force = true;
-      text = ''
-        [KSplash]
-        Engine=none
-        Theme=None
-      '';
-    };
   };
 
   programs.git = {
