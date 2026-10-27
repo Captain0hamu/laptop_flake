@@ -1,13 +1,6 @@
 { lib, pkgs, ... }:
 
 let
-  # Backport google/mozc#1594: Qt 6.12 rejects a leading :: in UI class names.
-  mozcForQt = pkgs.mozc.overrideAttrs (old: {
-    postPatch = (old.postPatch or "") + ''
-      substituteInPlace src/gui/dictionary_tool/dictionary_tool.ui \
-        --replace-fail "::mozc::gui::DictionaryContentTableWidget" "mozc::gui::DictionaryContentTableWidget"
-    '';
-  });
   themeSource = ../../files/sddm/Gently-Blur-SDDM-6;
   themeConfig = pkgs.writeText "theme.conf.user" ''
     [General]
@@ -76,7 +69,7 @@ in
     enable = true;
     type = "fcitx5";
     fcitx5.addons = with pkgs; [
-      (fcitx5-mozc.override { mozc = mozcForQt; })
+      fcitx5-mozc
       fcitx5-gtk
       qt6Packages.fcitx5-configtool
     ];
