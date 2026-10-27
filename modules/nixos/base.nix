@@ -5,6 +5,9 @@
     experimental-features = [ "nix-command" "flakes" ];
     max-jobs = 1;
     cores = 2;
+    extra-trusted-public-keys = [
+      "nixos-tailscale-builder-1:MCRmLODczdcmIecEDeEbFsjFRmeTu0YU4vXfMrQDEfQ="
+    ];
   };
 
   time.timeZone = "Asia/Tokyo";

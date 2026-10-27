@@ -1,5 +1,6 @@
 NIXOS_FLAKE_DIR="${NIXOS_FLAKE_DIR:-/home/nix/nixos-flake}"
 NIXOS_FLAKE_HOST="${NIXOS_FLAKE_HOST:-nixos}"
+NIXOS_BUILD_HOST="${NIXOS_BUILD_HOST:-nixos@100.81.40.56}"
 
 _nixos_flake_ref() {
   printf '%s#%s' "$NIXOS_FLAKE_DIR" "$NIXOS_FLAKE_HOST"
@@ -57,11 +58,31 @@ drybuild() {
 }
 
 rebuild_n_switch() {
-  sudo nixos-rebuild switch --flake "$(_nixos_flake_ref)" --impure
-}
-
-rebuild_and_switch() {
-  rebuild_n_switch "$@"
+  local system_path
+  case "${1:-}" in
+    "")
+      sudo nixos-rebuild switch --flake "$(_nixos_flake_ref)" --impure
+      ;;
+    --remote)
+      if (( $# != 1 )); then
+        printf 'Usage: rebuild_n_switch [--remote]\n' >&2
+        return 2
+      fi
+      system_path=$(nix eval --impure --raw \
+        "$NIXOS_FLAKE_DIR#nixosConfigurations.\"$NIXOS_FLAKE_HOST\".config.system.build.toplevel.outPath") || return
+      if nix-store --check-validity "$system_path" 2>/dev/null; then
+        printf '[INFO] Reusing locally built system: %s\n' "$system_path"
+        nixos-rebuild switch --store-path "$system_path" --elevate sudo
+        return
+      fi
+      nixos-rebuild switch --flake "$(_nixos_flake_ref)" --impure \
+        --build-host "$NIXOS_BUILD_HOST" --elevate sudo
+      ;;
+    *)
+      printf 'Usage: rebuild_n_switch [--remote]\n' >&2
+      return 2
+      ;;
+  esac
 }
 
 switch-dev() {

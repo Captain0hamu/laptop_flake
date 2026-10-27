@@ -48,7 +48,25 @@ The shell functions default to:
 ```bash
 NIXOS_FLAKE_DIR=/home/nix/nixos-flake
 NIXOS_FLAKE_HOST=nixos
+NIXOS_BUILD_HOST=nixos@100.81.40.56
 ```
+
+Use `rebuild_n_switch --remote` to evaluate locally and activate the result on
+this machine with sudo. It reuses a completed local system if available;
+otherwise it builds on the SSH host. Set `NIXOS_BUILD_HOST` to use another
+builder. SSH access must work as
+the invoking user; the builder must accept the Nix store paths and support the
+target architecture. Build inputs and outputs are copied to the builder, so
+only use a trusted machine: any secrets included in Nix store paths are shared.
+Without `--remote`, the helper continues to build locally.
+
+The local Nix daemon trusts the public key `nixos-tailscale-builder-1` declared
+in `modules/nixos/base.nix`. The remote daemon must be configured to sign builds
+with its matching private key via `nix.settings.secret-key-files`. Activate that
+configuration on the builder, and activate this local configuration once with
+the normal local rebuild, before using `--remote`. Keep the private key outside
+the Nix store and readable only by root. Trusting this key allows the builder to
+supply store paths used by the local system; it must remain a trusted host.
 
 The login name is `razero` (UID 1000). Its home remains `/home/nix` to keep
 existing paths and VM disk mounts working. Home Manager profiles are
