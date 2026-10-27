@@ -5,6 +5,7 @@ Item {
     id: scene
     property bool showClock: true
     property bool entering: false
+    property bool fadeOnEnter: true
     property date now: new Date()
 
     // Identical animated source and framing on the lock and startup screens.
@@ -81,6 +82,6 @@ Item {
         Behavior on xScale { NumberAnimation { duration: 850; easing.type: Easing.InCubic } }
         Behavior on yScale { NumberAnimation { duration: 850; easing.type: Easing.InCubic } }
     }
-    opacity: entering ? 0 : 1
+    opacity: entering && fadeOnEnter ? 0 : 1
     Behavior on opacity { NumberAnimation { duration: 850; easing.type: Easing.InCubic } }
 }

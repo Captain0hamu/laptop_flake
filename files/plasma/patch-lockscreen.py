@@ -19,13 +19,25 @@ replace_once('    id: lockScreenUi\n', '''    id: lockScreenUi
     SharedScene {
         anchors.fill: parent
         showClock: false // Plasma's native clock keeps the password layout intact.
+        fadeOnEnter: false // Keep the underlying wallpaper hidden until unlock.
         entering: lockScreenUi.entering
     }
+''')
+replace_once('''        function onFailed(kind) {
+''', '''        function onFailed(kind) {
+            if (lockScreenUi.entering) return;
+''')
+replace_once('''            authenticator.stopAuthenticating()
+''', '''            // Stopping PAM can itself emit a failure; mark success first.
+            if (authenticator.hadPrompt) {
+                lockScreenUi.entering = true;
+                rejectPasswordAnimation.stop();
+            }
+            authenticator.stopAuthenticating()
 ''')
 replace_once('''            if (authenticator.hadPrompt) {
                 Qt.quit();
 ''', '''            if (authenticator.hadPrompt) {
-                lockScreenUi.entering = true;
                 unlockTransition.start();
 ''')
 replace_once('    SessionManagement {\n', '''    Timer {
