@@ -26,7 +26,6 @@ in
   boot.initrd.kernelModules = [ "i915" ];
 
   boot.consoleLogLevel = 0;
-  boot.initrd.verbose = false;
 
   boot.kernelParams = [
     "quiet"
