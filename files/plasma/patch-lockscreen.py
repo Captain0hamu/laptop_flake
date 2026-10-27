@@ -29,9 +29,9 @@ replace_once('''        function onFailed(kind) {
 ''')
 replace_once('''            authenticator.stopAuthenticating()
 ''', '''            // Stopping PAM can itself emit a failure; mark success first.
+            // RejectPasswordAnimation exposes start(), but not stop().
             if (authenticator.hadPrompt) {
                 lockScreenUi.entering = true;
-                rejectPasswordAnimation.stop();
             }
             authenticator.stopAuthenticating()
 ''')
