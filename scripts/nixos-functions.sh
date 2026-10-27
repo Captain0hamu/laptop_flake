@@ -72,7 +72,7 @@ rebuild_n_switch() {
         "$NIXOS_FLAKE_DIR#nixosConfigurations.\"$NIXOS_FLAKE_HOST\".config.system.build.toplevel.outPath") || return
       if nix-store --check-validity "$system_path" 2>/dev/null; then
         printf '[INFO] Reusing locally built system: %s\n' "$system_path"
-        nixos-rebuild switch --store-path "$system_path" --elevate sudo
+        nixos-rebuild switch --store-path "$system_path" --no-reexec --elevate sudo
         return
       fi
       nixos-rebuild switch --flake "$(_nixos_flake_ref)" --impure \
