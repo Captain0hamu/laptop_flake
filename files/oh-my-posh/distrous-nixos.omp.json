@@ -92,6 +92,39 @@
       "alignment": "right",
       "segments": [
         {
+          "foreground": "#9DD447",
+          "properties": {
+            "time_format": " <#D4A647>\uf017 03:04:05 PM</> <#47D49E>|</> \uf073 06/01/02 \uf104 January \uf142 Wednesday \uf105"
+          },
+          "style": "plain",
+          "template": "{{ .CurrentDate | date .Format }}",
+          "type": "time"
+        }
+      ],
+      "type": "prompt"
+    },
+    {
+      "alignment": "left",
+      "newline": true,
+      "segments": [
+        {
+          "foreground": "#A1ACC4",
+          "style": "plain",
+          "template": "\u256d\u2500",
+          "type": "text"
+        },
+        {
+          "style": "plain",
+          "template": "  <#6F8AC7>\uf007 {{ .UserName }}</> <#47D49E>|</> <#796FC7>\udb80\udf79 {{ .HostName }}</>",
+          "type": "session"
+        }
+      ],
+      "type": "prompt"
+    },
+    {
+      "alignment": "right",
+      "segments": [
+        {
           "background": "#03DE6C",
           "background_templates": [
             "{{ if gt .Code 0 }}#E44141{{ end }}"
@@ -120,46 +153,6 @@
           "template": " \uf252 {{ .FormattedMs }}",
           "trailing_diamond": "\ue0b0",
           "type": "executiontime"
-        }
-      ],
-      "type": "prompt"
-    },
-    {
-      "alignment": "left",
-      "newline": true,
-      "segments": [
-        {
-          "foreground": "#A1ACC4",
-          "style": "plain",
-          "template": "\u256d\u2500",
-          "type": "text"
-        },
-        {
-          "foreground": "#9DD447",
-          "properties": {
-            "time_format": " <#D4A647>\uf017 03:04:05 PM</> <#47D49E>|</> \uf073 06/01/02 \uf104 January \uf142 Wednesday \uf105"
-          },
-          "style": "plain",
-          "template": "{{ .CurrentDate | date .Format }}",
-          "type": "time"
-        }
-      ],
-      "type": "prompt"
-    },
-    {
-      "alignment": "left",
-      "newline": true,
-      "segments": [
-        {
-          "foreground": "#A1ACC4",
-          "style": "plain",
-          "template": "\u2502",
-          "type": "text"
-        },
-        {
-          "style": "plain",
-          "template": "  <#6F8AC7>\uf007 {{ .UserName }}</> <#47D49E>|</> <#796FC7>\udb80\udf79 {{ .HostName }}</>",
-          "type": "session"
         }
       ],
       "type": "prompt"
