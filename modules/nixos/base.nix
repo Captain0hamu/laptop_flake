@@ -1,13 +1,11 @@
-{ ... }:
+{ local, ... }:
 
 {
   nix.settings = {
     experimental-features = [ "nix-command" "flakes" ];
     max-jobs = 1;
     cores = 2;
-    extra-trusted-public-keys = [
-      "nixos-tailscale-builder-1:MCRmLODczdcmIecEDeEbFsjFRmeTu0YU4vXfMrQDEfQ="
-    ];
+    extra-trusted-public-keys = local.remoteBuildPublicKeys or [ ];
   };
 
   time.timeZone = "Asia/Tokyo";

@@ -1,6 +1,5 @@
 NIXOS_FLAKE_DIR="${NIXOS_FLAKE_DIR:-/home/nix/nixos-flake}"
 NIXOS_FLAKE_HOST="${NIXOS_FLAKE_HOST:-nixos}"
-NIXOS_BUILD_HOST="${NIXOS_BUILD_HOST:-nixos@100.81.40.56}"
 
 _nixos_flake_ref() {
   printf '%s#%s' "$NIXOS_FLAKE_DIR" "$NIXOS_FLAKE_HOST"
@@ -58,7 +57,7 @@ drybuild() {
 }
 
 rebuild_n_switch() {
-  local system_path
+  local system_path build_host
   case "${1:-}" in
     "")
       sudo nixos-rebuild switch --flake "$(_nixos_flake_ref)" --impure
@@ -75,8 +74,17 @@ rebuild_n_switch() {
         nixos-rebuild switch --store-path "$system_path" --no-reexec --elevate sudo
         return
       fi
+      build_host="${NIXOS_BUILD_HOST:-}"
+      if [[ -z "$build_host" && -f "$NIXOS_FLAKE_DIR/local.nix" ]]; then
+        build_host=$(nix eval --impure --raw --file "$NIXOS_FLAKE_DIR/local.nix" \
+          --apply 'local: local.remoteBuildHost or ""') || return
+      fi
+      if [[ -z "$build_host" ]]; then
+        printf '[ERROR] Set remoteBuildHost in local.nix or NIXOS_BUILD_HOST.\n' >&2
+        return 2
+      fi
       nixos-rebuild switch --flake "$(_nixos_flake_ref)" --impure \
-        --build-host "$NIXOS_BUILD_HOST" --elevate sudo
+        --build-host "$build_host" --elevate sudo
       ;;
     *)
       printf 'Usage: rebuild_n_switch [--remote]\n' >&2

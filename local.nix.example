@@ -11,4 +11,7 @@
   userHashedPassword = "$6$CskgfvBHmvASlZ..$yXmOy2JbwfYMlMftpe1vrxiXYBkHyPMaB0MhdEFXHAirK3a1dyYQC7mIbjmZZMnM/v6IYoC01hxRMgYjOgbMG/";
   gitName = "Your Name";
   gitEmail = "you@example.com";
+  # Optional: configure a trusted SSH builder in your private local.nix.
+  remoteBuildHost = "";
+  remoteBuildPublicKeys = [ ];
 }

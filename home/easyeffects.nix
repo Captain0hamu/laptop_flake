@@ -61,16 +61,4 @@ in
     device-profile = "Speaker";
     preset-name = name;
   };
-  systemd.user.services.easyeffects = {
-    Unit = {
-      Description = "EasyEffects speaker processing";
-      After = [ "pipewire.service" "wireplumber.service" ];
-    };
-    Service = {
-      ExecStart = "${pkgs.easyeffects}/bin/easyeffects --service-mode";
-      Restart = "on-failure";
-      RestartSec = 3;
-    };
-    Install.WantedBy = [ "graphical-session.target" ];
-  };
 }
