@@ -54,7 +54,12 @@ replace_once('''        WallpaperFader {
             // Keep its state transitions for the clock and controls, but don't
             // paint Plasma's wallpaper over the animated scene.
             opacity: 0
-            anchors.fill: parent
+             anchors.fill: parent
+''')
+replace_once('''                showUserList: userList.y + mainStack.y > 0
+''', '''                // Hide the redundant avatar for a single session, but keep
+                // the list available when switching between multiple sessions.
+                showUserList: userList.count > 1 && userList.y + mainStack.y > 0
 ''')
 replace_once('''    MouseArea {
         id: lockScreenRoot
