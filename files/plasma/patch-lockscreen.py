@@ -36,6 +36,14 @@ replace_once('    SessionManagement {\n', '''    Timer {
 
     SessionManagement {
 ''')
+replace_once('''        WallpaperFader {
+            anchors.fill: parent
+''', '''        WallpaperFader {
+            // Keep its state transitions for the clock and controls, but don't
+            // paint Plasma's wallpaper over the animated scene.
+            opacity: 0
+            anchors.fill: parent
+''')
 replace_once('''    MouseArea {
         id: lockScreenRoot
 ''', '''    MouseArea {
