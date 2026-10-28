@@ -40,6 +40,7 @@ in
       tree-sitter
       curl
       firefox
+      tor-browser
       fastfetch
       (vim-full.customize {
         name = "vim";
