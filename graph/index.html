@@ -142,19 +142,19 @@
       .panel-head { align-items: flex-start; flex-direction: column; }
     }
   </style>
+  <link rel="stylesheet" href="dependency-design.css">
 </head>
 <body>
   <main>
-    <nav aria-label="Views" style="display:flex;gap:24px;flex-wrap:wrap;margin-bottom:30px;font-size:.85rem">
-      <a href="showcase.html" style="color:var(--cyan)">← Desktop showcase</a>
-      <span aria-current="page" style="color:var(--muted)">Dependency map</span>
+    <nav class="map-nav" aria-label="Views">
+      <a class="map-wordmark" href="showcase.html">razero <span>/</span> nixos</a>
+      <div><a href="showcase.html">← Showcase</a><span aria-current="page">Dependency map</span></div>
     </nav>
-    <div class="eyebrow">~/nixos-flake</div>
-    <h1>Configuration dependency map</h1>
+    <div class="map-hero"><div><div class="eyebrow">SYSTEM ATLAS <span> / </span> NIXOS FLAKE</div>
+    <h1>Under<br><em>the hood.</em></h1></div>
     <p class="lead">
-      How this repository turns its flake inputs into NixOS, Home Manager and
-      development-shell outputs. Select any node to open the file it describes.
-    </p>
+      One configuration. Many moving parts.<br>Explore the files and connections behind the desktop.
+    </p></div>
 
     <div class="badges">
       <span class="badge">system: x86_64-linux</span>
@@ -164,6 +164,25 @@
       <span class="badge">stateVersion: 25.05</span>
     </div>
 
+    <section class="explorer" aria-labelledby="explorer-heading">
+      <div class="explorer-heading"><div><span class="eyebrow">01 / SOURCE CONSTELLATION</span><h2 id="explorer-heading">Follow the connections.</h2></div><p>Real references from the repository scan.<br>Select a node to trace its connections.</p></div>
+      <div class="explorer-shell">
+        <div class="explorer-toolbar"><div><span class="explorer-indicator"></span> REPOSITORY / LIVE MAP</div><div class="explorer-tools"><button id="graph-motion" type="button" aria-pressed="false">Pause motion</button><button id="graph-reset" type="button">Reset view ↗</button></div></div>
+        <div class="explorer-layout">
+          <div class="network-stage"><div class="network-label"><span>LOCAL REFERENCES</span><span id="graph-count">LOADING</span></div><svg id="network-graph" viewBox="0 0 1000 720" role="group" aria-label="Interactive graph of local file references"></svg><div class="network-hint">DRAG NODES <span> / </span> SELECT TO TRACE</div></div>
+          <aside class="network-sidebar" aria-label="Graph explorer">
+            <label for="graph-search">FIND A FILE</label><input id="graph-search" type="search" placeholder="Search paths..." autocomplete="off"><div id="graph-search-results" class="search-results" aria-label="Matching files"></div>
+            <div class="network-details" id="graph-details" aria-live="polite"><span class="eyebrow">NODE / SELECTED</span><h3>Start anywhere.</h3><p>Select a node or search for a file to inspect its connections.</p></div>
+            <div class="network-legend"><span><i class="legend-root"></i> FLAKE / ROOT</span><span><i class="legend-system"></i> NIXOS</span><span><i class="legend-home"></i> HOME</span><span><i class="legend-asset"></i> FILES / OTHER</span></div>
+          </aside>
+        </div>
+      </div>
+      <p class="explorer-note">A best-effort source scan, not a complete evaluated dependency graph. Computed paths may be absent. Open a file to see its source.</p>
+      <noscript><p>JavaScript is required for the interactive graph. The architecture diagram below remains available.</p></noscript>
+    </section>
+
+    <details class="architecture">
+    <summary><span><span class="eyebrow">02 / ARCHITECTURE</span><strong>The bigger picture.</strong></span><span class="architecture-toggle">OPEN DIAGRAM ＋</span></summary>
     <section class="panel">
       <div class="panel-head">
         <h2>Dependency graph</h2>
@@ -354,6 +373,7 @@
         </svg>
       </div>
     </section>
+    </details>
 
     <section class="panel" style="margin-top:18px">
       <div class="panel-head">
@@ -427,6 +447,7 @@
     </footer>
   </main>
   <script src="./dependency-data.js"></script>
+  <script src="./dependency-explorer.js" defer></script>
   <script>
     (() => {
       const data = window.NIX_GRAPH_DATA;

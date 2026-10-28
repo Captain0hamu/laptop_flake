@@ -84,9 +84,13 @@ The browser overlays approximate the actual QML/Plymouth UI. They are labelled
 as recreations and do not claim to be screenshots or recordings. Animation
 can be paused and respects `prefers-reduced-motion`.
 
-`index.html` is a self-contained viewer for this repository's flake structure.
-Its evaluated data is stored in `dependency-data.js`, so the page also works
-when opened directly with a `file://` URL.
+`index.html` presents an interactive map of the local references in
+`dependency-data.js`. Search or select a node to see incoming and outgoing
+references; drag nodes to rearrange the map. The motion control pauses the
+layout animation, and the page respects `prefers-reduced-motion`. The original
+architecture diagram and evaluated package data remain available below the map.
+The source scan is best-effort, not a complete evaluation of dynamic Nix paths.
+The page works when opened directly with a `file://` URL as well as on the web.
 
 Regenerate the data after changing the configuration or running
 `nix flake update`:

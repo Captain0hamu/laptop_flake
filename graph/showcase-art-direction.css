@@ -461,3 +461,21 @@ footer a:last-child { color:var(--accent); }
 @media(min-width:1600px) { .tor-feature::before { inset-inline:calc((1440px - 100vw) / 2); } }
 @media(max-width:850px) { .tor-showcase { grid-template-columns:1fr; } .tor-side { max-width:600px; } .tor-intro h2 { font-size:clamp(75px,14vw,120px); } }
 @media(max-width:540px) { .tor-intro { align-items:start; flex-direction:column; gap:25px; } .tor-intro h2 { font-size:20vw; } .tor-window-bar { font-size:8px; } .tor-screen { padding:20px 15px; } .tor-screen-meta,.tor-screen-bottom { font-size:8px; letter-spacing:0; } .tor-screen figure { margin:38px 0; } .tor-footer { flex-direction:column; } }
+
+/* A quiet sign-off, with the repository one deliberate click away. */
+.showcase-footer { display:grid; grid-template-columns:1fr minmax(280px,440px); align-items:start; gap:50px; padding-block:60px 75px; }
+.footer-identity { display:flex; flex-direction:column; align-items:start; }
+.footer-kicker { color:#62749a; font:9px/1.5 var(--mono); letter-spacing:1.5px; }
+.showcase-footer .footer-name { display:block; margin-top:18px; color:#1c263b; font:400 clamp(30px,3.5vw,48px)/1 BankGothic,Arial,sans-serif; letter-spacing:-.05em; }
+.showcase-footer .footer-name span { color:#6383d3; }
+.footer-identity p { margin-top:14px; color:#69758a; font-size:12px; }
+.footer-links { border-top:1px solid #bbc3d1; }
+.footer-links a { display:flex; align-items:center; justify-content:space-between; gap:20px; padding:17px 0; border-bottom:1px solid #bbc3d1; color:#1c263b; transition:color 180ms,border-color 180ms; }
+.footer-links a>span:first-child { display:flex; flex-direction:column; gap:4px; }
+.footer-links small { color:#7183a7; font:9px/1.4 var(--mono); letter-spacing:1px; }
+.footer-links b { font-size:14px; font-weight:500; }
+.footer-links a>span:last-child { display:grid; place-items:center; width:36px; height:36px; border:1px solid #b6c1d8; border-radius:50%; color:#294fc5; font-size:17px; transition:background 180ms,color 180ms,transform 180ms; }
+.footer-links a:hover { color:#294fc5; border-color:#294fc5; }
+.footer-links a:hover>span:last-child { color:#fff; background:#294fc5; transform:translate(3px,-3px); }
+@media(max-width:700px) { .showcase-footer { grid-template-columns:1fr; gap:35px; padding-block:45px 55px; } }
+@media(prefers-reduced-motion:reduce) { .footer-links a,.footer-links a>span:last-child { transition:none; } }
