@@ -75,14 +75,24 @@
         "razero@dev" = mkStandaloneHome "dev";
         "razero@lab" = mkStandaloneHome "lab";
       };
-      devShells.${system}.default = pkgs.mkShell {
-        packages = with pkgs; [
-          dotnet-sdk_10
-          csharp-ls
-          netcoredbg
-        ];
-        DOTNET_ROOT = "${pkgs.dotnet-sdk_10}/share/dotnet";
-        DOTNET_CLI_TELEMETRY_OPTOUT = "1";
+      devShells.${system} = {
+        default = pkgs.mkShell {
+          packages = with pkgs; [
+            dotnet-sdk_10
+            csharp-ls
+            netcoredbg
+          ];
+          DOTNET_ROOT = "${pkgs.dotnet-sdk_10}/share/dotnet";
+          DOTNET_CLI_TELEMETRY_OPTOUT = "1";
+        };
+        tor = pkgs.mkShell {
+          packages = with pkgs; [ tor torsocks curl ];
+
+          shellHook = ''
+            echo "Tor shell: start a Tor client, then use torsocks <command>."
+            echo "See the Tor development shell section in README.md."
+          '';
+        };
       };
 
     };

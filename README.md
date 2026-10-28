@@ -72,6 +72,37 @@ existing paths and VM disk mounts working. Home Manager profiles are
 `razero@dev` and `razero@lab`. The recovery account `razero-trial` uses UID
 1001 and `/home/razero`; it does not receive the main Home Manager profile.
 
+## Tor development shell
+
+From any working directory, enter the shared shell without changing that
+directory or loading the local project's dev shell:
+
+```bash
+nix develop /home/nix/nixos-flake#tor --impure
+```
+
+The shell provides `tor`, `torsocks`, and `curl`, but does not start Tor or
+route commands through it automatically. To run a Tor client locally, start it
+in one terminal and leave it running:
+
+```bash
+mkdir -p "$HOME/.local/share/tor-dev-shell"
+tor --SocksPort 127.0.0.1:9050 --DataDirectory "$HOME/.local/share/tor-dev-shell"
+```
+
+Wait for Tor to report `Bootstrapped 100%`. In another terminal, enter the Tor
+shell and run supported commands explicitly through Tor:
+
+```bash
+torsocks curl https://check.torproject.org/api/ip
+```
+
+The response should report `"IsTor": true`. Stop the Tor client with Ctrl-C
+when finished. If a Tor client is already listening on port 9050, use it
+instead of starting a second one. Ordinary commands are not automatically
+proxied, and `torsocks` cannot cover every application or UDP traffic; this
+shell does not isolate networking or block direct connections.
+
 ## Assets and reproducibility
 
 SDDM's animated background reads `anim/frames.js` and `anim/*.jpg` relative to
