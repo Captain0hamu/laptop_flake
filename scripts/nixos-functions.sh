@@ -9,6 +9,46 @@ _home_flake_ref() {
   printf '%s#razero@%s' "$NIXOS_FLAKE_DIR" "$1"
 }
 
+tor-start() {
+  local data_dir="$HOME/.local/share/tor-dev-shell"
+  mkdir -p -- "$data_dir" || return
+  nix develop --impure "$NIXOS_FLAKE_DIR#tor" --command \
+    tor --SocksPort 127.0.0.1:9050 --DataDirectory "$data_dir" \
+    --RunAsDaemon 1 --PidFile "$data_dir/tor.pid" \
+    --Log "notice file $data_dir/tor.log" || return
+  printf 'Tor started. Check bootstrap progress: tail -f "%s/tor.log"\n' "$data_dir"
+}
+
+tor-stop() {
+  local data_dir="$HOME/.local/share/tor-dev-shell" pid arg
+  local found_pidfile=0 found_datadir=0 previous=""
+  local -a args
+  if ! read -r pid < "$data_dir/tor.pid" || [[ ! "$pid" =~ ^[0-9]+$ ]] || (( pid < 2 )); then
+    printf 'Tor PID file missing or invalid: %s/tor.pid\n' "$data_dir" >&2
+    return 1
+  fi
+  if [[ "$(readlink "/proc/$pid/exe")" != */bin/tor ]] ||
+    ! mapfile -d '' -t args < "/proc/$pid/cmdline"; then
+    printf 'Tor process %s is not running or cannot be verified.\n' "$pid" >&2
+    return 1
+  fi
+  for arg in "${args[@]}"; do
+    [[ "$previous" == --PidFile && "$arg" == "$data_dir/tor.pid" ]] && found_pidfile=1
+    [[ "$previous" == --DataDirectory && "$arg" == "$data_dir" ]] && found_datadir=1
+    previous="$arg"
+  done
+  if (( ! found_pidfile || ! found_datadir )); then
+    printf 'Process %s does not match this Tor client; refusing to stop it.\n' "$pid" >&2
+    return 1
+  fi
+  kill -TERM "$pid" || return
+  printf 'Sent shutdown signal to Tor (PID %s).\n' "$pid"
+}
+
+tor-shell() {
+  nix develop --impure "$NIXOS_FLAKE_DIR#tor"
+}
+
 lsgen() {
   sudo nix-env --list-generations --profile /nix/var/nix/profiles/system
 }

@@ -1,7 +1,17 @@
 # nixos-flake
 
 NixOS and home-manager configuration for this machine, kept together with the
-local SDDM theme, virtual-camera support, and a dependency-graph viewer.
+local SDDM theme, virtual-camera support, and a dependency-graph viewer. It
+also provides shared development shells and Tor Browser.
+
+## Contents
+
+- [Setup](#setup)
+- [Common commands](#common-commands)
+- [Tor development shell](#tor-development-shell)
+- [Assets and reproducibility](#assets-and-reproducibility)
+- [Dependency graph](#dependency-graph)
+- [Speaker and login appearance](#speaker-and-login-appearance)
 
 ## Layout
 
@@ -38,17 +48,17 @@ the configuration, and never commit your real `local.nix` or private keys.
 Nix store contents may be readable by other local users; do not put plaintext
 secrets in values that become store paths.
 
-## Common Commands
+## Common commands
 
-```bash
-drybuild
-rebuild_n_switch
-loadgen
-switch-dev
-switch-lab
-build-dev
-build-lab
-```
+| Command | Purpose |
+| --- | --- |
+| `drybuild` | Check the system build without switching. |
+| `rebuild_n_switch` | Build and activate the NixOS configuration. |
+| `loadgen` | Build the configuration and select it for the next boot. |
+| `switch-dev`, `switch-lab` | Activate the corresponding Home Manager profile. |
+| `build-dev`, `build-lab` | Build a Home Manager profile without activating it. |
+| `tor-start`, `tor-stop` | Start or stop the shared Tor client. |
+| `tor-shell` | Enter the shared Tor development shell. |
 
 The shell functions default to:
 
@@ -74,34 +84,66 @@ existing paths and VM disk mounts working. Home Manager profiles are
 
 ## Tor development shell
 
-From any working directory, enter the shared shell without changing that
-directory or loading the local project's dev shell:
+Tor Browser is installed as a system package and routes its own browser traffic
+through Tor. The separate development shell below is for command-line tools;
+it does not use or control Tor Browser's client.
+
+### Start and verify the client
+
+From any working directory, start a Tor client in the background:
+
+```bash
+tor-start
+```
+
+Check its log and wait for `Bootstrapped 100%` for the current launch (logs
+are retained across launches). Press Ctrl-C to stop viewing the log; Tor keeps
+running:
+
+```bash
+tail -f "$HOME/.local/share/tor-dev-shell/tor.log"
+```
+
+Then enter the shared shell without changing the working directory or loading
+the local project's dev shell:
+
+```bash
+tor-shell
+```
+
+These functions are installed with the system shell configuration. To use
+them in an existing Bash session before rebuilding, run
+`source /home/nix/nixos-flake/scripts/nixos-functions.sh`. Alternatively, enter
+the shell directly:
 
 ```bash
 nix develop /home/nix/nixos-flake#tor --impure
 ```
 
 The shell provides `tor`, `torsocks`, and `curl`, but does not start Tor or
-route commands through it automatically. To run a Tor client locally, start it
-in one terminal and leave it running:
-
-```bash
-mkdir -p "$HOME/.local/share/tor-dev-shell"
-tor --SocksPort 127.0.0.1:9050 --DataDirectory "$HOME/.local/share/tor-dev-shell"
-```
-
-Wait for Tor to report `Bootstrapped 100%`. In another terminal, enter the Tor
-shell and run supported commands explicitly through Tor:
+route commands through it automatically. Run supported commands explicitly
+through Tor:
 
 ```bash
 torsocks curl https://check.torproject.org/api/ip
 ```
 
-The response should report `"IsTor": true`. Stop the Tor client with Ctrl-C
-when finished. If a Tor client is already listening on port 9050, use it
-instead of starting a second one. Ordinary commands are not automatically
-proxied, and `torsocks` cannot cover every application or UDP traffic; this
-shell does not isolate networking or block direct connections.
+The response should report `"IsTor": true`. Run `exit` to leave the shell;
+this does not stop the Tor client. When finished, stop the client separately:
+
+```bash
+tor-stop
+```
+
+The client uses `127.0.0.1:9050` and stores its state, PID file and log in
+`~/.local/share/tor-dev-shell/`. If another Tor client already listens on port
+9050, use it instead of starting a second one; `tor-stop` only stops the client
+started by `tor-start`.
+
+**Privacy limits:** ordinary commands are not automatically proxied, and
+`torsocks` cannot cover every application or UDP traffic. This shell does not
+isolate networking or block direct connections. The project's own dev shell
+is not automatically combined with the shared Tor shell.
 
 ## Assets and reproducibility
 
@@ -142,7 +184,7 @@ structure. Regenerate the data after changing the configuration or running
 ./graph/update.sh
 xdg-open graph/index.html
 ```
-# Speaker and login appearance
+## Speaker and login appearance
 
 `home/easyeffects.nix` installs a conservative EQ + gentle compressor preset for
 the built-in Fujitsu/Raptor Lake Speaker route only. Start EasyEffects manually
