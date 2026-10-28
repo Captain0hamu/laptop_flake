@@ -12,7 +12,7 @@ body { background:#090c17; color:var(--ink); }
 .wordmark-slash { color:#91a9e9; }
 .intro::before {
   bottom:0;
-  background:linear-gradient(110deg,#101b39ed,#172344d9 56%,#111122e8),url('assets/showcase-intro.jpg') center/cover;
+  background:linear-gradient(110deg,#101b39d4,#172344bf 56%,#111122ce),url('assets/showcase-intro.jpg') center/cover;
 }
 .intro h1 { text-shadow:0 2px 30px #0008; }
 .hero-capture>a { box-shadow:0 25px 70px #000a,0 0 0 1px #91acf044; }
