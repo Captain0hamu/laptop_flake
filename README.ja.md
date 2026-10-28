@@ -85,6 +85,8 @@ tail -f "$HOME/.local/share/tor-dev-shell/tor.log"
 tor-shell
 ```
 
+`tor-start` と `tor-shell` では、端末のサイズに合わせたバナーが表示されます。端末のサイズを変更した後は、シェル内で `tor-banner` を実行すると再表示できます。環境変数 `NO_COLOR` を設定すると色を無効にできます。
+
 これらの関数はシステムのシェル設定で読み込まれます。再ビルド前のBashセッションですぐに使うには、`source /home/nix/nixos-flake/scripts/nixos-functions.sh` を実行してください。シェルには次のコマンドでも直接入れます。
 
 ```bash

@@ -11,6 +11,10 @@ _home_flake_ref() {
 
 tor-start() {
   local data_dir="$HOME/.local/share/tor-dev-shell"
+  if [[ -t 1 && -r "$NIXOS_FLAKE_DIR/scripts/tor-banner.sh" ]]; then
+    source "$NIXOS_FLAKE_DIR/scripts/tor-banner.sh"
+    tor-banner start
+  fi
   mkdir -p -- "$data_dir" || return
   nix develop --impure "$NIXOS_FLAKE_DIR#tor" --command \
     tor --SocksPort 127.0.0.1:9050 --DataDirectory "$data_dir" \

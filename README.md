@@ -113,6 +113,10 @@ the local project's dev shell:
 tor-shell
 ```
 
+The welcome banners for `tor-start` and `tor-shell` adapt to the terminal size.
+After resizing the terminal, run `tor-banner` inside the shell to redraw its
+banner. Set `NO_COLOR` to disable the colors.
+
 These functions are installed with the system shell configuration. To use
 them in an existing Bash session before rebuilding, run
 `source /home/nix/nixos-flake/scripts/nixos-functions.sh`. Alternatively, enter
