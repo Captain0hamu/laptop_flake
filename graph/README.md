@@ -45,7 +45,9 @@ layout, `showcase.css` for the simulated interfaces, and
 original illustrated office background is `assets/after-hours-office.svg`.
 The Daily Driver background is the local `3899617.jpg`, tracked as
 `assets/desktop-mountains.jpg`; Go onion uses `assets/tor-eye.jpg`, derived
-from the selected local wallpaper with metadata removed.
+from the selected local wallpaper with metadata removed. The introductory
+background is `assets/showcase-intro.jpg`, derived from the selected local
+wallpaper with metadata removed, while Power on uses the GRUB preview.
 Motion includes a
 masked title entrance, a scroll-linked photograph, section-title reveals,
 stage transitions and the scene handoff. The page-header control pauses the
