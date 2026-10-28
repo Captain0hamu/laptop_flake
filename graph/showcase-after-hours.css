@@ -21,7 +21,7 @@ body { background:#090c17; color:var(--ink); }
   background:linear-gradient(115deg,#172847bc,#263c5ab8 55%,#282b49b7),url('assets/desktop-mountains.jpg') center/cover;
 }
 .tor-feature::before {
-  background:radial-gradient(ellipse at 25% 35%,#4b2c6077,transparent 55%),linear-gradient(110deg,#100d1af2,#21152de8),url('assets/tor-eye.jpg') center/cover;
+  background:radial-gradient(ellipse at 25% 35%,#4b2c6077,transparent 55%),linear-gradient(110deg,#100d1ac4,#21152dba),url('assets/tor-eye.jpg') center/cover;
 }
 .sequence, .underneath { position:relative; isolation:isolate; }
 .sequence::before, .underneath::before {
