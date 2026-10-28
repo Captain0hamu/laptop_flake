@@ -43,6 +43,9 @@ The English showcase uses `showcase-art-direction.css` for the exhibition
 layout, `showcase.css` for the simulated interfaces, and
 `showcase-after-hours.css` for its darker atmospheric backgrounds. The
 original illustrated office background is `assets/after-hours-office.svg`.
+The Daily Driver background is the local `3899617.jpg`, tracked as
+`assets/desktop-mountains.jpg`; Go onion uses `assets/tor-eye.jpg`, derived
+from the selected local wallpaper with metadata removed.
 Motion includes a
 masked title entrance, a scroll-linked photograph, section-title reveals,
 stage transitions and the scene handoff. The page-header control pauses the

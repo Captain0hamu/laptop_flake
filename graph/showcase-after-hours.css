@@ -21,7 +21,7 @@ body { background:#090c17; color:var(--ink); }
   background:linear-gradient(115deg,#0b162beF,#15213aeb 55%,#16152bea),url('assets/desktop-mountains.jpg') center/cover;
 }
 .tor-feature::before {
-  background:radial-gradient(ellipse at 25% 35%,#4b2c6077,transparent 55%),linear-gradient(110deg,#100d1af2,#21152de8),url('assets/plymouth-background.png') center/cover;
+  background:radial-gradient(ellipse at 25% 35%,#4b2c6077,transparent 55%),linear-gradient(110deg,#100d1af2,#21152de8),url('assets/tor-eye.jpg') center/cover;
 }
 .sequence, .underneath { position:relative; isolation:isolate; }
 .sequence::before, .underneath::before {
@@ -35,6 +35,11 @@ body { background:#090c17; color:var(--ink); }
   background-position:center,center top;
   background-size:100% 100%,100% auto;
   background-repeat:no-repeat;
+}
+.sequence::before {
+  background-image:linear-gradient(110deg,#101529,#171329);
+  background-position:center;
+  background-size:100% 100%;
 }
 .sequence .section-heading h2 { color:#bdcfff; }
 /* Keep the entire 16:10 boot artwork visible and fit the viewer on screen. */
