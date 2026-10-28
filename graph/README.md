@@ -9,6 +9,15 @@ directly:
 xdg-open graph/showcase.html
 ```
 
+For an internet-facing deployment, `deploy/update.sh` fetches the public
+GitHub `main` branch and atomically publishes only `graph/`, the shared font,
+and SDDM animation files. `deploy/serve.py` serves that snapshot on loopback,
+without directory listings or links outside the snapshot. The deployed service
+and its timer run these scripts from an independently installed copy; a GitHub
+update does not execute code from the fetched repository. The checked-in
+`showcase-data.js` and `dependency-data.js` are published as-is, so regenerate
+and commit them when their inputs change.
+
 No npm packages, external fonts or CDN scripts are required. Keep `graph/`
 beside `files/` when serving or copying the pages: SDDM frames, the shared
 scene source and the shared font are referenced directly from the repository.
@@ -45,6 +54,10 @@ an abstract background and static sample values, not a live desktop.
 `assets/nix-snowflake.svg` comes from the installed Nix artwork,
 recolored to match the terminal's blue/green logo. The terminal/editor tabs
 also support Left/Right, Home and End keys. Fastfetch values are static samples.
+The Tor feature uses `assets/tor-shell-crop.png`, cropped from the 28 October
+2026 terminal screenshot to omit the prompt and project path, with metadata
+removed. It is a real capture, not a live Tor status display. Its source
+buttons show the allowlisted shell, banner and helper scripts.
 The SDDM preview's `assets/sddm-avatar.jpg` is a local copy of the selected
 `artworks-jMsWPOeOHp4qXf2j-Jt0oZA-t500x500.jpg` user image.
 

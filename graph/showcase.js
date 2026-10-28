@@ -454,6 +454,6 @@
         observer.unobserve(entry.target);
       });
     }, { threshold: .1 });
-    $$('.workspace, .sequence').forEach(section => observer.observe(section));
+    $$('.workspace, .tor-feature, .sequence').forEach(section => observer.observe(section));
   }
 })();
