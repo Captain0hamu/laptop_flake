@@ -6,7 +6,8 @@
 <title>razero / nixos — Personal desktop</title>
 <link rel="stylesheet" href="showcase.css">
 <link rel="stylesheet" href="showcase-art-direction.css">
-<script src="showcase-data.js" defer></script><script src="showcase.js" defer></script>
+<link rel="stylesheet" href="showcase-after-hours.css">
+<script src="showcase-data.js" defer></script><script src="showcase-after-hours-player.js" defer></script><script src="showcase-after-hours.js" defer></script>
 </head>
 <body>
 <header class="navigation"><a class="wordmark" href="showcase.html">razero<span class="wordmark-slash"> / </span>nixos</a><nav aria-label="Main navigation"><a href="#workspace">Workspace</a><a href="#tor">Tor shell</a><a href="#sequence">Boot & login</a><a href="index.html">Dependency map ↗</a><button id="page-motion-toggle" type="button" aria-pressed="false">Pause motion</button></nav></header>
@@ -16,10 +17,10 @@
   <figure class="hero-capture"><a href="assets/workspace-redacted.jpg" target="_blank" rel="noopener" aria-label="Enlarge the desktop screenshot with sensitive details blurred"><img src="assets/workspace-redacted.jpg" alt="A three-pane Kitty workspace with fastfetch and a Nix configuration diff over a game wallpaper." width="1920" height="1200" fetchpriority="high"></a><figcaption><span>Plasma 6 / Kitty / Bash</span><span>22 Oct 2026 — Sensitive details blurred</span></figcaption></figure>
 </section>
 <section id="sequence" class="sequence" aria-labelledby="sequence-title">
-<div class="section-heading"><div><span class="eyebrow">Boot & login</span><h2 id="sequence-title">Power<br>on.</h2></div><p>Four stages. One scene.<br>A Grand Theft Gentoo boot sequence.<br>Play it through, or pick a chapter.</p></div>
+<div class="section-heading"><div><span class="eyebrow">Boot & login</span><h2 id="sequence-title">Power<br>on.</h2></div><p>Four stages. One scene.<br>A Grand Theft Gentoo boot sequence.<br>Playing automatically, or pick a chapter.</p></div>
 <div class="viewer" id="sequence-viewer">
   <div class="viewer-top"><span><i class="status-dot"></i> BOOT EXPERIENCE</span><span class="preview-label">WEB RECREATION · NOT A SCREEN RECORDING</span></div>
-  <div class="sequence-player">
+  <div class="sequence-player" hidden>
     <button id="sequence-play" class="sequence-play" type="button" aria-label="Play boot sequence"><span aria-hidden="true">▶</span></button>
     <div class="sequence-timeline">
       <div class="sequence-track" id="sequence-track" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
@@ -53,9 +54,9 @@
 </div>
 <div class="scene-controls" role="group" aria-label="Boot stages">
   <button data-stage="grub" class="selected" aria-pressed="true" data-time="00:00"><span>01</span><b>GRUB</b><small>Choose a system.</small></button>
-  <button data-stage="plymouth" aria-pressed="false" data-time="00:02"><span>02</span><b>Plymouth</b><small>Make the wait count.</small></button>
-  <button data-stage="sddm" aria-pressed="false" data-time="00:05"><span>03</span><b>SDDM</b><small>Welcome back.</small></button>
-  <button data-stage="shared" aria-pressed="false" data-time="00:09"><span>04</span><b>Lock<span class="stage-suffix"> / Splash</span></b><small>Same scene, new surface.</small></button>
+  <button data-stage="plymouth" aria-pressed="false" data-time="00:03"><span>02</span><b>Plymouth</b><small>Make the wait count.</small></button>
+  <button data-stage="sddm" aria-pressed="false" data-time="00:12"><span>03</span><b>SDDM</b><small>Welcome back.</small></button>
+  <button data-stage="shared" aria-pressed="false" data-time="00:23"><span>04</span><b>Lock<span class="stage-suffix"> / Splash</span></b><small>Same scene, new surface.</small></button>
 </div>
 <div class="stage-notes"><div><span id="stage-eyebrow" class="eyebrow">01 / SYSTEM SELECTION</span><h3 id="stage-title">Choose your entry point.</h3></div><div><p id="stage-description">Grand Theft Gentoo artwork, BankGothic type, and a cool-blue selection. A small GRUB patch keeps the selected menu visible until the kernel takes over. Menu entries here are examples.</p><div id="stage-links" class="source-links"></div><button class="text-link" type="button" id="replay-intro" hidden>Replay intro ↻</button></div></div>
 <div class="scene-specs" aria-label="Shared scene specification">

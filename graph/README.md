@@ -26,10 +26,10 @@ scene source and the shared font are referenced directly from the repository.
 The login controls and terminal output are visual examples, not an actual
 login or command runner.
 
-The boot player runs a 15.2-second sequence: GRUB, Plymouth, SDDM, the shared
-lock/splash scene, then the Plasma title card. Play continues from the current
-timeline position; the four chapter tabs seek to a stage. The range input,
-stage buttons, play button and shared-scene controls are keyboard accessible.
+The boot sequence automatically loops through GRUB, Plymouth, SDDM, the shared
+lock/splash scene, then the Plasma title card. It runs while the viewer is
+visible and page motion is enabled. The four keyboard-accessible chapter tabs
+seek to a stage; shared-scene controls are also keyboard accessible.
 The lock and splash surfaces share one scene, and **Enter the session** runs
 the 850 ms zoom into the desktop card. Chapter deep links are supported:
 
@@ -40,11 +40,14 @@ showcase.html?stage=shared&mode=splash
 ```
 
 The English showcase uses `showcase-art-direction.css` for the exhibition
-layout and `showcase.css` for the simulated interfaces. Motion includes a
+layout, `showcase.css` for the simulated interfaces, and
+`showcase-after-hours.css` for its darker atmospheric backgrounds. The
+original illustrated office background is `assets/after-hours-office.svg`.
+Motion includes a
 masked title entrance, a scroll-linked photograph, section-title reveals,
-stage transitions and the scene handoff. The boot player pauses the sequence;
-the page-header control pauses both the sequence and the additional page
-motion. `prefers-reduced-motion` starts the page with motion off. The five-value
+stage transitions and the scene handoff. The page-header control pauses the
+sequence and additional page motion. `prefers-reduced-motion` starts the page
+with motion off. The five-value
 strip under the player links each number to the file that defines it.
 
 The workspace includes `assets/workspace-redacted.jpg`, derived from

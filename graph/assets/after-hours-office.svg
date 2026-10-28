@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="wall" x2="0" y2="1"><stop stop-color="#29212d"/><stop offset=".65" stop-color="#211a23"/><stop offset="1" stop-color="#100f17"/></linearGradient>
+    <radialGradient id="lamp"><stop stop-color="#d4a264" stop-opacity=".44"/><stop offset=".3" stop-color="#9b694d" stop-opacity=".16"/><stop offset="1" stop-color="#291d29" stop-opacity="0"/></radialGradient>
+    <linearGradient id="glass" x2="0" y2="1"><stop stop-color="#6b7b89" stop-opacity=".4"/><stop offset="1" stop-color="#151723" stop-opacity=".8"/></linearGradient>
+    <linearGradient id="desk" x2="0" y2="1"><stop stop-color="#64483c"/><stop offset=".2" stop-color="#33252a"/><stop offset="1" stop-color="#141117"/></linearGradient>
+    <pattern id="wood" width="95" height="900" patternUnits="userSpaceOnUse"><path d="M2 0v900M94 0v900" stroke="#090b10" stroke-opacity=".35"/><path d="M20 0c12 210-7 440 3 900M65 0c-10 180 8 530-3 900" fill="none" stroke="#c4a085" stroke-opacity=".04"/></pattern>
+    <pattern id="grain" width="9" height="9" patternUnits="userSpaceOnUse"><path d="M0 3h1M5 8h1" stroke="#f9d6ac" stroke-opacity=".08"/></pattern>
+  </defs>
+  <path fill="url(#wall)" d="M0 0h1600v900H0z"/><path fill="url(#wood)" d="M0 0h1600v900H0z"/>
+  <path fill="#0f1118" d="M0 0h1600v54H0zM0 573h1600v21H0z"/>
+  <path stroke="#826452" stroke-opacity=".25" stroke-width="5" d="M0 75h1600M0 552h1600M0 607h1600"/>
+  <!-- Tall divided window and rain-lit night, with no identifiable logos. -->
+  <path fill="#100e17" stroke="#755746" stroke-width="17" d="M1035 112h360v435h-360z"/>
+  <path fill="url(#glass)" d="M1045 122h340v415h-340z"/>
+  <path fill="#151622" d="M1045 435l41-69 47 37 36-103 46 101 55-68 45 80 70-61v185h-340z"/>
+  <path stroke="#16121a" stroke-width="12" d="M1215 122v415M1045 325h340"/>
+  <path stroke="#aec2c8" stroke-opacity=".13" d="M1086 150l-5 54m52 27-3 40m209-90-4 54m-56 139-5 44m64 26-4 37"/>
+  <!-- Shelves, worn books and a small framed picture. -->
+  <path fill="#100e16" stroke="#60483f" stroke-width="13" d="M105 132h350v403H105z"/>
+  <path stroke="#62483b" stroke-width="13" d="M105 264h350M105 397h350"/>
+  <g opacity=".62"><path fill="#695047" d="M130 170h27v88h-27zM178 150h34v108h-34zM258 173h24v85h-24zM325 148h26v110h-26z"/><path fill="#3d4650" d="M159 161h17v97h-17zM218 164h29v94h-29zM287 155h28v103h-28zM358 175h32v83h-32z"/><path fill="#6c4e49" d="M128 305h30v85h-30zM199 286h26v104h-26zM269 301h32v89h-32zM339 290h27v100h-27z"/><path fill="#4a4147" d="M164 291h29v99h-29zM231 315h26v75h-26zM305 280h28v110h-28zM374 310h31v80h-31z"/></g>
+  <path fill="#17131a" stroke="#80634e" stroke-width="9" d="M535 158h180v124H535z"/><path fill="#34343a" d="M546 169h158v102H546z"/><path fill="#20232b" d="M546 251l46-46 26 18 35-30 51 58v20H546z"/>
+  <!-- Pendant lamp and desk give the room its warm focal point. -->
+  <ellipse cx="790" cy="300" rx="510" ry="410" fill="url(#lamp)"/>
+  <path stroke="#141119" stroke-width="7" d="M790 0v140"/><path fill="#1b171e" stroke="#8a6950" stroke-width="4" d="M738 170q52-66 104 0z"/><ellipse cx="790" cy="170" rx="52" ry="9" fill="#a47c55" opacity=".55"/>
+  <path fill="#151117" d="M0 783h1600v117H0z"/><path fill="url(#desk)" stroke="#725140" stroke-width="7" d="M373 686l100-101h667l125 101v214H373z"/>
+  <path fill="#2e2529" stroke="#9a6a4e" stroke-width="5" d="M350 675h935v35H350z"/>
+  <path fill="#17151b" d="M568 637q12-30 45-22l25 18 33 2 12 28H555z"/><path fill="none" stroke="#9d8879" stroke-width="5" d="M579 623q-24-29-48-13m120 27 25-25"/>
+  <path fill="#d3b69a" opacity=".32" d="M873 648l96-9 34 22-100 10z"/>
+  <path fill="#141017" d="M603 715h420v185H603z"/><path stroke="#72564c" stroke-opacity=".5" stroke-width="6" fill="none" d="M640 742h150v114H640zM836 742h150v114H836z"/>
+  <path fill="url(#grain)" d="M0 0h1600v900H0z"/>
+</svg>

@@ -1,0 +1,73 @@
+/* Independent art-direction experiment. All imagery is already in graph/assets. */
+:root {
+  color-scheme: dark;
+  --bg:#090c17;
+  --ink:#e7eaf5;
+  --muted:#b7c3d9;
+  --line:#46526c;
+  --accent:#b5caff;
+}
+body { background:#090c17; color:var(--ink); }
+.navigation { background:#0b101e; }
+.wordmark-slash { color:#91a9e9; }
+.intro::before {
+  bottom:0;
+  background:linear-gradient(110deg,#101b39ed,#172344d9 56%,#111122e8),url('assets/grub-background.png') center/cover;
+}
+.intro h1 { text-shadow:0 2px 30px #0008; }
+.hero-capture>a { box-shadow:0 25px 70px #000a,0 0 0 1px #91acf044; }
+.workspace { margin-top:0; --muted:#c0cbe0; --accent:#b8ceff; --line:#56627a; }
+.workspace::before {
+  background:linear-gradient(115deg,#0b162beF,#15213aeb 55%,#16152bea),url('assets/desktop-mountains.jpg') center/cover;
+}
+.tor-feature::before {
+  background:radial-gradient(ellipse at 25% 35%,#4b2c6077,transparent 55%),linear-gradient(110deg,#100d1af2,#21152de8),url('assets/plymouth-background.png') center/cover;
+}
+.sequence, .underneath { position:relative; isolation:isolate; }
+.sequence::before, .underneath::before {
+  content:''; position:absolute; z-index:-1;
+  inset:0 calc(-1 * clamp(22px,5vw,80px));
+  pointer-events:none;
+}
+.sequence::before, .underneath::before {
+  background-color:#101322;
+  background-image:linear-gradient(110deg,#101529cc,#171329b8),url('assets/after-hours-office.svg');
+  background-position:center,center top;
+  background-size:100% 100%,100% auto;
+  background-repeat:no-repeat;
+}
+.sequence .section-heading h2 { color:#bdcfff; }
+/* Keep the entire 16:10 boot artwork visible and fit the viewer on screen. */
+.sequence .display {
+  aspect-ratio:16/10;
+  width:min(100%, calc(160svh - 256px));
+  max-height:none;
+  margin-inline:auto;
+}
+.sequence .grub-scene>img,
+.sequence .plymouth-scene>img,
+.sequence .login-scene>.frame { object-fit:contain; }
+/* Panning enlarges the images and clips their edges; keep the crossfade instead. */
+.sequence .login-scene:not(.entering)>.frame { animation:none; transform:none; }
+.sequence .scene-controls button { border-color:#56627a; }
+.sequence .scene-controls button.selected { border-color:#b5caff; }
+.sequence .scene-controls button:hover { color:#fff; }
+.scene-specs b { color:#e7eaf5; }
+.showcase-footer { border-color:#46526c; }
+.showcase-footer .footer-name { color:#e7eaf5; }
+.showcase-footer .footer-name span { color:#a7bbf6; }
+.showcase-footer a { color:#dbe6ff; }
+.showcase-footer .footer-kicker,.showcase-footer .footer-identity p,.showcase-footer .footer-links small { color:#a9b8d4; }
+.showcase-footer .footer-links,.showcase-footer .footer-links a { border-color:#65728d; }
+:focus-visible { outline:2px solid #c4d5ff; outline-offset:4px; }
+
+/* A slow change of light, only while the corresponding section is visible. */
+.after-hours-visible::before { animation:room-light 18s ease-in-out infinite alternate; }
+.motion-off .after-hours-visible::before { animation:none; }
+@keyframes room-light { from { filter:brightness(.9); } to { filter:brightness(1.14); } }
+@media (prefers-reduced-motion:reduce) {
+  .after-hours-visible::before { animation:none; }
+}
+@media (min-width:1600px) {
+  .sequence::before, .underneath::before { inset-inline:calc((1440px - 100vw) / 2); }
+}
