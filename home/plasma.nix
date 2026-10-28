@@ -2,7 +2,7 @@
 
 let
   # 40% transparent = 60% opaque. Only background SVG fills are changed.
-  backgroundOpacity = "0.60";
+  backgroundOpacity = "0.34";
   themeName = "personal-translucent";
   plasmaTheme = pkgs.runCommand "plasma-theme-${themeName}" {
     nativeBuildInputs = [ pkgs.python3 ];
