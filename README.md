@@ -1,5 +1,7 @@
 # nixos-flake
 
+English | [日本語](README.ja.md)
+
 NixOS and home-manager configuration for this machine, kept together with the
 local SDDM theme, virtual-camera support, and a dependency-graph viewer. It
 also provides shared development shells and Tor Browser.
