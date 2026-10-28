@@ -11,9 +11,11 @@ xdg-open graph/showcase.html
 
 For an internet-facing deployment, `deploy/update.sh` fetches the public
 GitHub `main` branch and atomically publishes only `graph/`, the shared font,
-and SDDM animation files. `deploy/serve.py` serves that snapshot on loopback,
-without directory listings or links outside the snapshot. The deployed service
-and its timer run these scripts from an independently installed copy; a GitHub
+and SDDM animation files. `deploy/nginx.conf` serves that snapshot without
+directory listings or links outside the snapshot. The public server runs in a
+read-only, unprivileged container on an internal Docker network; Tailscale
+Funnel provides HTTPS. Its update timer
+runs an independently installed copy of the update script; a GitHub
 update does not execute code from the fetched repository. The checked-in
 `showcase-data.js` and `dependency-data.js` are published as-is, so regenerate
 and commit them when their inputs change.
