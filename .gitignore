@@ -7,3 +7,4 @@ result-*
 *.bak
 *.bak.*
 *.pre-flake.bak
+graph/showcase-after*
