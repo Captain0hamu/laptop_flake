@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="razero's NixOS desktop: transparent terminals, a shared Plasma login scene, and the configuration behind it all.">
+<title>razero / nixos — After hours demo</title>
+<link rel="stylesheet" href="showcase.css">
+<link rel="stylesheet" href="showcase-art-direction.css">
+<link rel="stylesheet" href="showcase-after-hours.css">
+<script src="showcase-data.js" defer></script><script src="showcase-after-hours-player.js" defer></script><script src="showcase-after-hours.js" defer></script>
+</head>
+<body>
+<header class="navigation"><a class="wordmark" href="showcase-after-hours.html">razero<span class="wordmark-slash"> / </span>nixos</a><nav aria-label="Main navigation"><a href="#workspace">Workspace</a><a href="#tor">Tor shell</a><a href="#sequence">Boot & login</a><a href="index.html">Dependency map ↗</a><button id="page-motion-toggle" type="button" aria-pressed="false">Pause motion</button></nav></header>
+<main>
+<section class="intro" aria-labelledby="intro-title">
+  <div class="hero-heading"><h1 id="intro-title"><span class="title-line"><span>Not stock.</span></span><span class="title-line"><span>My NixOS.</span></span></h1><div class="hero-description"><p>Game worlds. Glass terminals.<br>A Gentoo-inspired boot sequence.</p><p>The desktop I use every day,<br>and the flake that makes it mine.</p><a href="#workspace">Explore the setup ↓</a></div></div>
+  <figure class="hero-capture"><a href="assets/workspace-redacted.jpg" target="_blank" rel="noopener" aria-label="Enlarge the desktop screenshot with sensitive details blurred"><img src="assets/workspace-redacted.jpg" alt="A three-pane Kitty workspace with fastfetch and a Nix configuration diff over a game wallpaper." width="1920" height="1200" fetchpriority="high"></a><figcaption><span>Plasma 6 / Kitty / Bash</span><span>22 Oct 2026 — Sensitive details blurred</span></figcaption></figure>
+</section>
+<section id="sequence" class="sequence" aria-labelledby="sequence-title">
+<div class="section-heading"><div><span class="eyebrow">Boot & login</span><h2 id="sequence-title">Power<br>on.</h2></div><p>Four stages. One scene.<br>A Grand Theft Gentoo boot sequence.<br>Playing automatically, or pick a chapter.</p></div>
+<div class="viewer" id="sequence-viewer">
+  <div class="viewer-top"><span><i class="status-dot"></i> BOOT EXPERIENCE</span><span class="preview-label">WEB RECREATION · NOT A SCREEN RECORDING</span></div>
+  <div class="sequence-player" hidden>
+    <button id="sequence-play" class="sequence-play" type="button" aria-label="Play boot sequence"><span aria-hidden="true">▶</span></button>
+    <div class="sequence-timeline">
+      <div class="sequence-track" id="sequence-track" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+      <span class="sequence-fill" id="sequence-fill" aria-hidden="true"></span>
+      <input id="sequence-scrub" class="sequence-range" type="range" min="0" max="15.2" step="0.05" value="0" aria-label="Boot sequence timeline">
+      <div class="sequence-marks" id="sequence-marks" aria-hidden="true"></div>
+    </div>
+    <span id="sequence-clock" class="sequence-clock">00:00 / 00:15</span>
+  </div>
+  <div class="display" id="display">
+    <div class="scene grub-scene" data-scene="grub" hidden><img src="assets/grub-background.png" alt="The actual GRUB theme background"><div class="grub-menu"><p class="grub-selected">NixOS <span>↵</span></p><p>NixOS — All configurations</p><p>Windows Boot Manager</p></div><span class="scene-corner">SELECT YOUR SYSTEM</span></div>
+    <div class="scene plymouth-scene" data-scene="plymouth" hidden><img src="assets/plymouth-background.png" alt="The generated Plymouth background"><div class="radio-mini"><b>RADIO GENTOO</b><small>101.3 FM // BOOT SEQUENCE</small><span>♪ emerge --sync</span></div><div class="loading"><b>LOADING<span class="loading-dots">...</span></b><span class="progress-track"><i></i></span></div></div>
+    <div class="scene login-scene" data-scene="sddm">
+      <img id="frame-a" class="frame active" alt="An SDDM animation frame"><img id="frame-b" class="frame" alt="" aria-hidden="true">
+      <div class="scene-shade"></div><div class="scanlines"></div>
+      <div class="login-radio" id="login-radio"><b>RADIO GENTOO <i>●</i></b><small>101.3 FM // BOOT SEQUENCE</small><span id="radio-track">♪ emerge --sync</span></div>
+      <div class="login-form" id="login-form"><img class="avatar" src="assets/sddm-avatar.jpg" alt="razero's user avatar" width="500" height="500"><strong>razero</strong><div class="fake-input">Password <span>→</span></div><small>↻ Restart <span>⏻ Shut down</span></small></div>
+      <div class="shared-chrome" id="shared-chrome" hidden>
+        <div class="shared-frame" aria-hidden="true"></div><div class="shared-rule" aria-hidden="true"></div>
+        <div class="shared-clock"><b id="shared-time">--:--</b><span id="shared-date"></span></div>
+        <div class="shared-modes" role="group" aria-label="Shared scene surface"><button type="button" data-shared-mode="lock" class="selected" aria-pressed="true">Lock</button><button type="button" data-shared-mode="splash" aria-pressed="false">Splash</button></div>
+        <div class="shared-lock" id="shared-lock"><span class="shared-kicker">Locked</span><button class="shared-unlock" id="shared-unlock" type="button">Enter the session <span>→</span></button><small>Plasma's native password, fingerprint and session controls stay in charge.</small></div>
+        <div class="shared-splash" id="shared-splash" hidden><span class="shared-kicker">Starting Plasma</span><span class="shared-progress"><i></i></span><small>KSplashQML · stage 5 hands off with the same 850 ms zoom.</small></div>
+      </div>
+      <div class="intro-overlay" id="intro-overlay" hidden><b>GRAND THEFT GENTOO</b><small>SYSTEM READY // WELCOME BACK</small><span>LOADING SESSION</span></div>
+      <span class="scene-corner" id="scene-corner">26 FRAMES / PAN / CROSSFADE</span>
+    </div>
+    <div class="scene desktop-scene" data-scene="desktop" hidden><img class="desktop-mark" src="assets/nix-snowflake.svg" alt="" aria-hidden="true"><div class="desktop-copy"><span>PLASMA SESSION / READY</span><b>Welcome<br>back.</b><small>The shared scene hands over to the desktop.</small></div><span class="scene-corner">05 / PLASMA</span></div>
+  </div>
+  <div class="viewer-bottom"><span id="scene-tag">01 / SYSTEM SELECTION</span><span>Actual assets. Browser-rendered interface.</span><button id="motion-toggle" type="button" aria-pressed="false">Ⅱ Pause motion</button></div>
+</div>
+<div class="scene-controls" role="group" aria-label="Boot stages">
+  <button data-stage="grub" class="selected" aria-pressed="true" data-time="00:00"><span>01</span><b>GRUB</b><small>Choose a system.</small></button>
+  <button data-stage="plymouth" aria-pressed="false" data-time="00:03"><span>02</span><b>Plymouth</b><small>Make the wait count.</small></button>
+  <button data-stage="sddm" aria-pressed="false" data-time="00:12"><span>03</span><b>SDDM</b><small>Welcome back.</small></button>
+  <button data-stage="shared" aria-pressed="false" data-time="00:23"><span>04</span><b>Lock<span class="stage-suffix"> / Splash</span></b><small>Same scene, new surface.</small></button>
+</div>
+<div class="stage-notes"><div><span id="stage-eyebrow" class="eyebrow">01 / SYSTEM SELECTION</span><h3 id="stage-title">Choose your entry point.</h3></div><div><p id="stage-description">Grand Theft Gentoo artwork, BankGothic type, and a cool-blue selection. A small GRUB patch keeps the selected menu visible until the kernel takes over. Menu entries here are examples.</p><div id="stage-links" class="source-links"></div><button class="text-link" type="button" id="replay-intro" hidden>Replay intro ↻</button></div></div>
+<div class="scene-specs" aria-label="Shared scene specification">
+  <button data-source="home/plasma.nix"><b>0.60</b><span>Panel + dialog fill</span><small>plasma.nix</small></button>
+  <button data-source="files/plasma/SharedScene.qml"><b>24px</b><span>Lock + splash blur</span><small>SharedScene.qml</small></button>
+  <button data-source="files/plasma/SharedScene.qml"><b>0.32</b><span>Frosted veil</span><small>SharedScene.qml</small></button>
+  <button data-source="files/plasma/SharedScene.qml"><b>850ms</b><span>Handoff zoom</span><small>SharedScene.qml</small></button>
+  <button data-source="files/plasma/SharedScene.qml"><b>#a9c9ef</b><span>Scene accent</span><small>SharedScene.qml</small></button>
+</div>
+</section>
+<section id="workspace" class="workspace" aria-labelledby="workspace-title">
+  <div class="section-heading">
+    <div><span class="eyebrow">Workspace</span><h2 id="workspace-title">Daily<br>driver.</h2></div>
+    <p>A terminal, not a dashboard.<br>The tools I live in, the files behind them.<br>Select a filename to look inside.</p>
+  </div>
+  <div class="workspace-simulation">
+  <div class="workspace-preview">
+    <div class="workspace-toolbar">
+      <div class="terminal-switch" role="tablist" aria-label="Workspace preview">
+        <button id="shell-tab" data-tool="terminal" role="tab" aria-selected="true" aria-controls="fetch-demo">01 <span>Shell + fastfetch</span></button>
+        <button id="editor-tab" data-tool="editor" role="tab" aria-selected="false" aria-controls="editor-demo" tabindex="-1">02 <span>Neovim</span></button>
+      </div>
+      <span class="workspace-label">KITTY / BASH / NIXOS</span>
+    </div>
+    <div class="terminal-demo">
+      <div class="terminal-prompt" aria-hidden="true">
+        <div class="prompt-top"><div class="prompt"><span>❄ NIXOS</span><span>▣ bash</span><span> main</span></div><span class="prompt-status">✓ <span>0ms</span></span></div>
+        <p class="prompt-date">╭ ◷ 03:45:10 PM <span>│</span> ▦ 26/10/13 〈 October : Tuesday 〉</p>
+        <p class="prompt-identity">│ <span>♟ razero</span> │ ▣ nixos</p>
+        <p class="prompt-path">│ <span>⌂ ~</span></p>
+        <p class="prompt-command">╰› <span id="terminal-command">ff</span></p>
+      </div>
+      <div id="fetch-demo" class="shell-panel" role="tabpanel" aria-labelledby="shell-tab" tabindex="0">
+        <div class="fetch-demo">
+          <img class="fetch-logo" src="assets/nix-snowflake.svg" alt="Blue and green Nix snowflake" width="535" height="535">
+          <div class="fetch-output">
+            <table class="fetch-table">
+              <caption class="sr-only">Terminal recreation with static sample values based on the reference screenshot.</caption>
+              <thead><tr><th scope="col">Keys</th><th scope="col">Values</th></tr></thead>
+              <tbody>
+                <tr class="fetch-user"><th scope="row">User</th><td>razero <span>[/home/nix/]</span></td></tr>
+                <tr class="fetch-user"><th scope="row">Users</th><td>razero@localhost <span>[Local session]</span></td></tr>
+                <tr class="fetch-user"><th scope="row">Datetime</th><td>2026-10-13 15:45:14 <span>[Tuesday] [UTC+0900]</span></td></tr>
+                <tr class="fetch-system"><th scope="row">Host</th><td>nixos</td></tr>
+                <tr class="fetch-system"><th scope="row">Machine</th><td>FMVU8104GP</td></tr>
+                <tr class="fetch-system"><th scope="row">OS</th><td>NixOS 26.11 <span>(Zokor) [x86_64]</span></td></tr>
+                <tr class="fetch-system"><th scope="row">Kernel</th><td>Linux <span>[v6.18.55]</span></td></tr>
+                <tr class="fetch-system"><th scope="row">Uptime</th><td>0:16:03</td></tr>
+                <tr class="fetch-hardware"><th scope="row">CPU</th><td>13th Gen Intel® Core™ i5-1335U <span>[4.60 GHz]</span></td></tr>
+                <tr class="fetch-hardware"><th scope="row">GPU</th><td>Iris Xe Graphics <span>[Integrated]</span></td></tr>
+                <tr class="fetch-hardware"><th scope="row">Memory</th><td>3.07 GiB / 15.20 GiB <em>(20%)</em></td></tr>
+                <tr class="fetch-hardware"><th scope="row">Disk</th><td>102.46 GiB / 245.68 GiB <em>(42%)</em></td></tr>
+                <tr class="fetch-tools"><th scope="row">Terminal</th><td>kitty <span>[0.49.2]</span></td></tr>
+                <tr class="fetch-tools"><th scope="row">Font</th><td>JetBrainsMono Nerd Font <span>[10]</span></td></tr>
+                <tr class="fetch-tools"><th scope="row">Shell</th><td>bash <span>[v5.3.15]</span></td></tr>
+                <tr class="fetch-network"><th scope="row">Network</th><td>Wi-Fi <span>[Connected]</span></td></tr>
+              </tbody>
+            </table>
+            <div class="palette" aria-label="Breeze-inspired terminal palette"><span>Colors</span><div class="color-swatches" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+          </div>
+        </div>
+        <div class="terminal-prompt prompt-repeat" aria-hidden="true">
+          <div class="prompt"><span>❄ NIXOS</span><span>▣ bash</span><span> main</span></div>
+          <p class="prompt-date">╭ ◷ 03:45:14 PM <span>│</span> ▦ 26/10/13</p>
+          <p class="prompt-identity">│ <span>♟ razero</span> │ ▣ nixos</p>
+          <p class="prompt-command">╰› <span class="terminal-cursor"></span></p>
+        </div>
+      </div>
+      <div id="editor-demo" class="editor-demo" role="tabpanel" aria-labelledby="editor-tab" tabindex="0" hidden>
+        <div class="editor-tabline"><span>home/neovim.nix</span><small>UTF-8 · Nix</small></div>
+        <div class="editor-code" aria-label="Example Neovim configuration">
+          <div><span>1</span><code><b class="pink">{</b> pkgs, ... <b class="pink">}:</b></code></div>
+          <div><span>2</span><code></code></div>
+          <div><span>3</span><code><b class="pink">{</b></code></div>
+          <div><span>4</span><code>  programs.neovim = <b class="pink">{</b></code></div>
+          <div class="editor-current-line"><span>5</span><code>    enable = <b class="cyan">true</b>;</code></div>
+          <div><span>6</span><code>    defaultEditor = <b class="cyan">true</b>;</code></div>
+          <div><span>7</span><code>    viAlias = <b class="cyan">true</b>;</code></div>
+          <div><span>8</span><code>    vimAlias = <b class="cyan">true</b>;</code></div>
+          <div><span>9</span><code>    plugins = <b class="pink">with</b> pkgs.vimPlugins; [</code></div>
+          <div><span>10</span><code>      monokai-pro-nvim</code></div>
+          <div><span>11</span><code>      mini-nvim</code></div>
+          <div><span>12</span><code>    ];</code></div>
+          <div><span>13</span><code>  <b class="pink">}</b>;</code></div>
+          <div><span>14</span><code><b class="pink">}</b></code></div>
+          <div class="editor-empty" aria-hidden="true">~<br>~<br>~</div>
+        </div>
+        <div class="editor-status"><span>NORMAL</span><span>home/neovim.nix</span><span>5:5 · Nix</span></div>
+      </div>
+    </div>
+    <div class="workspace-caption"><span><i class="status-dot"></i> A WORKSPACE, RECREATED</span><p>A palette and prompt study. Abstract background, static sample values.</p><button data-source="files/fastfetch/config.jsonc">View fastfetch config ↗</button></div>
+  </div>
+  </div>
+  <div class="workspace-notes">
+    <article><span class="eyebrow">Terminal</span><h3>Kitty</h3><p>28% opacity. Split horizontally or vertically without losing the view. Jump between panes with Alt + H / J / K / L.</p><div class="source-links"><button data-source="files/kitty/kitty.conf">kitty.conf ↗</button></div></article>
+    <article><span class="eyebrow">Shell</span><h3>Bash + Oh My Posh</h3><p>Branch and exit status in the prompt. Machine details in a color-coded fastfetch table. Everything where I expect it.</p><div class="source-links"><button data-source="files/oh-my-posh/distrous-nixos.omp.json">prompt ↗</button><button data-source="files/fastfetch/config.jsonc">fastfetch ↗</button></div></article>
+    <article><span class="eyebrow">Editor</span><h3>Neovim</h3><p>mini.nvim and Treesitter. Plugins and parsers pinned by Nix; colors and keybindings tuned in Lua.</p><div class="source-links"><button data-source="home/neovim.nix">neovim.nix ↗</button><button data-source="files/nvim/init.lua">init.lua ↗</button></div></article>
+  </div>
+</section>
+<section id="tor" class="tor-feature" aria-labelledby="tor-title">
+  <div class="tor-intro">
+    <div><span class="tor-eyebrow"><span aria-hidden="true">✳</span> 02 / A DIFFERENT KIND OF SHELL</span><h2 id="tor-title">Go<br><em>onion.</em></h2></div>
+    <p>A little privacy, with a lot of personality. A shared Nix shell, an explicit proxy, and an onion that makes an entrance.</p>
+  </div>
+  <div class="tor-showcase">
+    <div class="tor-window">
+      <div class="tor-window-bar"><span><i></i><i></i><i></i></span><span>TOR SHELL / KITTY</span><span>01 — 03</span></div>
+      <div class="tor-screen">
+        <div class="tor-screen-meta"><span>THE ONION ROOM</span><span>LOCAL / 127.0.0.1:9050</span></div>
+        <figure><img src="assets/tor-shell-crop.png" width="490" height="224" alt="Cropped screenshot of the Tor shell's purple onion banner and explicit proxy instructions" loading="lazy"><figcaption>ACTUAL TERMINAL OUTPUT <span> / CROPPED CAPTURE</span></figcaption></figure>
+        <div class="tor-screen-bottom"><span>DESIGNED FOR THE COMMAND LINE</span><span>✳</span></div>
+      </div>
+    </div>
+    <div class="tor-side">
+      <span class="tor-index">01 / 03</span>
+      <h3>Privacy is<br>intentional.</h3>
+      <p>Start the client, enter the shell, and choose which commands go through Tor. No magic switch. No false promises.</p>
+      <div class="tor-commands" aria-label="Tor shell commands"><div><span>01</span><code>tor-start</code><small>Start the client</small></div><div><span>02</span><code>tor-shell</code><small>Enter the shell</small></div><div><span>03</span><code>torsocks curl …</code><small>Route a command</small></div></div>
+      <p class="tor-caveat">Ordinary commands are not proxied automatically. The shell does not block direct connections or isolate networking.</p>
+      <div class="tor-source-links"><button data-source="scripts/tor-banner.sh">The banner ↗</button><button data-source="devshells/tor.nix">Nix shell ↗</button><button data-source="scripts/nixos-functions.sh">Shell helpers ↗</button></div>
+    </div>
+  </div>
+  <div class="tor-footer"><span>BUILT WITH NIX / COLORED FOR THE TERMINAL</span><span>PRIVACY BY CHOICE, NOT BY DEFAULT ↗</span></div>
+</section>
+<section class="underneath" aria-label="Additional system configuration">
+  <details class="system-details">
+    <summary>More under the hood <span>Shared scene, audio & virtual machines ＋</span></summary>
+    <div class="detail-list">
+      <article><div><h3>Shared login scene</h3><p>SDDM, the Plasma lock screen and KSplash draw the same animated background, blur and clock. Native authentication and session controls stay intact.</p></div><button data-source="files/plasma/SharedScene.qml" aria-label="View the shared Plasma scene">↗</button></article>
+      <article><div><h3>Translucent Plasma</h3><p>Panel and dialog SVG fills at 60% opacity, plus a warm selection accent in Kickoff. The stock layout and behavior remain.</p></div><button data-source="modules/nixos/plasma-customisation.nix" aria-label="View Plasma customisation">↗</button></article>
+      <article><div><h3>Speaker EQ</h3><p>A six-band EasyEffects preset for the internal speaker: gentle low-end cuts, a little presence, and a peak-catching compressor.</p></div><button data-source="home/easyeffects.nix" aria-label="View the EasyEffects preset">↗</button></article>
+      <article><div><h3>Quiet boot</h3><p>Less boot noise. Hold Plymouth's final frame and hand off cleanly to SDDM.</p></div><button data-source="modules/nixos/plymouth.nix" aria-label="View Plymouth configuration">↗</button></article>
+      <article><div><h3>Audio</h3><p>PipeWire and WirePlumber rules to prefer the working internal microphone.</p></div><button data-source="modules/nixos/audio.nix" aria-label="View audio configuration">↗</button></article>
+      <article><div><h3>Virtual machines</h3><p>Docker, libvirt, and QEMU with TPM support. Test environments live in the same flake.</p></div><button data-source="modules/nixos/virtualisation.nix" aria-label="View virtualization configuration">↗</button></article>
+    </div>
+  </details>
+</section>
+</main><footer class="showcase-footer"><div class="footer-identity"><span class="footer-kicker">THE WORK BEHIND THE WORK</span><a class="footer-name" href="showcase-after-hours.html">razero <span>/</span> nixos</a><p>Personal desktop, configured in Nix.</p></div><div class="footer-links"><a href="https://github.com/Captain0hamu/laptop_flake"><span><small>01 / SOURCE</small><b>GitHub repository</b></span><span aria-hidden="true">↗</span></a><a href="index.html"><span><small>02 / EXPLORE</small><b>Dependency map</b></span><span aria-hidden="true">↗</span></a></div></footer>
+<dialog id="source-dialog" aria-labelledby="source-title"><div class="dialog-heading"><div><span class="eyebrow">SOURCE / REPOSITORY</span><h2 id="source-title"></h2></div><button id="close-source" aria-label="Close source viewer">×</button></div><pre><code id="source-code"></code></pre><div class="dialog-footer"><span>Actual configuration from this repository</span><button id="copy-source">Copy</button></div></dialog>
+<noscript><p class="noscript">Animation and source previews require JavaScript. <a href="index.html">Open the dependency map</a>.</p></noscript>
+</body></html>

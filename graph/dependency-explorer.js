@@ -116,6 +116,7 @@
   function updateMotion() {
     motionButton.setAttribute('aria-pressed', String(paused));
     motionButton.textContent = paused ? 'Resume motion' : 'Pause motion';
+    stage.classList.toggle('motion-paused', paused);
   }
   motionButton.addEventListener('click', () => { paused = !paused; updateMotion(); if (!paused) start(100); });
   reduced.addEventListener('change', event => { paused = event.matches; updateMotion(); if (!paused) start(100); });
