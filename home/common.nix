@@ -8,6 +8,7 @@
   home.packages = with pkgs; [
     gh
     ripgrep
+    feather
     fd
     yt-dlp
   ];
