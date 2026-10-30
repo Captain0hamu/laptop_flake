@@ -1,7 +1,7 @@
 { pkgs }:
 
 pkgs.mkShell {
-  packages = with pkgs; [ tor torsocks curl ];
+  packages = with pkgs; [ tor nyx torsocks curl ];
 
   shellHook = ''
     if [[ $- == *i* && -t 1 ]]; then
