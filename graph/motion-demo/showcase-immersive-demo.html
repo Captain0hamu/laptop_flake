@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<base href="../">
+<title>Immersive showcase — motion study</title>
+<link rel="stylesheet" href="motion-demo/showcase-immersive-demo.css">
+<script src="motion-demo/showcase-immersive-demo.js" defer></script>
+</head>
+<body>
+<header class="demo-nav">
+  <a class="brand" href="#intro">razero <span>/</span> nixos</a>
+  <span class="demo-label">IMMERSIVE STUDY / DEMO</span>
+  <div class="nav-actions"><a href="showcase.html">Original ↗</a></div>
+</header>
+<nav class="chapter-nav" aria-label="Chapters">
+  <a href="#intro" aria-label="Intro" aria-current="location"><span>Intro</span></a>
+  <a href="#workspace" aria-label="Daily driver"><span>Daily driver</span></a>
+  <a href="#tor" aria-label="Go onion"><span>Go onion</span></a>
+  <a href="#boot" aria-label="Power on"><span>Power on</span></a>
+</nav>
+<main>
+  <section class="panel panel-intro" id="intro" aria-labelledby="intro-title">
+    <div class="panel-background"></div>
+    <div class="panel-content split-content intro-content">
+      <div class="panel-copy">
+      <p class="eyebrow">A PERSONAL NIXOS DESKTOP</p>
+      <h1 id="intro-title">Not stock.<br><span>My NixOS.</span></h1>
+      <p class="lead">Game worlds. Glass terminals.<br>A desktop that feels like mine.</p>
+      <a class="next-link" href="#workspace">Explore the setup <span>↓</span></a>
+      </div>
+      <figure class="panel-visual"><img src="assets/workspace-redacted.jpg" alt="Three Kitty terminal panes over the desktop wallpaper"><figcaption>PLASMA 6 / KITTY / BASH</figcaption></figure>
+    </div>
+    <div class="scroll-hint" aria-hidden="true">SCROLL TO EXPLORE <span>↓</span></div>
+  </section>
+  <section class="panel panel-workspace" id="workspace" aria-labelledby="workspace-title">
+    <div class="panel-background"></div>
+    <div class="panel-content split-content">
+      <div class="panel-copy"><p class="eyebrow">01 / WORKSPACE</p><h2 id="workspace-title">Daily<br><span>driver.</span></h2><p class="lead">A terminal, not a dashboard.<br>The tools I live in, configured my way.</p><a class="next-link" href="#tor">Go deeper <span>↓</span></a></div>
+      <figure class="panel-visual workspace-visual"><img src="assets/workspace-daily-redacted.png" alt="Kitty workspace with fastfetch and Nix configuration; IP addresses are hidden"><figcaption>KITTY / FASTFETCH / NIX CONFIGURATION</figcaption></figure>
+    </div>
+  </section>
+  <section class="panel panel-tor" id="tor" aria-labelledby="tor-title">
+    <div class="panel-background"></div>
+    <div class="panel-content split-content">
+      <div class="panel-copy"><p class="eyebrow">02 / TOR SHELL</p><h2 id="tor-title">Go<br><span>onion.</span></h2><p class="lead">A shell with its own atmosphere.<br>One command, another perspective.</p><a class="next-link" href="#boot">Power on <span>↓</span></a></div>
+      <figure class="panel-visual tor-visual"><img src="assets/tor-shell-crop.png" alt="Tor shell terminal"><figcaption>THE ONION ROUTER / TERMINAL</figcaption></figure>
+    </div>
+  </section>
+  <section class="panel panel-boot" id="boot" aria-labelledby="boot-title">
+    <div class="panel-background"></div>
+    <div class="panel-content split-content">
+      <div class="panel-copy"><p class="eyebrow">03 / BOOT &amp; LOGIN</p><h2 id="boot-title">Power<br><span>on.</span></h2><p class="lead">From GRUB to Plasma.<br>One scene, all the way home.</p><a class="next-link" href="showcase.html#sequence">See the full boot sequence <span>↗</span></a></div>
+      <figure class="panel-visual boot-visual"><iframe src="motion-demo/boot-preview.html" title="Grand Theft Gentoo boot sequence"></iframe><figcaption>GRUB / PLYMOUTH / SDDM / PLASMA</figcaption></figure>
+    </div>
+  </section>
+</main>
+</body>
+</html>
