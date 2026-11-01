@@ -27,8 +27,9 @@ The login controls and terminal output are visual examples, not an actual
 login or command runner.
 
 The boot sequence automatically loops through GRUB, Plymouth, SDDM, the shared
-lock/splash scene, then the Plasma title card. It runs while the viewer is
-visible and page motion is enabled. The four keyboard-accessible chapter tabs
+lock/splash scene, then the Plasma title card. It keeps playing as visitors
+move between panels (and pauses while the browser tab is hidden or reduced
+motion is requested). The four keyboard-accessible chapter tabs
 seek to a stage; shared-scene controls are also keyboard accessible.
 The lock and splash surfaces share one scene, and **Enter the session** runs
 the 850 ms zoom into the desktop card. Chapter deep links are supported:
@@ -42,17 +43,20 @@ showcase.html?stage=shared&mode=splash
 The English showcase uses `showcase-art-direction.css` for the exhibition
 layout, `showcase.css` for the simulated interfaces, and
 `showcase-after-hours.css` for its darker atmospheric backgrounds. The
+viewport panel transitions and Daily Driver's photographed terminal case live
+in `showcase-deck.css` and `showcase-deck.js`. Scroll within a panel first;
+scrolling another quarter viewport beyond either edge changes panels. The
+large Daily Driver screenshot is `assets/workspace-daily-redacted.png`, with
+IP addresses covered in the asset. The
 original illustrated office background is `assets/after-hours-office.svg`.
 The Daily Driver background is the local `3899617.jpg`, tracked as
 `assets/desktop-mountains.jpg`; Go onion uses `assets/tor-eye.jpg`, derived
 from the selected local wallpaper with metadata removed. The introductory
 background is `assets/showcase-intro.jpg`, derived from the selected local
 wallpaper with metadata removed, while Power on uses the GRUB preview.
-Motion includes a
-masked title entrance, a scroll-linked photograph, section-title reveals,
-stage transitions and the scene handoff. The page-header control pauses the
-sequence and additional page motion. `prefers-reduced-motion` starts the page
-with motion off. The five-value
+Motion includes a masked title entrance, section-title reveals, panel
+transitions, stage transitions and the scene handoff. Reduced-motion settings
+disable the transitions and boot autoplay. The five-value
 strip under the player links each number to the file that defines it.
 
 The workspace includes `assets/workspace-redacted.jpg`, derived from
