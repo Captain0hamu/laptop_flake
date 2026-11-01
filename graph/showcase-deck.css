@@ -27,6 +27,16 @@ html.deck-ready, .deck-ready body { height:100%; overflow:hidden; }
 .deck-workspace-image .tor-screen figcaption { color:#adc5e9; }
 .deck-workspace-image .tor-screen figcaption span { color:#8d9fbf; }
 .deck-workspace-image .tor-screen-bottom span:last-child { color:#9ec5ff; }
+/* Keep the browser-rendered SDDM login unobtrusive. */
+.sequence .login-form { background:none; }
+.sequence .login-form .fake-input { background:#07111f52; border-color:#dce8f866; backdrop-filter:none; }
+/* Lock and splash use the original frames without the simulated frosted layer. */
+.sequence .login-scene.shared-mode .frame { filter:none; }
+.sequence .shared-modes { backdrop-filter:none; }
+/* Hand the sequence to the desktop itself instead of a welcome title card. */
+.sequence .desktop-scene { background:#090c17; }
+.sequence .desktop-scene::before,.sequence .desktop-scene::after { display:none; }
+.sequence .desktop-scene>.desktop-screenshot { width:100%; height:100%; object-fit:contain; }
 /* Preserve the original grid's dimensions without showing the old simulation. */
 .deck-ready .workspace-simulation { grid-column:1; grid-row:2; visibility:hidden; pointer-events:none; }
 /* Reveal more of Daily driver's wallpaper without changing the other sections. */

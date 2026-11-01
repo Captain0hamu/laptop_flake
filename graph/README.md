@@ -27,7 +27,9 @@ The login controls and terminal output are visual examples, not an actual
 login or command runner.
 
 The boot sequence automatically loops through GRUB, Plymouth, SDDM, the shared
-lock/splash scene, then the Plasma title card. It keeps playing as visitors
+lock/splash scene, then a redacted desktop capture. The browser preview leaves
+the Lock/Splash frames unblurred; native Plasma effects are configured separately.
+It keeps playing as visitors
 move between panels (and pauses while the browser tab is hidden or reduced
 motion is requested). The four keyboard-accessible chapter tabs
 seek to a stage; shared-scene controls are also keyboard accessible.
@@ -49,8 +51,8 @@ scrolling another quarter viewport beyond either edge changes panels. The
 large Daily Driver screenshot is `assets/workspace-daily-redacted.png`, with
 IP addresses covered in the asset. The
 original illustrated office background is `assets/after-hours-office.svg`.
-The Daily Driver background is the local `3899617.jpg`, tracked as
-`assets/desktop-mountains.jpg`; Go onion uses `assets/tor-eye.jpg`, derived
+The Daily Driver background is tracked as `assets/desktop-mountains.jpg`;
+Go onion uses `assets/tor-eye.jpg`, derived
 from the selected local wallpaper with metadata removed. The introductory
 background is `assets/showcase-intro.jpg`, derived from the selected local
 wallpaper with metadata removed, while Power on uses the GRUB preview.
