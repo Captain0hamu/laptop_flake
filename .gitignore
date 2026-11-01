@@ -8,3 +8,4 @@ result-*
 *.bak.*
 *.pre-flake.bak
 graph/showcase-after*
+/graph/motion-demo/
