@@ -1,7 +1,7 @@
 # Sourced only in an interactive Tor development shell.
 tor-banner() {
   local cols rows indent purple accent dim reset green light dark i padding mode="${1:-shell}"
-  local -a left middle right info
+  local -a left middle right info logo
   read -r rows cols < <(stty size 2>/dev/null) || cols=0
   [[ "$cols" =~ ^[0-9]+$ ]] && (( cols > 0 )) || cols=80
   [[ "$rows" =~ ^[0-9]+$ ]] && (( rows > 0 )) || rows=24
@@ -12,7 +12,61 @@ tor-banner() {
     green=$'\033[38;5;114m' accent=$'\033[1;38;5;183m' dim=$'\033[2m' reset=$'\033[0m'
   fi
 
-  if (( cols >= 70 && rows >= 15 )); then
+  if (( cols >= 104 && rows >= 24 )); then
+    # A larger onion for full-size terminals; leave the compact artwork intact.
+    indent=$(( (cols - 94) / 2 ))
+    logo=(
+      '                         ▄▄'
+      '                        ▄██'
+      '                       ▄██▀'
+      '              ▄▄      ▄██▀      ▄▄'
+      '               ▀██▄▄▄██▀▄▄▄▄▄██▀'
+      '                 ▀███████████▀'
+      '                   ▀███████▀'
+      '                 ▄███████████▄'
+      '             ▄▄█████████████████▄▄'
+      '          ▄▄██████░░████████████████▄▄'
+      '        ▄████████░░████████████████████▄'
+      '      ▄█████████░░███████████████████████▄'
+      '     ██████████░░█████████████████████████'
+      '    ██████████░░███████████████████████████'
+      '    █████████░░████████████████████████████'
+      '     ████████░░███████████████████████████'
+      '      ▀███████░░████████████████████████▀'
+      '        ▀██████░░████████████████████▀'
+      '           ▀████░░████████████████▀'
+      '               ▀██████████████▀'
+      '                   ▀▀▀▀▀▀▀▀'
+    )
+    info=(
+      '' '' '' '' 'T O R   S H E L L' '────────────────────────────'
+      '' 'MODE     Explicit SOCKS proxy' 'CLIENT   tor-start / tor-stop'
+      'RUN      torsocks <command>' 'CHECK    check.torproject.org' ''
+      'Traffic is not routed automatically.' 'Not network isolation.'
+      '' '' '' '' '' '' ''
+    )
+    if [[ "$mode" == start ]]; then
+      info[4]='T O R   C L I E N T'
+      info[7]='MODE     Starting in background'
+      info[8]='LISTEN   127.0.0.1:9050'
+      info[9]='STOP     tor-stop'
+      info[10]='SHELL    tor-shell'
+      info[12]='Wait for bootstrap to reach 100%.'
+      info[13]='Traffic is not routed automatically.'
+    fi
+    printf '\n'
+    for (( i = 0; i < ${#logo[@]}; i++ )); do
+      padding=$(( 52 - ${#logo[i]} ))
+      if (( i < 7 )); then
+        printf '%*s%b%s%b%*s%b%s%b\n' "$indent" '' "$green" "${logo[i]}" "$reset" \
+          "$padding" '' "$accent" "${info[i]}" "$reset"
+      else
+        printf '%*s%b%s%b%*s%b%s%b\n' "$indent" '' "$purple" "${logo[i]}" "$reset" \
+          "$padding" '' "$accent" "${info[i]}" "$reset"
+      fi
+    done
+    printf '\n'
+  elif (( cols >= 70 && rows >= 15 )); then
     indent=$(( (cols - 70) / 2 ))
     left=(
       '          ' '        ' '         ' '        ▄█' '      ▄█'
