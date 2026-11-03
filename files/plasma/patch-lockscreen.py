@@ -28,16 +28,22 @@ replace_once('''        function onFailed(kind) {
             if (lockScreenUi.entering) return;
 ''')
 replace_once('''            authenticator.stopAuthenticating()
-''', '''            // Stopping PAM can itself emit a failure; mark success first.
-            // RejectPasswordAnimation exposes start(), but not stop().
+
+            if (!lockScreenUi.expectingPrompt) {
+                Qt.quit()
+            }
             if (authenticator.hadPrompt) {
+                Qt.quit();
+''', '''            // Preserve Plasma's prompt-less confirmation screen, but animate
+            // every path that would otherwise unlock immediately. Stopping PAM
+            // can emit a failure, so mark the transition before stopping it.
+            const shouldUnlock = !lockScreenUi.expectingPrompt || authenticator.hadPrompt;
+            if (shouldUnlock) {
                 lockScreenUi.entering = true;
             }
             authenticator.stopAuthenticating()
-''')
-replace_once('''            if (authenticator.hadPrompt) {
-                Qt.quit();
-''', '''            if (authenticator.hadPrompt) {
+
+            if (shouldUnlock) {
                 unlockTransition.start();
 ''')
 replace_once('    SessionManagement {\n', '''    Timer {

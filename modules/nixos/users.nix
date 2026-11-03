@@ -18,7 +18,7 @@
     isNormalUser = true;
     uid = 1000;
     home = "/home/nix";
-    extraGroups = [ "wheel" "video" "docker" "networkmanager" "libvirtd" "kvm" ];
+    extraGroups = [ "wheel" "video" "docker" "wireshark" "networkmanager" "libvirtd" "kvm" ];
     hashedPassword = local.userHashedPassword;
     packages = [
       (pkgs.discord-ptb.override {
