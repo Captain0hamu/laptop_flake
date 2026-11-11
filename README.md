@@ -10,6 +10,7 @@ also provides shared development shells and Tor Browser.
 
 - [Setup](#setup)
 - [Common commands](#common-commands)
+- [Custom patches and update checklist](docs/custom-patches.ja.md) (Japanese)
 - [Tor development shell](#tor-development-shell)
 - [Assets and reproducibility](#assets-and-reproducibility)
 - [Dependency graph](#dependency-graph)
@@ -26,6 +27,7 @@ also provides shared development shells and Tor Browser.
 - `modules/nixos/`: standalone NixOS modules (boot, bootloader, desktop, ...).
 - `scripts/nixos-functions.sh`: shell functions installed through
   `environment.interactiveShellInit`.
+- `docs/custom-patches.ja.md`: custom patches, update checks and recovery notes.
 
 ## Setup
 

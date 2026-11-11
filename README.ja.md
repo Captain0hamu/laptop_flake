@@ -9,6 +9,7 @@
 - [構成](#構成)
 - [セットアップ](#セットアップ)
 - [よく使うコマンド](#よく使うコマンド)
+- [独自パッチと更新時の確認](docs/custom-patches.ja.md)
 - [Tor開発用シェル](#tor開発用シェル)
 - [アセットと再現性](#アセットと再現性)
 - [依存関係グラフ](#依存関係グラフ)
@@ -24,6 +25,7 @@
 - `files/`: Nixモジュールから参照するファイル。
 - `modules/nixos/`: 起動、ブートローダー、デスクトップなどのNixOSモジュール。
 - `scripts/nixos-functions.sh`: `environment.interactiveShellInit` で読み込むシェル関数。
+- `docs/custom-patches.ja.md`: 独自パッチ、更新時の確認、復旧手順。
 
 ## セットアップ
 
