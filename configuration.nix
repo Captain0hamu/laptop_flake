@@ -16,5 +16,6 @@
     ./modules/nixos/users.nix
     ./modules/nixos/packages.nix
     ./modules/nixos/shell.nix
+    ./modules/nixos/swap.nix
   ];
 }
