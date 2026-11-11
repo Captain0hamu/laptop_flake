@@ -36,7 +36,7 @@
       tag: '04 / LOCK + SPLASH',
       eyebrow: '04 / SHARED SCENE',
       title: 'One scene. Three surfaces.',
-      text: 'SDDM hands off to the Plasma lock screen and KSplash. A 24 px blur, a 0.32 veil, and the same clock keep the scene continuous. Native authentication, fingerprint, and session controls stay in Plasma\'s hands.',
+      text: 'SDDM hands off to the Plasma lock screen and KSplash. A 24 px blur, a 0.18 veil, and the same clock keep the scene continuous. Native authentication, fingerprint, and session controls stay in Plasma\'s hands.',
       sources: [
         'files/plasma/SharedScene.qml',
         'files/plasma/Splash.qml',

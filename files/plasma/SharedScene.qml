@@ -24,7 +24,7 @@ Item {
     Rectangle {
         anchors.fill: parent
         color: "#151c2c"
-        opacity: 0.32
+        opacity: 0.18
     }
 
     Rectangle {

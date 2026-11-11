@@ -52,8 +52,10 @@ Item {
                 source: "anim/" + modelData
                 sourceSize.width: root.width
                 sourceSize.height: root.height
-                opacity: index === root.baseIndex
-                    ? 1 - root.blend
+                // Keep the current frame opaque under the next one. Fading
+                // both frames exposes the background and darkens mid-transition.
+                z: index === root.nextIndex ? 1 : 0
+                opacity: index === root.baseIndex ? 1
                     : (index === root.nextIndex ? root.blend : 0)
             }
         }
@@ -62,7 +64,7 @@ Item {
     Rectangle {
         anchors.fill: parent
         color: "#000000"
-        opacity: 0.16
+        opacity: 0.06
     }
 
     Image {
