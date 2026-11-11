@@ -13,7 +13,7 @@ const paths = [
   'modules/nixos/desktop.nix', 'files/sddm/Gently-Blur-SDDM-6/AnimatedBackground.qml',
   'files/sddm/Gently-Blur-SDDM-6/IntroOverlay.qml', 'files/sddm/Gently-Blur-SDDM-6/SplashHud.qml',
   'files/kitty/kitty.conf', 'files/oh-my-posh/distrous-nixos.omp.json',
-  'files/fastfetch/config.jsonc',
+  'files/bash/bashrc',
   'devshells/tor.nix', 'scripts/tor-banner.sh', 'scripts/nixos-functions.sh',
   'files/nvim/init.lua', 'home/neovim.nix', 'modules/nixos/audio.nix',
   'modules/nixos/boot.nix', 'modules/nixos/virtualisation.nix',

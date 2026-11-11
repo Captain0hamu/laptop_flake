@@ -31,7 +31,7 @@ alias lt='eza --tree --level=2 --icons --group-directories-first'
 alias lta='eza --tree --level=2 -a --icons --group-directories-first'
 alias ltd='eza --tree --level=3 --icons --group-directories-first --git-ignore'
 alias lf='eza -lhf --icons --group-directories-first'
-alias ff='fastfetch'
+alias ff='fastfetch -c examples/24.jsonc'
 
 mkcd() {
   mkdir -p -- "$1" && cd -- "$1"

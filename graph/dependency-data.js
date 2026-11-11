@@ -1591,7 +1591,6 @@ window.NIX_GRAPH_DATA = {
       "file": "home/common.nix",
       "targets": [
         "files/bash/bashrc",
-        "files/fastfetch/config.jsonc",
         "files/kitty/kitty.conf",
         "files/oh-my-posh/distrous-nixos.omp.json"
       ]

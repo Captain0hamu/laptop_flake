@@ -78,7 +78,6 @@
       '';
     };
     ".config/kitty/kitty.conf".source = ../files/kitty/kitty.conf;
-    ".config/fastfetch/config.jsonc".source = ../files/fastfetch/config.jsonc;
     ".bashrc".source = ../files/bash/bashrc;
   };
 
