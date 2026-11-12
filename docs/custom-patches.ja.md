@@ -32,6 +32,7 @@ Plasma ロック画面は別プロセス・別パッケージなので、片方�
 | Plymouth | `modules/nixos/plymouth.nix` が `files/plymouth/` のテーマ生成と設定、`plymouth-quit` 等をカスタマイズ | テーマ生成、initrd・systemd のオプション、起動時の画面遷移を確認。上流オプション廃止時はエラーの説明を読み、代替の要否を確認する。以前 `boot.initrd.verbose` が廃止された例がある |
 | Kamoso | `modules/nixos/packages.nix` が `modules/nixos/patches/kamoso-record-state.patch` を適用。録画状態を `Kamoso.isRecording` に統一 | パッチ失敗や QML API 変更のほか、録画開始・停止が実際にできるか確認 |
 | v4l2loopback | `modules/nixos/boot.nix` の `overrideAttrs` で `DEPMOD=true` を指定 | 上流のビルド手順やカーネル更新との互換性を確認。ビルドだけでなく仮想カメラの読み込み・利用も確認 |
+| libinput | `modules/nixos/touchpad.nix` が入力中のタッチパッド無効化の単発キー後の時間を200msから500msに変更 | システム全体の libinput 利用先に影響する。上流の定数が変わったらビルド時に失敗するため、単発・連続入力の両方の仕様を再確認する |
 
 なお、過去の Mozc 向け Qt 互換バックポートは、新しい上流 Mozc に修正が
 取り込まれたため削除済みです。再び Mozc のビルドが失敗した場合は、以前の
