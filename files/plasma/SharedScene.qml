@@ -17,14 +17,14 @@ Item {
         anchors.fill: parent
         source: backdrop
         radius: 24
-        opacity: 0.85
+        opacity: 0.75
     }
 
     // A frosted veil keeps text readable without blurring the password field.
     Rectangle {
         anchors.fill: parent
         color: "#151c2c"
-        opacity: 0.18
+        opacity: 0.10
     }
 
     Rectangle {
