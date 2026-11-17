@@ -42,7 +42,7 @@
         'files/plasma/Splash.qml',
         'files/plasma/patch-lockscreen.py',
         'modules/nixos/plasma-customisation.nix',
-        'home/plasma.nix'
+        'home/modules/plasma.nix'
       ]
     },
     desktop: {
@@ -50,7 +50,7 @@
       eyebrow: '05 / PLASMA',
       title: 'The scene hands over.',
       text: 'The shared scene scales into the session. In this browser it becomes a title card; in Plasma, the same 850 ms zoom reveals the desktop.',
-      sources: ['home/plasma.nix', 'files/plasma/Splash.qml']
+      sources: ['home/modules/plasma.nix', 'files/plasma/Splash.qml']
     }
   };
 
@@ -393,7 +393,7 @@
   function selectTool(button) {
     const editor = button.dataset.tool === 'editor';
     $('#fetch-demo').hidden = editor; $('#editor-demo').hidden = !editor;
-    $('#terminal-command').textContent = editor ? 'nvim home/neovim.nix' : 'ff';
+    $('#terminal-command').textContent = editor ? 'nvim home/modules/neovim.nix' : 'ff';
     toolTabs.forEach(node => {
       const selected = node === button;
       node.setAttribute('aria-selected', String(selected));

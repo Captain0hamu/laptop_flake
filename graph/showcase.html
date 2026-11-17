@@ -61,7 +61,7 @@
 </div>
 <div class="stage-notes"><div><span id="stage-eyebrow" class="eyebrow">01 / SYSTEM SELECTION</span><h3 id="stage-title">Choose your entry point.</h3></div><div><p id="stage-description">Grand Theft Gentoo artwork, BankGothic type, and a cool-blue selection. A small GRUB patch keeps the selected menu visible until the kernel takes over. Menu entries here are examples.</p><div id="stage-links" class="source-links"></div><button class="text-link" type="button" id="replay-intro" hidden>Replay intro ↻</button></div></div>
 <div class="scene-specs" aria-label="Shared scene specification">
-  <button data-source="home/plasma.nix"><b>0.60</b><span>Panel + dialog fill</span><small>plasma.nix</small></button>
+  <button data-source="home/modules/plasma.nix"><b>0.60</b><span>Panel + dialog fill</span><small>plasma.nix</small></button>
   <button data-source="files/plasma/SharedScene.qml"><b>24px</b><span>Lock + splash blur</span><small>SharedScene.qml</small></button>
   <button data-source="files/plasma/SharedScene.qml"><b>0.18</b><span>Frosted veil</span><small>SharedScene.qml</small></button>
   <button data-source="files/plasma/SharedScene.qml"><b>850ms</b><span>Handoff zoom</span><small>SharedScene.qml</small></button>
@@ -127,7 +127,7 @@
         </div>
       </div>
       <div id="editor-demo" class="editor-demo" role="tabpanel" aria-labelledby="editor-tab" tabindex="0" hidden>
-        <div class="editor-tabline"><span>home/neovim.nix</span><small>UTF-8 · Nix</small></div>
+        <div class="editor-tabline"><span>home/modules/neovim.nix</span><small>UTF-8 · Nix</small></div>
         <div class="editor-code" aria-label="Example Neovim configuration">
           <div><span>1</span><code><b class="pink">{</b> pkgs, ... <b class="pink">}:</b></code></div>
           <div><span>2</span><code></code></div>
@@ -145,7 +145,7 @@
           <div><span>14</span><code><b class="pink">}</b></code></div>
           <div class="editor-empty" aria-hidden="true">~<br>~<br>~</div>
         </div>
-        <div class="editor-status"><span>NORMAL</span><span>home/neovim.nix</span><span>5:5 · Nix</span></div>
+        <div class="editor-status"><span>NORMAL</span><span>home/modules/neovim.nix</span><span>5:5 · Nix</span></div>
       </div>
     </div>
     <div class="workspace-caption"><span><i class="status-dot"></i> A WORKSPACE, RECREATED</span><p>A palette and prompt study. Abstract background, static sample values.</p><button data-source="files/bash/bashrc">View shell aliases ↗</button></div>
@@ -154,7 +154,7 @@
   <div class="workspace-notes">
     <article><span class="eyebrow">Terminal</span><h3>Kitty</h3><p>28% opacity. Split horizontally or vertically without losing the view. Jump between panes with Alt + H / J / K / L.</p><div class="source-links"><button data-source="files/kitty/kitty.conf">kitty.conf ↗</button></div></article>
     <article><span class="eyebrow">Shell</span><h3>Bash + Oh My Posh</h3><p>Branch and exit status in the prompt. Machine details in a color-coded fastfetch table. Everything where I expect it.</p><div class="source-links"><button data-source="files/oh-my-posh/distrous-nixos.omp.json">prompt ↗</button><button data-source="files/bash/bashrc">fastfetch alias ↗</button></div></article>
-    <article><span class="eyebrow">Editor</span><h3>Neovim</h3><p>mini.nvim and Treesitter. Plugins and parsers pinned by Nix; colors and keybindings tuned in Lua.</p><div class="source-links"><button data-source="home/neovim.nix">neovim.nix ↗</button><button data-source="files/nvim/init.lua">init.lua ↗</button></div></article>
+    <article><span class="eyebrow">Editor</span><h3>Neovim</h3><p>mini.nvim and Treesitter. Plugins and parsers pinned by Nix; colors and keybindings tuned in Lua.</p><div class="source-links"><button data-source="home/modules/neovim.nix">neovim.nix ↗</button><button data-source="files/nvim/init.lua">init.lua ↗</button></div></article>
   </div>
 </section>
 <section id="tor" class="tor-feature" aria-labelledby="tor-title">
@@ -188,7 +188,7 @@
     <div class="detail-list">
       <article><div><h3>Shared login scene</h3><p>SDDM, the Plasma lock screen and KSplash draw the same animated background, blur and clock. Native authentication and session controls stay intact.</p></div><button data-source="files/plasma/SharedScene.qml" aria-label="View the shared Plasma scene">↗</button></article>
       <article><div><h3>Translucent Plasma</h3><p>Panel and dialog SVG fills at 60% opacity, plus a warm selection accent in Kickoff. The stock layout and behavior remain.</p></div><button data-source="modules/nixos/plasma-customisation.nix" aria-label="View Plasma customisation">↗</button></article>
-      <article><div><h3>Speaker EQ</h3><p>A six-band EasyEffects preset for the internal speaker: gentle low-end cuts, a little presence, and a peak-catching compressor.</p></div><button data-source="home/easyeffects.nix" aria-label="View the EasyEffects preset">↗</button></article>
+      <article><div><h3>Speaker EQ</h3><p>A six-band EasyEffects preset for the internal speaker: gentle low-end cuts, a little presence, and a peak-catching compressor.</p></div><button data-source="home/modules/easyeffects.nix" aria-label="View the EasyEffects preset">↗</button></article>
       <article><div><h3>Quiet boot</h3><p>Less boot noise. Hold Plymouth's final frame and hand off cleanly to SDDM.</p></div><button data-source="modules/nixos/plymouth.nix" aria-label="View Plymouth configuration">↗</button></article>
       <article><div><h3>Audio</h3><p>PipeWire and WirePlumber rules to prefer the working internal microphone.</p></div><button data-source="modules/nixos/audio.nix" aria-label="View audio configuration">↗</button></article>
       <article><div><h3>Virtual machines</h3><p>Docker, libvirt, and QEMU with TPM support. Test environments live in the same flake.</p></div><button data-source="modules/nixos/virtualisation.nix" aria-label="View virtualization configuration">↗</button></article>
