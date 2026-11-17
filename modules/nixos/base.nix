@@ -4,7 +4,7 @@
   nix.settings = {
     experimental-features = [ "nix-command" "flakes" ];
     max-jobs = 1;
-    cores = 2;
+    cores = 3;
     extra-trusted-public-keys = local.remoteBuildPublicKeys or [ ];
   };
 
