@@ -154,7 +154,7 @@ vim.keymap.set("n", "<leader>w", "<cmd>write<CR>", { desc = "Write file" })
 vim.keymap.set("n", "<leader>q", "<cmd>quit<CR>", { desc = "Quit window" })
 vim.keymap.set("n", "<leader>e", "<cmd>lua MiniFiles.open()<CR>", { desc = "File explorer" })
 
--- Plugins and Tree-sitter parsers are supplied by home/neovim.nix.
+-- Plugins and Tree-sitter parsers are supplied by home/modules/neovim.nix.
 -- Startup never clones plugins or compiles parsers into the home directory.
 if not minimal_mode then
   require("monokai-pro").setup({

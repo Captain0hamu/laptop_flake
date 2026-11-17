@@ -10,9 +10,10 @@ in
 {
   imports = [
     ./common.nix
-    ./plasma.nix
-    ./easyeffects.nix
-    ./neovim.nix
+    ./modules/cool-retro-term.nix
+    ./modules/plasma.nix
+    ./modules/easyeffects.nix
+    ./modules/neovim.nix
     profileModule
   ];
 }

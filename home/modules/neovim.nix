@@ -5,7 +5,7 @@
     enable = true;
     withRuby = true;
     withPython3 = true;
-    initLua = builtins.readFile ../files/nvim/init.lua;
+    initLua = builtins.readFile ../../files/nvim/init.lua;
     # Plugin revisions and parser sources follow the pinned nixpkgs input.
     plugins = with pkgs.vimPlugins; [
       monokai-pro-nvim

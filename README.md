@@ -165,7 +165,7 @@ Plymouth's source images are in `files/plymouth/gtg/assets/`. These assets are
 regular repository files, not symlinks into a user's home directory.
 
 Neovim plugins and its Bash, C, C#, C++, CSS, HTML, JavaScript, JSON, Nix and
-Python Tree-sitter parsers are declared in `home/neovim.nix`. Their versions
+Python Tree-sitter parsers are declared in `home/modules/neovim.nix`. Their versions
 follow `flake.lock`; starting Neovim does not clone plugins or run `TSUpdate`.
 The `dl-msc` helper also uses the Nix-managed `yt-dlp` package and writes to
 `$HOME/Downloads/m4a`.
@@ -194,7 +194,7 @@ xdg-open graph/index.html
 ```
 ## Speaker and login appearance
 
-`home/easyeffects.nix` installs a conservative EQ + gentle compressor preset for
+`home/modules/easyeffects.nix` installs a conservative EQ + gentle compressor preset for
 the built-in Fujitsu/Raptor Lake Speaker route only. Start EasyEffects manually
 when needed; headphones and HDMI are not assigned this preset. The EQ is
 not a measured calibration: adjust its six bands in EasyEffects after listening

@@ -7,7 +7,7 @@ let
   plasmaTheme = pkgs.runCommand "plasma-theme-${themeName}" {
     nativeBuildInputs = [ pkgs.python3 ];
   } ''
-    python ${../files/plasma/build-translucent-theme.py} \
+    python ${../../files/plasma/build-translucent-theme.py} \
       ${pkgs.kdePackages.libplasma}/share/plasma/desktoptheme/default \
       "$out" ${backgroundOpacity}
   '';

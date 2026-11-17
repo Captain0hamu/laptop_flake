@@ -117,7 +117,7 @@ SDDMのアニメーション背景は、`files/sddm/Gently-Blur-SDDM-6/AnimatedB
 
 `files/fonts/BankGothic.ttf` はGRUB、Plymouth、SDDMで共通して使うフォントです。Plymouthの元画像は `files/plymouth/gtg/assets/` にあります。これらはホームディレクトリへのシンボリックリンクではなく、リポジトリ内の通常のファイルです。
 
-Neovimのプラグインと、Bash、C、C#、C++、CSS、HTML、JavaScript、JSON、Nix、Python用のTree-sitterパーサーは `home/neovim.nix` で宣言しています。バージョンは `flake.lock` に従い、Neovim起動時にプラグインのクローンや `TSUpdate` は実行しません。`dl-msc` 関数もNix管理の `yt-dlp` を使い、`$HOME/Downloads/m4a` に出力します。
+Neovimのプラグインと、Bash、C、C#、C++、CSS、HTML、JavaScript、JSON、Nix、Python用のTree-sitterパーサーは `home/modules/neovim.nix` で宣言しています。バージョンは `flake.lock` に従い、Neovim起動時にプラグインのクローンや `TSUpdate` は実行しません。`dl-msc` 関数もNix管理の `yt-dlp` を使い、`$HOME/Downloads/m4a` に出力します。
 
 Nixpkgs、Home Manager、上流のGRUBテーマは、`flake.lock` でバージョンを固定した外部入力です。このチェックアウト外のファイルには依存しません。一方、`local.nix`、ホームディレクトリとユーザー名、`hardware-configuration.nix` と `modules/nixos/filesystems.nix` のディスクUUIDやマウント設定はホスト固有です。別の場所にチェックアウトした場合は、impureなflake評価時に `NIXOS_FLAKE_DIR` にその絶対パスを設定してください。
 
@@ -134,6 +134,6 @@ xdg-open graph/index.html
 
 ## スピーカーとログイン画面
 
-`home/easyeffects.nix` は、内蔵のFujitsu/Raptor Lake Speaker出力専用に、控えめなEQと緩やかなコンプレッサーのプリセットを設定します。EasyEffectsは必要なときに手動で起動してください。このプリセットはヘッドホンやHDMIには適用されません。EQは実測に基づく補正ではないため、安全な音量で聴きながらEasyEffectsの6バンドを調整してください。プリセットとデバイス別の自動読み込みファイルは `~/.local/share/easyeffects/` にあります。
+`home/modules/easyeffects.nix` は、内蔵のFujitsu/Raptor Lake Speaker出力専用に、控えめなEQと緩やかなコンプレッサーのプリセットを設定します。EasyEffectsは必要なときに手動で起動してください。このプリセットはヘッドホンやHDMIには適用されません。EQは実測に基づく補正ではないため、安全な音量で聴きながらEasyEffectsの6バンドを調整してください。プリセットとデバイス別の自動読み込みファイルは `~/.local/share/easyeffects/` にあります。
 
 SDDM、Plasmaのロック画面、KSplashは、`files/sddm/Gently-Blur-SDDM-6/anim` にある同じアニメーション背景を使います。ロック画面は復旧時の動作を含め、Plasma標準の認証操作を維持しています。パスワードによるロック解除時とPlasmaの起動スプラッシュでは、デスクトップへフェード・ズームする演出が入ります。SDDMでもログイン成功時に同じ演出が始まりますが、完了前にディスプレイマネージャーが終了する場合があります。

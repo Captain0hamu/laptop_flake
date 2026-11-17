@@ -1,7 +1,7 @@
 { pkgs, ... }:
 
 let
-  # Kickoff selection colors. Native popup/panel transparency is in home/plasma.nix.
+  # Kickoff selection colors. Native popup/panel transparency is in home/modules/plasma.nix.
   launcherStyle = {
     accentColor = "#cfbea5";
     selectionOpacity = "0.25";
