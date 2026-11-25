@@ -46,102 +46,18 @@ if minimal_mode then
   vim.opt.splitbelow = false
 end
 
-local bat_like_palette = {
-  bg = "#1e1e1e",
-  fg = "#c8c8c8",
-  comment = "#78e482",
-  keyword = "#ff5f87",
-  string = "#ffd75f",
-  function_name = "#5fd7ff",
-  type = "#87d7ff",
-  constant = "#ffaf5f",
-  number = "#d7af87",
-  operator = "#d7af5f",
-  special = "#5fd7af",
-  identifier = "#f8f8f2",
-}
-
-local function apply_bat_like_highlights()
-  local hl = vim.api.nvim_set_hl
-  hl(0, "Normal", { fg = bat_like_palette.fg, bg = bat_like_palette.bg })
-  hl(0, "NormalFloat", { fg = bat_like_palette.fg, bg = bat_like_palette.bg })
-  hl(0, "Comment", { fg = bat_like_palette.comment, italic = true })
-  hl(0, "String", { fg = bat_like_palette.string })
-  hl(0, "Character", { link = "String" })
-  hl(0, "Number", { fg = bat_like_palette.number })
-  hl(0, "Float", { link = "Number" })
-  hl(0, "Boolean", { fg = bat_like_palette.constant, bold = true })
-  hl(0, "Constant", { fg = bat_like_palette.constant })
-  hl(0, "Identifier", { fg = bat_like_palette.identifier })
-  hl(0, "Function", { fg = bat_like_palette.function_name })
-  hl(0, "Statement", { fg = bat_like_palette.keyword, bold = true })
-  hl(0, "Keyword", { fg = bat_like_palette.keyword, bold = true })
-  hl(0, "Operator", { fg = bat_like_palette.operator })
-  hl(0, "Type", { fg = bat_like_palette.type })
-  hl(0, "Special", { fg = bat_like_palette.special })
-  hl(0, "PreProc", { fg = bat_like_palette.keyword })
-  hl(0, "Underlined", { undercurl = true })
-  hl(0, "CursorLine", { bg = "#262626" })
-  hl(0, "Visual", { bg = "#353535" })
-
-  local treesitter_links = {
-    ["@comment"] = "Comment",
-    ["@string"] = "String",
-    ["@string.escape"] = "Special",
-    ["@character"] = "Character",
-    ["@number"] = "Number",
-    ["@boolean"] = "Boolean",
-    ["@constant"] = "Constant",
-    ["@constant.builtin"] = "Constant",
-    ["@function.builtin"] = "Function",
-    ["@function"] = "Function",
-    ["@function.call"] = "Function",
-    ["@method"] = "Function",
-    ["@method.call"] = "Function",
-    ["@keyword"] = "Keyword",
-    ["@keyword.return"] = "Keyword",
-    ["@keyword.function"] = "Keyword",
-    ["@keyword.operator"] = "Keyword",
-    ["@keyword.import"] = "Keyword",
-    ["@keyword.directive"] = "Keyword",
-    ["@keyword.modifier"] = "Keyword",
-    ["@keyword.conditional"] = "Keyword",
-    ["@keyword.repeat"] = "Keyword",
-    ["@keyword.exception"] = "Keyword",
-    ["@type"] = "Type",
-    ["@type.builtin"] = "Type",
-    ["@module"] = "Type",
-    ["@namespace"] = "Type",
-    ["@attribute"] = "Special",
-    ["@tag"] = "Special",
-    ["@variable.member"] = "Identifier",
-    ["@variable"] = "Identifier",
-    ["@variable.builtin"] = "Identifier",
-    ["@variable.parameter"] = "Identifier",
-    ["@variable.parameter.builtin"] = "Identifier",
-    ["@property"] = "Identifier",
-    ["@field"] = "Identifier",
-    ["@parameter"] = "Identifier",
-    ["@operator"] = "Operator",
-    ["@punctuation.delimiter"] = "Identifier",
-    ["@punctuation.bracket"] = "Identifier",
-    ["@punctuation.special"] = "Special",
-    ["@label"] = "Special",
-    ["@text.title"] = "Keyword",
-    ["@text.strong"] = "Keyword",
-    ["@text.emphasis"] = "Keyword",
-    ["@text.literal"] = "String",
-    ["@text.reference"] = "Special",
-  }
-
-  for group, target in pairs(treesitter_links) do
-    hl(0, group, { link = target })
-  end
+local function apply_ui_highlights()
+  vim.api.nvim_set_hl(0, "Visual", {
+    fg = "#000000",
+    bg = "#FFFF00",
+    ctermfg = "black",
+    ctermbg = "yellow",
+  })
 end
 
 if not minimal_mode then
   vim.api.nvim_create_autocmd("ColorScheme", {
-    callback = apply_bat_like_highlights,
+    callback = apply_ui_highlights,
   })
 end
 
@@ -157,18 +73,53 @@ vim.keymap.set("n", "<leader>e", "<cmd>lua MiniFiles.open()<CR>", { desc = "File
 -- Plugins and Tree-sitter parsers are supplied by home/modules/neovim.nix.
 -- Startup never clones plugins or compiles parsers into the home directory.
 if not minimal_mode then
-  require("monokai-pro").setup({
-    filter = "classic",
-  })
-  vim.cmd.colorscheme("monokai-pro")
-  apply_bat_like_highlights()
+  vim.opt.background = "dark"
+  vim.opt.signcolumn = "yes"
+  vim.opt.laststatus = 2
+  vim.cmd.colorscheme("carbonfox")
+  apply_ui_highlights()
 
+  require("mini.icons").setup()
+  require("mini.icons").mock_nvim_web_devicons()
   require("mini.ai").setup()
   require("mini.comment").setup()
+  require("mini.cursorword").setup()
   require("mini.files").setup()
   require("mini.pairs").setup()
   require("mini.surround").setup()
   require("mini.statusline").setup()
+  require("mini.tabline").setup()
+  require("mini.notify").setup()
+  -- One Git gutter and one scope renderer: avoid gitsigns/mini.diff and
+  -- ibl/mini.indentscope drawing over each other.
+  require("gitsigns").setup()
+
+  local indent_highlights = {
+    "RainbowRed", "RainbowYellow", "RainbowBlue", "RainbowOrange",
+    "RainbowGreen", "RainbowViolet", "RainbowCyan",
+  }
+  local indent_colors = {
+    "#E06C75", "#E5C07B", "#61AFEF", "#D19A66",
+    "#98C379", "#C678DD", "#56B6C2",
+  }
+  local hooks = require("ibl.hooks")
+  hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
+    for index, group in ipairs(indent_highlights) do
+      vim.api.nvim_set_hl(0, group, { fg = indent_colors[index] })
+    end
+  end)
+  require("ibl").setup({
+    indent = { char = "|", highlight = indent_highlights },
+    scope = { highlight = { "RainbowRed", "RainbowYellow" } },
+    -- Preserve the existing large-buffer precaution for visual decorations.
+    exclude = {
+      buftypes = { "terminal", "nofile", "quickfix", "prompt" },
+    },
+  })
+  hooks.register(hooks.type.ACTIVE, function(bufnr)
+    local lines = vim.api.nvim_buf_line_count(bufnr)
+    return lines < 1000 and vim.api.nvim_buf_get_offset(bufnr, lines) < 100000
+  end)
   require("mini.completion").setup({
     delay = { completion = 120, info = 100, signature = 50 },
     lsp_completion = { source_func = "omnifunc", auto_setup = true },
