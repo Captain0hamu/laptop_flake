@@ -10,6 +10,7 @@ in
 {
   imports = [
     ./common.nix
+    ./modules/debuggers.nix
     ./modules/cool-retro-term.nix
     ./modules/plasma.nix
     ./modules/easyeffects.nix

@@ -10,6 +10,7 @@
       url = "git+https://gitlab.com/imnotpua/grub_gtg.git?ref=main";
       flake = false;
     };
+    pwndbg.url = "github:pwndbg/pwndbg";
   };
 
   outputs = inputs@{ nixpkgs, home-manager, grub-gtg, ... }:
@@ -54,7 +55,7 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.backupFileExtension = "hm-backup";
-              home-manager.extraSpecialArgs = { inherit local; };
+              home-manager.extraSpecialArgs = { inherit local inputs; };
               home-manager.users.razero = mkHomeModule profile;
             }
           ];
@@ -62,7 +63,7 @@
       mkStandaloneHome = profile:
         home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
-          extraSpecialArgs = { inherit local; };
+          extraSpecialArgs = { inherit local inputs; };
           modules = [ (mkHomeModule profile) ];
         };
     in {
