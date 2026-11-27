@@ -6,45 +6,45 @@
       "alignment": "left",
       "segments": [
         {
-          "background": "#4F70BA",
-          "foreground": "#FFFFFF",
+          "background": "#999A98",
+          "foreground": "#241F1B",
           "leading_diamond": "\ue0b2",
           "style": "diamond",
           "template": "<b>  NIXOS </b>",
           "type": "os"
         },
         {
-          "background": "#7EB5E1",
-          "foreground": "#000000",
+          "background": "#B8875D",
+          "foreground": "#241F1B",
           "powerline_symbol": "\ue0b0",
           "style": "powerline",
           "template": "<b> \uf489 {{ .Name }} </b>",
           "type": "shell"
         },
         {
-          "background": "#3E6DD8",
-          "foreground": "#FFFFFF",
+          "background": "#E68C70",
+          "foreground": "#241F1B",
           "powerline_symbol": "\ue0b0",
           "style": "powerline",
           "template": "<b> \uf09c root </b>",
           "type": "root"
         },
         {
-          "background": "#1E9748",
-          "foreground": "#E8EAEE",
+          "background": "#A0A48B",
+          "foreground": "#241F1B",
           "powerline_symbol": "\ue0b0",
           "style": "powerline",
           "template": "<b> \ue61e \ue61d cmake {{ .Full }} </b>",
           "type": "cmake"
         },
         {
-          "background": "#EBFF3B",
+          "background": "#C5A570",
           "background_templates": [
-            "{{ if .Venv}}#356C9C{{ end }}"
+            "{{ if .Venv}}#A2A099{{ end }}"
           ],
-          "foreground": "#000000",
+          "foreground": "#241F1B",
           "foreground_templates": [
-            "{{ if .Venv }}#FFFFFF{{ end }}"
+            "{{ if .Venv }}#241F1B{{ end }}"
           ],
           "powerline_symbol": "\ue0b0",
           "properties": {
@@ -55,24 +55,24 @@
           "type": "python"
         },
         {
-          "background": "#7FD5EA",
-          "foreground": "#000000",
+          "background": "#8F9E9A",
+          "foreground": "#241F1B",
           "powerline_symbol": "\ue0b0",
           "style": "powerline",
           "template": "<b> ‭\ue626 {{ .Full }} </b>",
           "type": "go"
         },
         {
-          "background": "#684e3d",
-          "foreground": "#e2f3ff",
+          "background": "#C08B5E",
+          "foreground": "#241F1B",
           "powerline_symbol": "\ue0b0",
           "style": "powerline",
           "template": " \ue7a8 {{ .Full }} ",
           "type": "rust"
         },
         {
-          "background": "#D53010",
-          "foreground": "#FFFFFF",
+          "background": "#E87F75",
+          "foreground": "#241F1B",
           "powerline_symbol": "\ue0b0",
           "properties": {
             "branch_icon": " ",
@@ -82,44 +82,8 @@
             "fetch_worktree_count": true
           },
           "style": "powerline",
-          "template": "<b> {{ .UpstreamIcon }}{{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }} \uf044 {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }}<#CAEBE1> \uf046 {{ .Staging.String }}</>{{ end }}{{ if gt .StashCount 0 }} \ueb4b {{ .StashCount }}{{ end }} </b>",
+          "template": "<b> {{ .UpstreamIcon }}{{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }} \uf044 {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }}<#263F29> \uf046 {{ .Staging.String }}</>{{ end }}{{ if gt .StashCount 0 }} \ueb4b {{ .StashCount }}{{ end }} </b>",
           "type": "git"
-        }
-      ],
-      "type": "prompt"
-    },
-    {
-      "alignment": "right",
-      "segments": [
-        {
-          "background": "#03DE6C",
-          "background_templates": [
-            "{{ if gt .Code 0 }}#E44141{{ end }}"
-          ],
-          "foreground": "#000000",
-          "foreground_templates": [
-            "{{ if gt .Code 0 }}#FFFFFF{{ end }}"
-          ],
-          "leading_diamond": "\ue0b2",
-          "properties": {
-            "always_enabled": true
-          },
-          "style": "diamond",
-          "template": "{{ if gt .Code 0 }}\uf00d{{ else }}\uf00c{{ end }}",
-          "trailing_diamond": "\ue0b0",
-          "type": "status"
-        },
-        {
-          "background": "#575656",
-          "foreground": "#FFFFFF",
-          "properties": {
-            "style": "roundrock",
-            "threshold": 0
-          },
-          "style": "diamond",
-          "template": " \uf252 {{ .FormattedMs }}",
-          "trailing_diamond": "\ue0b0",
-          "type": "executiontime"
         }
       ],
       "type": "prompt"
@@ -129,14 +93,14 @@
       "newline": true,
       "segments": [
         {
-          "foreground": "#A1ACC4",
+          "foreground": "#CFC3AC",
           "style": "plain",
           "template": "\u256d\u2500",
           "type": "text"
         },
         {
           "style": "plain",
-          "template": "  <#6F8AC7>\uf007 {{ .UserName }}</> <#47D49E>|</> <#796FC7>\udb80\udf79 {{ .HostName }}</>",
+          "template": "  <#F0C879>\uf007 {{ .UserName }}</> <#CFC3AC>|</> <#F0A78E>\udb80\udf79 {{ .HostName }}</>",
           "type": "session"
         }
       ],
@@ -147,7 +111,7 @@
       "newline": true,
       "segments": [
         {
-          "foreground": "#A1ACC4",
+          "foreground": "#CFC3AC",
           "style": "plain",
           "template": "\u2502",
           "type": "text"
@@ -156,22 +120,22 @@
           "leading_diamond": "",
           "properties": {
             "folder_icon": " \uf07c ",
-            "folder_separator_icon": " <#A1ACC4>\uf061</> ",
+            "folder_separator_icon": " <#CFC3AC>\uf061</> ",
             "home_icon": "\uf015",
             "mapped_locations": {
-              "~/Desktop": "\uf015 <#A1ACC4>\uf061</> \uf108",
-              "~/Documents": "\uf015 <#A1ACC4>\uf061</> \udb80\ude19",
-              "~/Downloads": "\uf015 <#A1ACC4>\uf061</> \uf019",
-              "~/Music": "\uf015 <#A1ACC4>\uf061</> \uf001",
-              "~/Pictures/": "\uf015 <#A1ACC4>\uf061</> \uf03e",
-              "~/Videos": "\uf015 <#A1ACC4>\uf061</> \uf03d"
+              "~/Desktop": "\uf015 <#CFC3AC>\uf061</> \uf108",
+              "~/Documents": "\uf015 <#CFC3AC>\uf061</> \udb80\ude19",
+              "~/Downloads": "\uf015 <#CFC3AC>\uf061</> \uf019",
+              "~/Music": "\uf015 <#CFC3AC>\uf061</> \uf001",
+              "~/Pictures/": "\uf015 <#CFC3AC>\uf061</> \uf03e",
+              "~/Videos": "\uf015 <#CFC3AC>\uf061</> \uf03d"
             },
             "max_depth": 4,
             "right_format": "<u><b>%s</b></u>",
             "style": "agnoster_short"
           },
           "style": "diamond",
-          "template": "  <#72D95D>{{ if not .Writable }}<#D96A5D>\uf09c {{ end }}{{ if .RootDir }}\ue216{{ else }}{{ .Path }}{{ end }}</> ",
+          "template": "  <#D3EA98>{{ if not .Writable }}<#F49B80>\uf09c {{ end }}{{ if .RootDir }}\ue216{{ else }}{{ .Path }}{{ end }}</> ",
           "type": "path"
         }
       ],
@@ -182,13 +146,13 @@
       "newline": true,
       "segments": [
         {
-          "foreground": "#A1ACC4",
+          "foreground": "#CFC3AC",
           "style": "plain",
           "template": "\u2570\u2500",
           "type": "text"
         },
         {
-          "foreground": "#A1ACC4",
+          "foreground": "#CFC3AC",
           "properties": {
             "always_enabled": true
           },
@@ -203,12 +167,12 @@
   "osc99": true,
   "secondary_prompt": {
     "background": "transparent",
-    "foreground": "#A1ACC4",
+    "foreground": "#CFC3AC",
     "template": "\u2570\u2500\u276f "
   },
   "transient_prompt": {
     "background": "transparent",
-    "foreground": "#FEF5ED",
+    "foreground": "#F4ECE0",
     "template": "\ue285 "
   },
   "version": 3
