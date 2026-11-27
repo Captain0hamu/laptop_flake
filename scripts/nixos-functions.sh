@@ -123,11 +123,14 @@ rebuild_n_switch() {
         build_host=$(nix eval --impure --raw --file "$NIXOS_FLAKE_DIR/local.nix" \
           --apply 'local: local.remoteBuildHost or ""') || return
       fi
+
       if [[ -z "$build_host" ]]; then
         printf '[ERROR] Set remoteBuildHost in local.nix or NIXOS_BUILD_HOST.\n' >&2
         return 2
       fi
       nixos-rebuild switch --flake "$(_nixos_flake_ref)" --impure \
+        --log-format bar-with-logs \
+        --print-build-logs \
         --build-host "$build_host" --elevate sudo
       ;;
     *)
