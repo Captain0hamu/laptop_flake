@@ -48,10 +48,7 @@ end
 
 local function apply_ui_highlights()
   vim.api.nvim_set_hl(0, "Visual", {
-    fg = "#000000",
-    bg = "#FFFF00",
-    ctermfg = "black",
-    ctermbg = "yellow",
+    bg = "#454545",
   })
 end
 
@@ -90,8 +87,7 @@ if not minimal_mode then
   require("mini.statusline").setup()
   require("mini.tabline").setup()
   require("mini.notify").setup()
-  -- One Git gutter and one scope renderer: avoid gitsigns/mini.diff and
-  -- ibl/mini.indentscope drawing over each other.
+  -- Use gitsigns for Git and mini.indentscope for the animated scope.
   require("gitsigns").setup()
 
   local indent_highlights = {
@@ -109,8 +105,8 @@ if not minimal_mode then
     end
   end)
   require("ibl").setup({
-    indent = { char = "|", highlight = indent_highlights },
-    scope = { highlight = { "RainbowRed", "RainbowYellow" } },
+    indent = { char = "│", highlight = indent_highlights },
+    scope = { enabled = false },
     -- Preserve the existing large-buffer precaution for visual decorations.
     exclude = {
       buftypes = { "terminal", "nofile", "quickfix", "prompt" },
@@ -120,6 +116,19 @@ if not minimal_mode then
     local lines = vim.api.nvim_buf_line_count(bufnr)
     return lines < 1000 and vim.api.nvim_buf_get_offset(bufnr, lines) < 100000
   end)
+  require("mini.indentscope").setup({
+    symbol = "╎",
+    draw = {
+      -- Keep the upstream animation; skip special and large buffers.
+      predicate = function(scope)
+        local lines = vim.api.nvim_buf_line_count(0)
+        return vim.bo.buftype == ""
+          and lines < 1000
+          and vim.api.nvim_buf_get_offset(0, lines) < 100000
+          and not scope.body.is_incomplete
+      end,
+    },
+  })
   require("mini.completion").setup({
     delay = { completion = 120, info = 100, signature = 50 },
     lsp_completion = { source_func = "omnifunc", auto_setup = true },
