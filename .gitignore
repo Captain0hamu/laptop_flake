@@ -9,3 +9,4 @@ result-*
 *.pre-flake.bak
 graph/showcase-after*
 /graph/motion-demo/
+.gdb_history
