@@ -59,6 +59,7 @@ if not minimal_mode then
 end
 
 vim.keymap.set("i", "kk", "<Esc>", { desc = "Exit insert mode" })
+vim.keymap.set("i", "jj", "<Esc>", { desc = "Exit insert mode"})
 vim.keymap.set("i", "<S-CR>", "<Esc>o", { desc = "Open new line below" })
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 vim.keymap.set("n", ";", ":")
